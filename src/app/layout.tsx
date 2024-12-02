@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { Provider } from '@/components/ui/provider';
 import { Toaster } from '@/components/ui/toaster';
 import Navbar from '@/components/common/navbar';
 import Footer from '@/components/common/footer';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'PortalLoker',
@@ -24,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-gray-100 text-gray-900">
+      <body className={`${inter.className} bg-background text-gray-900`}>
         <Provider>
           <Navbar />
           <Toaster />

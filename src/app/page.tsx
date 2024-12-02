@@ -8,16 +8,13 @@ import RegisterDialog from '../components/common/registerDialog';
 import useStore from '@/state/auth/store';
 
 export default function Home() {
-  const { uuid, setUuid, setIsLoginDialogOpen } = useMainStore();
-  const { isAuthenticated, checkLogin } = useStore();
+  const { uuid, setUuid } = useMainStore();
+  const { checkLogin } = useStore();
   console.log('Generated UUID:', uuid);
 
   useEffect(() => {
     checkLogin();
-    if (!isAuthenticated) {
-      setIsLoginDialogOpen(true);
-    }
-  }, [checkLogin, isAuthenticated, setIsLoginDialogOpen]);
+  }, [checkLogin]);
 
   useEffect(() => {
     const generateUuid = async () => {

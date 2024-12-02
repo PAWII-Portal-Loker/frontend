@@ -1,4 +1,4 @@
-export interface UserResponse {
+export interface UserEntity {
   id: string;
   role: string;
   email: string;
@@ -14,9 +14,9 @@ export interface UserResponse {
   updatedAt: Date;
 }
 
-export interface JobSeekerResponse {
+export interface JobSeekerEntity {
   id: string;
-  user: UserResponse;
+  user: UserEntity;
   name: string;
   lastEducation: string;
   major: string;
@@ -25,9 +25,9 @@ export interface JobSeekerResponse {
   updatedAt: Date;
 }
 
-export interface CompanyResponse {
+export interface CompanyEntity {
   id: string;
-  user: UserResponse;
+  user: UserEntity;
   companyType: string;
   companyName: string;
   foundingDate: Date;

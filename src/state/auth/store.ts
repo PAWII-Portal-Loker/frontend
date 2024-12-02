@@ -1,4 +1,4 @@
-import { UserResponse } from '@/api/services/auth/entity';
+import { UserEntity } from '@/api/services/auth/entity';
 import AuthService from '@/api/services/auth/route';
 import { toaster } from '@/components/ui/toaster';
 import { create } from 'zustand';
@@ -6,7 +6,7 @@ import { create } from 'zustand';
 const authService = new AuthService();
 
 interface AuthState {
-  user: UserResponse | null;
+  user: UserEntity | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   waNumber: string;
@@ -16,7 +16,7 @@ interface AuthState {
 }
 
 interface AuthActions {
-  setUser: (user: UserResponse) => void;
+  setUser: (user: UserEntity) => void;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   setIsLoading: (isLoading: boolean) => void;
   setEmail: (email: string) => void;

@@ -1,10 +1,10 @@
-import { JobSeekerResponse } from '../auth/entity';
-import { VacancyResponse } from '../vacancy/entity';
+import { JobSeekerEntity } from '../auth/entity';
+import { VacancyEntity } from '../vacancy/entity';
 
-export interface ApplicationResponseDto {
+export interface ApplicationEntity {
   id: string;
-  jobSeeker: JobSeekerResponse;
-  vacancy: VacancyResponse;
+  jobSeeker: JobSeekerEntity;
+  vacancy: VacancyEntity;
   documentUrls: string[];
   createdAt: Date;
   updatedAt: Date;

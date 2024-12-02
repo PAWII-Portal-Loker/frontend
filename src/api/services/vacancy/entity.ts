@@ -1,8 +1,8 @@
-import { CompanyResponse } from '../auth/entity';
+import { CompanyEntity } from '../auth/entity';
 
-export interface VacancyResponse {
+export interface VacancyEntity {
   id: string;
-  company: CompanyResponse;
+  company: CompanyEntity;
   jobType: string;
   incomeType: string;
   position: string;

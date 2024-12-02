@@ -1,21 +1,11 @@
 'use client';
 
-import {
-  Box,
-  Flex,
-  HStack,
-  IconButton,
-  Button,
-  useDisclosure,
-  Stack,
-} from '@chakra-ui/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import useStore from '@/state/auth/store';
-import useMainStore from '@/state/mainStore';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoIosClose } from 'react-icons/io';
 import Image from 'next/image';
+import useStore from '@/state/auth/store';
+import useMainStore from '@/state/mainStore';
 import {
   MenuContent,
   MenuItemCommand,
@@ -23,61 +13,112 @@ import {
   MenuTrigger,
 } from '../ui/menu';
 import { AvatarGroup } from '../ui/avatar';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IconButton } from '@chakra-ui/react';
+import clsx from 'clsx';
+import { usePathname, useRouter } from 'next/navigation';
+
+const navLinks = [
+  { href: '/dashboard', label: 'Dashboard' },
+  { href: '/vacancy', label: 'Vacancy' },
+  { href: '/history', label: 'History' },
+  { href: '/notification', label: 'Notification' },
+];
+
+type NavLinkProps = {
+  href: string;
+  label: string;
+  router: ReturnType<typeof useRouter>;
+};
+
+const NavLink = ({ href, label, router }: NavLinkProps) => (
+  <button
+    onClick={() => router.push(href)}
+    className={clsx(
+      'px-3 py-2 rounded-md',
+      usePathname() === href
+        ? 'bg-gray-200 text-blue-500 font-semibold'
+        : 'text-gray-600 hover:text-blue-500 hover:bg-gray-100 transition-all duration-200',
+    )}
+    disabled={usePathname() === href}
+  >
+    {label}
+  </button>
+);
+
+const MobileNavLink = ({ href, label, router }: NavLinkProps) => (
+  <motion.li
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.2 }}
+  >
+    <button
+      onClick={() => router.push(href)}
+      className={clsx(
+        'w-full px-3 py-2 rounded-md',
+        usePathname() === href
+          ? 'bg-gray-200 text-blue-500 font-semibold'
+          : 'text-gray-600 hover:text-blue-500 hover:bg-gray-100 transition-all duration-200',
+      )}
+      disabled={usePathname() === href}
+    >
+      {label}
+    </button>
+  </motion.li>
+);
 
 export default function Navbar() {
-  const { open, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { isAuthenticated, signOut } = useStore();
-  const { setIsLoginDialogOpen } = useMainStore();
+  const { isNavigationOpen, setIsNavigationOpen, setIsLoginDialogOpen } =
+    useMainStore();
 
   const handleLogout = () => {
     signOut();
   };
 
+  const toggleMenu = () => {
+    setIsNavigationOpen(!isNavigationOpen);
+  };
+
   return (
     <>
-      <Box
-        bg="gray.100"
-        px={4}
-        position="fixed"
-        top={0}
-        left={0}
-        width="100%"
-        zIndex={10}
-      >
-        <Flex h={16} alignItems="center" justifyContent={'space-between'}>
+      <header className="bg-background px-4 py-3 fixed top-0 left-0 w-full z-10">
+        <nav className="flex items-center justify-between">
           <IconButton
             size={'md'}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
-            onClick={open ? onClose : onOpen}
+            onClick={toggleMenu}
           >
-            {open ? <IoIosClose /> : <RxHamburgerMenu />}
+            {isNavigationOpen ? <IoIosClose /> : <RxHamburgerMenu />}
           </IconButton>
-          <HStack wordSpacing={8} alignItems="center">
-            <HStack alignItems="center">
-              <Image src="/your-logo.png" alt="Logo" width={30} height={30} />
-              <Link href="/">PortalLoker</Link>
-            </HStack>
-          </HStack>
-          <Flex gap={5} alignItems="center">
-            <HStack
-              as={'nav'}
-              wordSpacing={4}
-              gap={3}
-              display={{ base: 'none', md: 'flex' }}
-            >
-              <Link href="/dashboard">Dashboard</Link>
-              <Link href="/vacancy">Vacancy</Link>
-              <Link href="/history">History</Link>
-              <Link href="/notification">Notification</Link>
-            </HStack>
+          <div className="flex items-center gap-2">
+            <Image
+              src="/logo.png"
+              alt="PortalLoker Logo"
+              width={30}
+              height={30}
+            />
+            <Link href="/" className="text-blue-500 font-bold text-lg">
+              PortalLoker
+            </Link>
+          </div>
+          <div className="flex items-center gap-8">
+            <ul className="hidden md:flex gap-5">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <NavLink {...link} router={router} />
+                </li>
+              ))}
+            </ul>
             {isAuthenticated ? (
               <MenuRoot>
                 <MenuTrigger asChild>
-                  <Button rounded={'full'} cursor={'pointer'} minW={0}>
+                  <button className="rounded-full cursor-pointer">
                     <AvatarGroup size={'sm'} />
-                  </Button>
+                  </button>
                 </MenuTrigger>
                 <MenuContent>
                   <MenuItemCommand onClick={() => router.push('/profile')}>
@@ -89,29 +130,33 @@ export default function Navbar() {
                 </MenuContent>
               </MenuRoot>
             ) : (
-              <Button
-                variant={'solid'}
-                colorScheme={'blue'}
-                size={'sm'}
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm transition-all duration-200"
                 onClick={() => setIsLoginDialogOpen(true)}
               >
                 Login
-              </Button>
+              </button>
             )}
-          </Flex>
-        </Flex>
+          </div>
+        </nav>
 
-        {open ? (
-          <Box pb={4} display={{ md: 'none' }}>
-            <Stack as={'nav'} wordSpacing={4} alignItems="center">
-              <Link href="/dashboard">Dashboard</Link>
-              <Link href="/vacancy">Vacancy</Link>
-              <Link href="/history">History</Link>
-              <Link href="/notification">Notification</Link>
-            </Stack>
-          </Box>
-        ) : null}
-      </Box>
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isNavigationOpen && (
+            <motion.ul
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden px-4 py-4 absolute top-16 left-0 w-full bg-background"
+            >
+              {navLinks.map((link) => (
+                <MobileNavLink key={link.href} {...link} router={router} />
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
+      </header>
     </>
   );
 }

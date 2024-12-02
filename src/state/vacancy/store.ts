@@ -1,9 +1,9 @@
-import { VacancyResponse } from '@/api/services/vacancy/entity';
+import { VacancyEntity } from '@/api/services/vacancy/entity';
 import { create } from 'zustand';
 
 interface StoreState {
-  vacancies: VacancyResponse[];
-  setVacancies: (vacancies: VacancyResponse[]) => void;
+  vacancies: VacancyEntity[];
+  setVacancies: (vacancies: VacancyEntity[]) => void;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
 }
