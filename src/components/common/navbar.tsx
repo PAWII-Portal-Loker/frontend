@@ -19,7 +19,7 @@ import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
 
 const navLinks = [
-  { href: '/dashboard', label: 'Dashboard' },
+  { href: '/', label: 'Dashboard' },
   { href: '/vacancy', label: 'Vacancy' },
   { href: '/history', label: 'History' },
   { href: '/notification', label: 'Notification' },

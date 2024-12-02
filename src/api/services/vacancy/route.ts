@@ -1,61 +1,33 @@
 import API from '@/api';
-import { NextResponse } from 'next/server';
+import { VacancyEntity } from './entity';
+import { APIResponse, FetchCallback } from '@/common/types';
 
-const api = new API();
+export default class VacancyService {
+  private api: API = new API();
 
-export async function GET() {
-  try {
-    const response = await api.GET('/vacancies');
-
-    if (response.status) {
-      return NextResponse.json(response.data, { status: 200 });
+  async getAll(callback: FetchCallback<VacancyEntity[]>) {
+    const res: APIResponse<VacancyEntity[]> = await this.api.GET('v1/vacancy');
+    if (!res?.status) {
+      callback.onError(res.message);
     } else {
-      return NextResponse.json({ error: response.message }, { status: 500 });
+      callback.onSuccess(res.data);
     }
-  } catch (error) {
-    console.error('Error fetching vacancies:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch vacancies' },
-      { status: 500 },
-    );
+    if (callback.onFullfilled) {
+      callback.onFullfilled();
+    }
   }
-}
 
-export async function GET_DETAIL(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
-    const response = await api.GET(`/vacancies/${id}`);
-
-    if (response.status) {
-      return NextResponse.json(response.data, { status: 200 });
-    } else {
-      return NextResponse.json({ error: response.message }, { status: 500 });
-    }
-  } catch (error) {
-    console.error('Error fetching vacancy:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch vacancy' },
-      { status: 500 },
+  async getOne(id: string, callback: FetchCallback<VacancyEntity>) {
+    const res: APIResponse<VacancyEntity> = await this.api.GET(
+      `v1/vacancy/${id}`,
     );
-  }
-}
-
-export async function POST(request: Request) {
-  try {
-    const data = await request.json();
-    const response = await api.POST('/vacancies', data);
-
-    if (response.status) {
-      return NextResponse.json(response.data, { status: 201 });
+    if (!res?.status) {
+      callback.onError(res.message);
     } else {
-      return NextResponse.json({ error: response.message }, { status: 500 });
+      callback.onSuccess(res.data);
     }
-  } catch (error) {
-    console.error('Error creating vacancy:', error);
-    return NextResponse.json(
-      { error: 'Failed to create vacancy' },
-      { status: 500 },
-    );
+    if (callback.onFullfilled) {
+      callback.onFullfilled();
+    }
   }
 }

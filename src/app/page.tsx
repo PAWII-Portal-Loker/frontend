@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import { DeviceUUID } from 'device-uuid';
 import { useEffect } from 'react';
 import LoginDialog from '../components/common/loginDialog';
@@ -25,47 +24,23 @@ export default function Home() {
     generateUuid();
   }, [setUuid]);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#f2f2f2] to-[#e8e8e8] dark:from-black dark:to-[#1a1a1a]">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-slate-100 dark:bg-slate-900">
       <LoginDialog />
       <RegisterDialog />
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <p className="text-5xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-6xl">
-          Temukan Pekerjaan Impianmu
-        </p>
-        <p className="text-lg text-center text-gray-700 dark:text-gray-400">
-          Jelajahi ribuan lowongan pekerjaan dan temukan karir yang tepat
-          untukmu.
+        <h1 className="text-5xl font-bold tracking-tight text-center text-blue-500 sm:text-6xl">
+          Find Your Dream Job
+        </h1>
+        <p className="text-lg text-center text-gray-600">
+          Explore thousands of job vacancies and find the right career for you.
         </p>
         <div className="flex flex-col gap-4 sm:flex-row sm:gap-8">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded">
-            Cari Lowongan
+            Find Jobs
           </button>
-          <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded">
-            Upload CV
+          <button className="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-3 px-6 rounded">
+            Upload Resume
           </button>
-        </div>
-        <div className="flex gap-6">
-          <Image
-            className="dark:invert"
-            src="/company-logo1.png" // Ganti dengan logo perusahaan 1
-            alt="Company 1 Logo"
-            width={100}
-            height={50}
-          />
-          <Image
-            className="dark:invert"
-            src="/company-logo2.png" // Ganti dengan logo perusahaan 2
-            alt="Company 2 Logo"
-            width={100}
-            height={50}
-          />
-          <Image
-            className="dark:invert"
-            src="/company-logo3.png" // Ganti dengan logo perusahaan 3
-            alt="Company 3 Logo"
-            width={100}
-            height={50}
-          />
         </div>
       </div>
     </main>

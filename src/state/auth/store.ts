@@ -9,31 +9,22 @@ interface AuthState {
   user: UserEntity | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  waNumber: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
 }
 
 interface AuthActions {
   setUser: (user: UserEntity) => void;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   setIsLoading: (isLoading: boolean) => void;
-  setEmail: (email: string) => void;
-  setWaNumber: (waNumber: string) => void;
-  setPassword: (password: string) => void;
-  setConfirmPassword: (confirmPassword: string) => void;
 
-  login: (
+  signIn: (
     email: string,
     password: string,
     router: { push: (path: string) => void },
   ) => void;
-  register: (
+  signUp: (
     email: string,
     waNumber: string,
     password: string,
-    confirmPassword: string,
     router: { push: (path: string) => void },
   ) => void;
   checkLogin: () => void;
@@ -46,20 +37,12 @@ const useStore = create<StoreState>((set) => ({
   user: null,
   isAuthenticated: false,
   isLoading: false,
-  email: '',
-  waNumber: '',
-  password: '',
-  confirmPassword: '',
 
   setUser: (user) => set({ user }),
   setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
   setIsLoading: (isLoading) => set({ isLoading }),
-  setWaNumber: (waNumber) => set({ waNumber }),
-  setEmail: (email) => set({ email }),
-  setPassword: (password) => set({ password }),
-  setConfirmPassword: (confirmPassword) => set({ confirmPassword }),
 
-  login: async (email, password, router) => {
+  signIn: async (email, password, router) => {
     set({ isLoading: true });
 
     authService.signIn(
@@ -88,18 +71,8 @@ const useStore = create<StoreState>((set) => ({
     );
   },
 
-  register: async (email, waNumber, password, confirmPassword, router) => {
+  signUp: async (email, waNumber, password, router) => {
     set({ isLoading: true });
-
-    if (password !== confirmPassword) {
-      toaster.create({
-        title: 'Registration failed',
-        description: 'Password mismatch',
-        duration: 3000,
-      });
-      set({ isLoading: false });
-      return;
-    }
 
     authService.signUp(
       { email, password, waNumber },
@@ -107,6 +80,7 @@ const useStore = create<StoreState>((set) => ({
         onSuccess: () => {
           toaster.create({
             title: 'Registration successful',
+            type: 'success',
             duration: 3000,
           });
           router.push('/auth/login');
@@ -115,6 +89,7 @@ const useStore = create<StoreState>((set) => ({
           toaster.create({
             title: 'Registration failed',
             description: message || 'Failed to register',
+            type: 'error',
             duration: 3000,
           });
         },
