@@ -5,6 +5,15 @@ import { APIResponse, FetchCallback } from '@/common/types';
 export default class VacancyService {
   private api: API = new API();
 
+  async getDummy(callback: FetchCallback<VacancyEntity[]>) {
+    const response = await fetch('/dummy.json');
+    const data = await response.json();
+    callback.onSuccess(data.vacancy);
+    if (callback.onFullfilled) {
+      callback.onFullfilled();
+    }
+  }
+
   async getAll(callback: FetchCallback<VacancyEntity[]>) {
     const res: APIResponse<VacancyEntity[]> = await this.api.GET('v1/vacancy');
     if (!res?.status) {

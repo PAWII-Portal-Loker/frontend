@@ -27,11 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-background text-gray-900`}>
+      <body className={`${inter.className} bg-gray-100 text-gray-900`}>
         <Provider>
           <Navbar />
           <Toaster />
-          {children}
+          <section className="container mx-auto p-4 mt-16">{children}</section>
           <Footer />
         </Provider>
       </body>

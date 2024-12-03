@@ -16,7 +16,7 @@ import { AvatarGroup } from '../ui/avatar';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconButton } from '@chakra-ui/react';
 import clsx from 'clsx';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { href: '/', label: 'Dashboard' },
@@ -28,33 +28,27 @@ const navLinks = [
 type NavLinkProps = {
   href: string;
   label: string;
-  router: ReturnType<typeof useRouter>;
 };
 
-const NavLink = ({ href, label, router }: NavLinkProps) => (
-  <button
-    onClick={() => router.push(href)}
-    className={clsx(
-      'px-3 py-2 rounded-md',
-      usePathname() === href
-        ? 'bg-gray-200 text-blue-500 font-semibold'
-        : 'text-gray-600 hover:text-blue-500 hover:bg-gray-100 transition-all duration-200',
-    )}
-    disabled={usePathname() === href}
-  >
-    {label}
-  </button>
+const NavLink = ({ href, label }: NavLinkProps) => (
+  <Link href={href}>
+    <button
+      className={clsx(
+        'px-3 py-2 rounded-md',
+        usePathname() === href
+          ? 'bg-gray-200 text-blue-500 font-semibold'
+          : 'text-gray-600 hover:text-blue-500 hover:bg-gray-100 transition-all duration-200',
+      )}
+      disabled={usePathname() === href}
+    >
+      {label}
+    </button>
+  </Link>
 );
 
-const MobileNavLink = ({ href, label, router }: NavLinkProps) => (
-  <motion.li
-    initial={{ opacity: 0, y: -20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -20 }}
-    transition={{ duration: 0.2 }}
-  >
+const MobileNavLink = ({ href, label }: NavLinkProps) => (
+  <Link href={href}>
     <button
-      onClick={() => router.push(href)}
       className={clsx(
         'w-full px-3 py-2 rounded-md',
         usePathname() === href
@@ -65,11 +59,10 @@ const MobileNavLink = ({ href, label, router }: NavLinkProps) => (
     >
       {label}
     </button>
-  </motion.li>
+  </Link>
 );
 
 export default function Navbar() {
-  const router = useRouter();
   const { isAuthenticated, signOut } = useStore();
   const { isNavigationOpen, setIsNavigationOpen, setIsLoginDialogOpen } =
     useMainStore();
@@ -109,7 +102,7 @@ export default function Navbar() {
             <ul className="hidden md:flex gap-5">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <NavLink {...link} router={router} />
+                  <NavLink {...link} />
                 </li>
               ))}
             </ul>
@@ -121,9 +114,9 @@ export default function Navbar() {
                   </button>
                 </MenuTrigger>
                 <MenuContent>
-                  <MenuItemCommand onClick={() => router.push('/profile')}>
-                    Edit Profile
-                  </MenuItemCommand>
+                  <Link href="/profile">
+                    <MenuItemCommand>Edit Profile</MenuItemCommand>
+                  </Link>
                   <MenuItemCommand onClick={handleLogout}>
                     Sign Out
                   </MenuItemCommand>
@@ -151,7 +144,7 @@ export default function Navbar() {
               className="md:hidden px-4 py-4 absolute top-16 left-0 w-full bg-background"
             >
               {navLinks.map((link) => (
-                <MobileNavLink key={link.href} {...link} router={router} />
+                <MobileNavLink key={link.href} {...link} />
               ))}
             </motion.ul>
           )}
