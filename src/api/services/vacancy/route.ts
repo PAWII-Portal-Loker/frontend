@@ -14,6 +14,20 @@ export default class VacancyService {
     }
   }
 
+  async getOneDummy(id: string, callback: FetchCallback<VacancyEntity>) {
+    const response = await fetch('/dummy.json');
+    const data = await response.json();
+    const vacancy = data.vacancy.find((v: VacancyEntity) => v.id === id);
+    if (vacancy) {
+      callback.onSuccess(vacancy);
+    } else {
+      callback.onError('Vacancy not found');
+    }
+    if (callback.onFullfilled) {
+      callback.onFullfilled();
+    }
+  }
+
   async getAll(callback: FetchCallback<VacancyEntity[]>) {
     const res: APIResponse<VacancyEntity[]> = await this.api.GET('v1/vacancy');
     if (!res?.status) {
