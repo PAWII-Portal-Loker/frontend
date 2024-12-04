@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import useStore from '@/state/vacancy/store';
-import VacancyCard from './VacancyCard';
-import { Skeleton } from '@/components/ui/skeleton';
+import { useEffect } from "react";
+import useStore from "@/state/vacancy/store";
+import VacancyCard from "./VacancyCard";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function VacancyPage() {
   const { vacancies, isLoading, fetchVacancies } = useStore();

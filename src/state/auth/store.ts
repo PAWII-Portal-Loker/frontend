@@ -1,7 +1,7 @@
-import { UserEntity } from '@/api/services/auth/entity';
-import AuthService from '@/api/services/auth/route';
-import { toaster } from '@/components/ui/toaster';
-import { create } from 'zustand';
+import { UserEntity } from "@/api/services/auth/entity";
+import AuthService from "@/api/services/auth/service";
+import { toaster } from "@/components/ui/toaster";
+import { create } from "zustand";
 
 const authService = new AuthService();
 
@@ -50,17 +50,17 @@ const useStore = create<StoreState>((set) => ({
       {
         onSuccess: () => {
           toaster.create({
-            title: 'Login successful',
-            type: 'success',
+            title: "Login successful",
+            type: "success",
             duration: 3000,
           });
-          router.push('/');
+          router.push("/");
         },
         onError: (message: string) => {
           toaster.create({
-            title: 'Login failed',
-            description: message || 'Failed to login',
-            type: 'error',
+            title: "Login failed",
+            description: message || "Failed to login",
+            type: "error",
             duration: 3000,
           });
         },
@@ -79,17 +79,17 @@ const useStore = create<StoreState>((set) => ({
       {
         onSuccess: () => {
           toaster.create({
-            title: 'Registration successful',
-            type: 'success',
+            title: "Registration successful",
+            type: "success",
             duration: 3000,
           });
-          router.push('/auth/login');
+          router.push("/auth/login");
         },
         onError: (message: string) => {
           toaster.create({
-            title: 'Registration failed',
-            description: message || 'Failed to register',
-            type: 'error',
+            title: "Registration failed",
+            description: message || "Failed to register",
+            type: "error",
             duration: 3000,
           });
         },
@@ -115,8 +115,8 @@ const useStore = create<StoreState>((set) => ({
     authService.signOut({
       onSuccess: () => {
         toaster.create({
-          title: 'Logout successful',
-          type: 'success',
+          title: "Logout successful",
+          type: "success",
           duration: 3000,
         });
         set({ user: null });
@@ -124,8 +124,8 @@ const useStore = create<StoreState>((set) => ({
       },
       onError: () => {
         toaster.create({
-          title: 'Logout failed',
-          type: 'error',
+          title: "Logout failed",
+          type: "error",
           duration: 3000,
         });
       },

@@ -1,15 +1,15 @@
-import { APIResponse, FilterParams } from '@/common/types';
-import axios, { AxiosInstance, AxiosRequestConfig, isAxiosError } from 'axios';
+import { APIResponse, FilterParams } from "@/common/types";
+import axios, { AxiosInstance, AxiosRequestConfig, isAxiosError } from "axios";
 
 type Headers = {
   Accept: string;
-  'Content-type': string;
+  "Content-type": string;
 };
 
 export default class API {
   headers: Headers = {
-    Accept: 'application/json',
-    'Content-type': 'application/json',
+    Accept: "application/json",
+    "Content-type": "application/json",
   };
   api: AxiosInstance;
 
@@ -21,18 +21,18 @@ export default class API {
 
     this.api.interceptors.request.use(
       (config) => {
-        const accessToken = localStorage.getItem('access_token');
-        const refreshToken = localStorage.getItem('refresh_token');
-        const userId = localStorage.getItem('user_id');
+        const accessToken = localStorage.getItem("access_token");
+        const refreshToken = localStorage.getItem("refresh_token");
+        const userId = localStorage.getItem("user_id");
 
         if (accessToken) {
-          config.headers['access_token'] = accessToken;
+          config.headers["access_token"] = accessToken;
         }
         if (refreshToken) {
-          config.headers['refresh_token'] = refreshToken;
+          config.headers["refresh_token"] = refreshToken;
         }
         if (userId) {
-          config.headers['user_id'] = userId;
+          config.headers["user_id"] = userId;
         }
 
         return config;
@@ -43,18 +43,18 @@ export default class API {
     );
 
     this.api.interceptors.response.use((response) => {
-      const accessToken = response.headers['X-Access-Token'];
-      const refreshToken = response.headers['X-Refresh-Token'];
-      const user_id = response.headers['X-User-Id'];
+      const accessToken = response.headers["X-Access-Token"];
+      const refreshToken = response.headers["X-Refresh-Token"];
+      const user_id = response.headers["X-User-Id"];
 
       if (accessToken) {
-        localStorage.setItem('access_token', accessToken);
+        localStorage.setItem("access_token", accessToken);
       }
       if (refreshToken) {
-        localStorage.setItem('refresh_token', refreshToken);
+        localStorage.setItem("refresh_token", refreshToken);
       }
       if (user_id) {
-        localStorage.setItem('user_id', user_id);
+        localStorage.setItem("user_id", user_id);
       }
 
       return response;
@@ -79,7 +79,7 @@ export default class API {
       } else {
         return {
           status: false,
-          message: 'Internal Server Error',
+          message: "Internal Server Error",
         } as APIResponse<T>;
       }
     }
@@ -99,7 +99,7 @@ export default class API {
       } else {
         return {
           status: false,
-          message: 'Internal Server Error',
+          message: "Internal Server Error",
         } as APIResponse<T>;
       }
     }
@@ -119,7 +119,7 @@ export default class API {
       } else {
         return {
           status: false,
-          message: 'Internal Server Error',
+          message: "Internal Server Error",
         } as APIResponse<T>;
       }
     }
@@ -139,7 +139,7 @@ export default class API {
       } else {
         return {
           status: false,
-          message: 'Internal Server Error',
+          message: "Internal Server Error",
         } as APIResponse<T>;
       }
     }
@@ -148,10 +148,10 @@ export default class API {
   async DELETE<T>(path: string): Promise<APIResponse<T>> {
     try {
       const res = await this.api.delete(path);
-      if (res.data === '') {
+      if (res.data === "") {
         return {
           status: true,
-          message: 'Success',
+          message: "Success",
           data: null,
         } as unknown as APIResponse<T>;
       }
@@ -166,7 +166,7 @@ export default class API {
       } else {
         return {
           status: false,
-          message: 'Internal Server Error',
+          message: "Internal Server Error",
         } as APIResponse<T>;
       }
     }

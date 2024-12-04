@@ -1,12 +1,12 @@
-import API from '@/api';
-import { VacancyEntity } from './entity';
-import { APIResponse, FetchCallback } from '@/common/types';
+import API from "@/api";
+import { VacancyEntity } from "./entity";
+import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class VacancyService {
   private api: API = new API();
 
   async getDummy(callback: FetchCallback<VacancyEntity[]>) {
-    const response = await fetch('/dummy.json');
+    const response = await fetch("/dummy.json");
     const data = await response.json();
     callback.onSuccess(data.vacancy);
     if (callback.onFullfilled) {
@@ -15,13 +15,13 @@ export default class VacancyService {
   }
 
   async getOneDummy(id: string, callback: FetchCallback<VacancyEntity>) {
-    const response = await fetch('/dummy.json');
+    const response = await fetch("/dummy.json");
     const data = await response.json();
     const vacancy = data.vacancy.find((v: VacancyEntity) => v.id === id);
     if (vacancy) {
       callback.onSuccess(vacancy);
     } else {
-      callback.onError('Vacancy not found');
+      callback.onError("Vacancy not found");
     }
     if (callback.onFullfilled) {
       callback.onFullfilled();
@@ -29,7 +29,7 @@ export default class VacancyService {
   }
 
   async getAll(callback: FetchCallback<VacancyEntity[]>) {
-    const res: APIResponse<VacancyEntity[]> = await this.api.GET('v1/vacancy');
+    const res: APIResponse<VacancyEntity[]> = await this.api.GET("v1/vacancy");
     if (!res?.status) {
       callback.onError(res.message);
     } else {

@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
-import Image from 'next/image';
-import useStore from '@/state/vacancy/store';
-import clsx from 'clsx';
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
+import Image from "next/image";
+import useStore from "@/state/vacancy/store";
+import clsx from "clsx";
 
 export default function VacancyDetailPage() {
   const { id } = useParams();
   const { vacancy, isLoading, fetchVacancy } = useStore();
 
   useEffect(() => {
-    if (typeof id === 'string') {
+    if (typeof id === "string") {
       fetchVacancy(id);
     }
   }, [fetchVacancy, id]);
@@ -35,7 +35,7 @@ export default function VacancyDetailPage() {
             height={400}
             className="w-full rounded-lg shadow-md"
             onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = '/no-image.jpg';
+              (e.currentTarget as HTMLImageElement).src = "/no-image.jpg";
             }}
           />
         </div>
@@ -46,13 +46,13 @@ export default function VacancyDetailPage() {
             </h1>
             <span
               className={clsx(
-                'px-2 py-1 rounded-md text-xs font-bold',
+                "px-2 py-1 rounded-md text-xs font-bold",
                 vacancy.is_closed
-                  ? 'bg-red-500 text-white'
-                  : 'bg-green-500 text-white',
+                  ? "bg-red-500 text-white"
+                  : "bg-green-500 text-white",
               )}
             >
-              {vacancy.is_closed ? 'Closed' : 'Open'}
+              {vacancy.is_closed ? "Closed" : "Open"}
             </span>
           </div>
           <h2 className="text-lg font-medium text-gray-800 mb-2">

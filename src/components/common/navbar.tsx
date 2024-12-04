@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { IoIosClose } from 'react-icons/io';
-import Image from 'next/image';
-import useStore from '@/state/auth/store';
-import useMainStore from '@/state/mainStore';
+import Link from "next/link";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoIosClose } from "react-icons/io";
+import Image from "next/image";
+import useStore from "@/state/auth/store";
+import useMainStore from "@/state/mainStore";
 import {
   MenuContent,
   MenuItemCommand,
   MenuRoot,
   MenuTrigger,
-} from '../ui/menu';
-import { AvatarGroup } from '../ui/avatar';
-import { motion, AnimatePresence } from 'framer-motion';
-import { IconButton } from '@chakra-ui/react';
-import clsx from 'clsx';
-import { usePathname } from 'next/navigation';
+} from "../ui/menu";
+import { AvatarGroup } from "../ui/avatar";
+import { motion, AnimatePresence } from "framer-motion";
+import { IconButton } from "@chakra-ui/react";
+import clsx from "clsx";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
-  { href: '/', label: 'Dashboard' },
-  { href: '/vacancy', label: 'Vacancy' },
-  { href: '/history', label: 'History' },
-  { href: '/notification', label: 'Notification' },
+  { href: "/", label: "Dashboard" },
+  { href: "/vacancy", label: "Vacancy" },
+  { href: "/history", label: "History" },
+  { href: "/notification", label: "Notification" },
 ];
 
 type NavLinkProps = {
@@ -34,10 +34,10 @@ const NavLink = ({ href, label }: NavLinkProps) => (
   <Link href={href}>
     <button
       className={clsx(
-        'px-3 py-2 rounded-md',
+        "px-3 py-2 rounded-md",
         usePathname() === href
-          ? 'bg-gray-200 text-blue-500 font-semibold'
-          : 'text-gray-600 hover:text-blue-500 hover:bg-gray-100 transition-all duration-200',
+          ? "bg-gray-200 text-blue-500 font-semibold"
+          : "text-gray-600 hover:text-blue-500 hover:bg-gray-100 transition-all duration-200",
       )}
       disabled={usePathname() === href}
     >
@@ -50,10 +50,10 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
   <Link href={href}>
     <button
       className={clsx(
-        'w-full px-3 py-2 rounded-md',
+        "w-full px-3 py-2 rounded-md",
         usePathname() === href
-          ? 'bg-gray-200 text-blue-500 font-semibold'
-          : 'text-gray-600 hover:text-blue-500 hover:bg-gray-100 transition-all duration-200',
+          ? "bg-gray-200 text-blue-500 font-semibold"
+          : "text-gray-600 hover:text-blue-500 hover:bg-gray-100 transition-all duration-200",
       )}
       disabled={usePathname() === href}
     >
@@ -80,9 +80,9 @@ export default function Navbar() {
       <header className="bg-background px-4 py-3 fixed top-0 left-0 w-full z-10">
         <nav className="flex items-center justify-between">
           <IconButton
-            size={'md'}
-            aria-label={'Open Menu'}
-            display={{ md: 'none' }}
+            size={"md"}
+            aria-label={"Open Menu"}
+            display={{ md: "none" }}
             onClick={toggleMenu}
           >
             {isNavigationOpen ? <IoIosClose /> : <RxHamburgerMenu />}
@@ -110,7 +110,7 @@ export default function Navbar() {
               <MenuRoot>
                 <MenuTrigger asChild>
                   <button className="rounded-full cursor-pointer">
-                    <AvatarGroup size={'sm'} />
+                    <AvatarGroup size={"sm"} />
                   </button>
                 </MenuTrigger>
                 <MenuContent>

@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import Link from "next/link";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const socialLinks = [
-  { href: '#', icon: <FaFacebook size={40} color="#3b5998" /> },
-  { href: '#', icon: <FaTwitter size={40} color="#00acee" /> },
-  { href: '#', icon: <FaInstagram size={40} color="#c13584" /> },
+  { href: "#", icon: <FaFacebook size={40} color="#3b5998" /> },
+  { href: "#", icon: <FaTwitter size={40} color="#00acee" /> },
+  { href: "#", icon: <FaInstagram size={40} color="#c13584" /> },
 ];
 
 type SocialLinkProps = {

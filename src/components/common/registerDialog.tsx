@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Field } from '@/components/ui/field';
+import { Field } from "@/components/ui/field";
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -8,16 +8,16 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-} from '@/components/ui/dialog';
-import useStore from '@/state/auth/store';
-import { Stack, Input, Text } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import useMainStore from '@/state/mainStore';
-import { LuUserPlus } from 'react-icons/lu';
-import { useForm } from 'react-hook-form';
-import RegisterFormValues from '@/common/types/registerForm';
-import rules from '@/common/formRules/register';
+} from "@/components/ui/dialog";
+import useStore from "@/state/auth/store";
+import { Stack, Input, Text } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import useMainStore from "@/state/mainStore";
+import { LuUserPlus } from "react-icons/lu";
+import { useForm } from "react-hook-form";
+import RegisterFormValues from "@/common/types/registerForm";
+import rules from "@/common/formRules/register";
 
 export default function RegisterDialog() {
   const router = useRouter();
@@ -34,10 +34,10 @@ export default function RegisterDialog() {
     formState: { errors },
   } = useForm<RegisterFormValues>({
     defaultValues: {
-      email: '',
-      waNumber: '',
-      password: '',
-      confirmPassword: '',
+      email: "",
+      waNumber: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
@@ -70,7 +70,7 @@ export default function RegisterDialog() {
               errorText={errors.email?.message}
             >
               <Input
-                {...register('email', rules.email)}
+                {...register("email", rules.email)}
                 placeholder="Enter your email"
                 padding={4}
                 border="1px solid #e2e8f0"
@@ -82,7 +82,7 @@ export default function RegisterDialog() {
               errorText={errors.waNumber?.message}
             >
               <Input
-                {...register('waNumber', rules.waNumber)}
+                {...register("waNumber", rules.waNumber)}
                 type="number"
                 placeholder="Enter your WA Number"
                 padding={4}
@@ -95,7 +95,7 @@ export default function RegisterDialog() {
               errorText={errors.password?.message}
             >
               <Input
-                {...register('password', rules.password)}
+                {...register("password", rules.password)}
                 type="password"
                 placeholder="Enter your password"
                 padding={4}
@@ -108,7 +108,7 @@ export default function RegisterDialog() {
               errorText={errors.confirmPassword?.message}
             >
               <Input
-                {...register('confirmPassword', rules.confirmPassword)}
+                {...register("confirmPassword", rules.confirmPassword)}
                 type="password"
                 placeholder="Confirm your password"
                 padding={4}
@@ -127,7 +127,7 @@ export default function RegisterDialog() {
             </Button>
           </Stack>
           <Text mt={2} textAlign="center">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Text
               as="span"
               color="blue.500"
@@ -136,7 +136,7 @@ export default function RegisterDialog() {
                 setIsRegisterDialogOpen(false);
                 setIsLoginDialogOpen(true);
               }}
-              _hover={{ textDecoration: 'underline' }}
+              _hover={{ textDecoration: "underline" }}
             >
               Login
             </Text>

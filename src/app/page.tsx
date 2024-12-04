@@ -1,15 +1,14 @@
-'use client';
-import { DeviceUUID } from 'device-uuid';
-import { useEffect } from 'react';
-import LoginDialog from '../components/common/loginDialog';
-import useMainStore from '@/state/mainStore';
-import RegisterDialog from '../components/common/registerDialog';
-import useStore from '@/state/auth/store';
+"use client";
+import { DeviceUUID } from "device-uuid";
+import { useEffect } from "react";
+import LoginDialog from "../components/common/loginDialog";
+import useMainStore from "@/state/mainStore";
+import RegisterDialog from "../components/common/registerDialog";
+import useStore from "@/state/auth/store";
 
 export default function Home() {
-  const { uuid, setUuid } = useMainStore();
+  const { setUuid } = useMainStore();
   const { checkLogin } = useStore();
-  console.log('Generated UUID:', uuid);
 
   useEffect(() => {
     checkLogin();

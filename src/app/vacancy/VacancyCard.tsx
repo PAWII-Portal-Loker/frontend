@@ -1,7 +1,7 @@
-import { VacancyEntity } from '@/api/services/vacancy/entity';
-import clsx from 'clsx';
-import Image from 'next/image';
-import Link from 'next/link';
+import { VacancyEntity } from "@/api/services/vacancy/entity";
+import clsx from "clsx";
+import Image from "next/image";
+import Link from "next/link";
 
 interface VacancyCardProps {
   vacancy: VacancyEntity;
@@ -18,18 +18,18 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
           height={200}
           className="w-full transition-transform duration-200 transform hover:scale-105"
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = '/no-image.jpg';
+            (e.currentTarget as HTMLImageElement).src = "/no-image.jpg";
           }}
         />
         <span
           className={clsx(
-            'absolute top-2 right-2 px-2 py-1 rounded-md text-xs font-bold',
+            "absolute top-2 right-2 px-2 py-1 rounded-md text-xs font-bold",
             vacancy.is_closed
-              ? 'bg-red-500 text-white'
-              : 'bg-green-500 text-white',
+              ? "bg-red-500 text-white"
+              : "bg-green-500 text-white",
           )}
         >
-          {vacancy.is_closed ? 'Closed' : 'Open'}
+          {vacancy.is_closed ? "Closed" : "Open"}
         </span>
         <div className="p-4">
           <p className="text-lg font-bold text-gray-800 hover:text-primary transition-colors duration-200">

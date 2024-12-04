@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Field } from '@/components/ui/field';
+import { Field } from "@/components/ui/field";
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -8,16 +8,16 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-} from '@/components/ui/dialog';
-import useStore from '@/state/auth/store';
-import { Stack, Input, Text } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
-import { LuLogIn } from 'react-icons/lu';
-import { Button } from '@/components/ui/button';
-import useMainStore from '@/state/mainStore';
-import { useForm } from 'react-hook-form';
-import LoginFormValues from '@/common/types/loginForm';
-import rules from '@/common/formRules/login';
+} from "@/components/ui/dialog";
+import useStore from "@/state/auth/store";
+import { Stack, Input, Text } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { LuLogIn } from "react-icons/lu";
+import { Button } from "@/components/ui/button";
+import useMainStore from "@/state/mainStore";
+import { useForm } from "react-hook-form";
+import LoginFormValues from "@/common/types/loginForm";
+import rules from "@/common/formRules/login";
 
 export default function LoginDialog() {
   const router = useRouter();
@@ -31,8 +31,8 @@ export default function LoginDialog() {
     formState: { errors },
   } = useForm<LoginFormValues>({
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
@@ -65,7 +65,7 @@ export default function LoginDialog() {
               errorText={errors.email?.message}
             >
               <Input
-                {...register('email', rules.email)}
+                {...register("email", rules.email)}
                 placeholder="Enter your email"
                 padding={4}
                 border="1px solid #e2e8f0"
@@ -77,7 +77,7 @@ export default function LoginDialog() {
               errorText={errors.password?.message}
             >
               <Input
-                {...register('password', rules.password)}
+                {...register("password", rules.password)}
                 type="password"
                 placeholder="Enter your password"
                 padding={4}
@@ -97,7 +97,7 @@ export default function LoginDialog() {
             </Button>
           </Stack>
           <Text mt={4} textAlign="center">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have an account?{" "}
             <Text
               as="span"
               color="blue.500"
@@ -106,7 +106,7 @@ export default function LoginDialog() {
                 setIsLoginDialogOpen(false);
                 setIsRegisterDialogOpen(true);
               }}
-              _hover={{ textDecoration: 'underline' }}
+              _hover={{ textDecoration: "underline" }}
             >
               Register
             </Text>

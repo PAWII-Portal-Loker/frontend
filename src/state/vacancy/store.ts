@@ -1,7 +1,7 @@
-import { VacancyEntity } from '@/api/services/vacancy/entity';
-import VacancyService from '@/api/services/vacancy/route';
-import { toaster } from '@/components/ui/toaster';
-import { create } from 'zustand';
+import { VacancyEntity } from "@/api/services/vacancy/entity";
+import VacancyService from "@/api/services/vacancy/service";
+import { toaster } from "@/components/ui/toaster";
+import { create } from "zustand";
 
 const vacancyService = new VacancyService();
 interface VacancyState {
@@ -37,9 +37,9 @@ const useStore = create<StoreState>((set) => ({
       },
       onError: (message: string) => {
         toaster.create({
-          title: 'Failed to fetch vacancies',
+          title: "Failed to fetch vacancies",
           description: message,
-          type: 'error',
+          type: "error",
           duration: 3000,
         });
       },
@@ -58,9 +58,9 @@ const useStore = create<StoreState>((set) => ({
       },
       onError: (message: string) => {
         toaster.create({
-          title: 'Failed to fetch vacancy',
+          title: "Failed to fetch vacancy",
           description: message,
-          type: 'error',
+          type: "error",
           duration: 3000,
         });
       },

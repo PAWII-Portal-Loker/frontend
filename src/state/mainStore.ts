@@ -1,17 +1,22 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-interface MainStoreState {
+interface MainState {
   uuid: string | null;
-  setUuid: (uuid: string) => void;
   isNavigationOpen: boolean;
-  setIsNavigationOpen: (isOpen: boolean) => void;
   isLoginDialogOpen: boolean;
-  setIsLoginDialogOpen: (isOpen: boolean) => void;
   isRegisterDialogOpen: boolean;
+}
+
+interface MainActions {
+  setUuid: (uuid: string) => void;
+  setIsNavigationOpen: (isOpen: boolean) => void;
+  setIsLoginDialogOpen: (isOpen: boolean) => void;
   setIsRegisterDialogOpen: (isOpen: boolean) => void;
 }
 
-const useMainStore = create<MainStoreState>((set) => ({
+interface StoreState extends MainState, MainActions {}
+
+const useMainStore = create<StoreState>((set) => ({
   uuid: null,
   setUuid: (uuid) => set({ uuid }),
   isNavigationOpen: false,
