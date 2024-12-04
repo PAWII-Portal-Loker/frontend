@@ -1,9 +1,7 @@
 "use client";
 import { DeviceUUID } from "device-uuid";
 import { useEffect } from "react";
-import LoginDialog from "../components/common/loginDialog";
 import useMainStore from "@/state/mainStore";
-import RegisterDialog from "../components/common/registerDialog";
 import useStore from "@/state/auth/store";
 
 export default function Home() {
@@ -24,8 +22,6 @@ export default function Home() {
   }, [setUuid]);
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-slate-100 dark:bg-slate-900">
-      <LoginDialog />
-      <RegisterDialog />
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <h1 className="text-5xl font-bold tracking-tight text-center text-blue-500 sm:text-6xl">
           Find Your Dream Job

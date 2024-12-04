@@ -5,6 +5,8 @@ import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/common/navbar";
 import Footer from "@/components/common/footer";
+import LoginDialog from "@/components/common/loginDialog";
+import RegisterDialog from "@/components/common/registerDialog";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +33,11 @@ export default function RootLayout({
         <Provider>
           <Navbar />
           <Toaster />
-          <section className="container mx-auto p-4 mt-16">{children}</section>
+          <section className="container mx-auto p-4 mt-16">
+            <LoginDialog />
+            <RegisterDialog />
+            {children}
+          </section>
           <Footer />
         </Provider>
       </body>

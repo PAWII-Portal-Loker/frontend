@@ -16,6 +16,7 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
           alt={vacancy.position}
           width={500}
           height={200}
+          priority
           className="w-full transition-transform duration-200 transform hover:scale-105"
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).src = "/no-image.jpg";

@@ -33,6 +33,7 @@ export default function VacancyDetailPage() {
             alt={vacancy.position}
             width={800}
             height={400}
+            priority
             className="w-full rounded-lg shadow-md"
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).src = "/no-image.jpg";

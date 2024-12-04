@@ -93,6 +93,7 @@ export default function Navbar() {
               alt="PortalLoker Logo"
               width={30}
               height={30}
+              priority
             />
             <Link href="/" className="text-blue-500 font-bold text-lg">
               PortalLoker
