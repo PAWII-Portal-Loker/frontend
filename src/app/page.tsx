@@ -1,25 +1,14 @@
 "use client";
-import { DeviceUUID } from "device-uuid";
 import { useEffect } from "react";
-import useMainStore from "@/state/mainStore";
 import useStore from "@/state/auth/store";
 
 export default function Home() {
-  const { setUuid } = useMainStore();
   const { checkLogin } = useStore();
 
   useEffect(() => {
     checkLogin();
   }, [checkLogin]);
 
-  useEffect(() => {
-    const generateUuid = async () => {
-      const uuid = new DeviceUUID().get();
-      setUuid(uuid);
-    };
-
-    generateUuid();
-  }, [setUuid]);
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-slate-100 dark:bg-slate-900">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">

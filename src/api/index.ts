@@ -1,5 +1,6 @@
 import { APIResponse, FilterParams } from "@/common/types";
 import axios, { AxiosInstance, AxiosRequestConfig, isAxiosError } from "axios";
+import { DeviceUUID } from "device-uuid";
 
 type Headers = {
   Accept: string;
@@ -15,7 +16,7 @@ export default class API {
 
   constructor() {
     this.api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+      baseURL: "/api",
       headers: this.headers,
     } as AxiosRequestConfig);
 
@@ -24,15 +25,19 @@ export default class API {
         const accessToken = localStorage.getItem("access_token");
         const refreshToken = localStorage.getItem("refresh_token");
         const userId = localStorage.getItem("user_id");
+        const deviceId = new DeviceUUID().get();
 
         if (accessToken) {
-          config.headers["access_token"] = accessToken;
+          config.headers["X-Access-Token"] = accessToken;
         }
         if (refreshToken) {
-          config.headers["refresh_token"] = refreshToken;
+          config.headers["X-Refresh-Token"] = refreshToken;
         }
         if (userId) {
-          config.headers["user_id"] = userId;
+          config.headers["X-User-Id"] = userId;
+        }
+        if (deviceId) {
+          config.headers["X-Device-Id"] = deviceId;
         }
 
         return config;
@@ -46,6 +51,7 @@ export default class API {
       const accessToken = response.headers["X-Access-Token"];
       const refreshToken = response.headers["X-Refresh-Token"];
       const user_id = response.headers["X-User-Id"];
+      const device_id = response.headers["X-Device-Id"];
 
       if (accessToken) {
         localStorage.setItem("access_token", accessToken);
@@ -55,6 +61,9 @@ export default class API {
       }
       if (user_id) {
         localStorage.setItem("user_id", user_id);
+      }
+      if (device_id) {
+        localStorage.setItem("device_id", device_id);
       }
 
       return response;
