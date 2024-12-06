@@ -1,4 +1,4 @@
-import { CompanyEntity } from "../auth/entity";
+import { CompanyEntity } from "../auth/type";
 
 export interface VacancyEntity {
   id: string;

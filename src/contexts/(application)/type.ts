@@ -1,5 +1,5 @@
-import { JobSeekerEntity } from "../auth/entity";
-import { VacancyEntity } from "../vacancy/entity";
+import { JobSeekerEntity } from "../auth/type";
+import { VacancyEntity } from "../(vacancy)/type";
 
 export interface ApplicationEntity {
   id: string;

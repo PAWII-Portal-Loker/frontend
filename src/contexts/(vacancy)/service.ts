@@ -1,5 +1,5 @@
-import API from "@/api";
-import { VacancyEntity } from "./entity";
+import API from "..";
+import { VacancyEntity } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class VacancyService {

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosClose } from "react-icons/io";
 import Image from "next/image";
-import useStore from "@/state/auth/store";
 import useMainStore from "@/state/mainStore";
 import {
   MenuContent,
@@ -17,6 +16,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IconButton } from "@chakra-ui/react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
+import useStore from "@/contexts/auth/reducer";
 
 const navLinks = [
   { href: "/", label: "Dashboard" },

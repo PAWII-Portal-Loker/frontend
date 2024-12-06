@@ -9,7 +9,6 @@ import {
   DialogRoot,
   DialogTitle,
 } from "@/components/ui/dialog";
-import useStore from "@/state/auth/store";
 import { Stack, Input, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,7 @@ import { LuUserPlus } from "react-icons/lu";
 import { useForm } from "react-hook-form";
 import RegisterFormValues from "@/common/types/registerForm";
 import rules from "@/common/formRules/register";
+import useStore from "@/contexts/auth/reducer";
 
 export default function RegisterDialog() {
   const router = useRouter();

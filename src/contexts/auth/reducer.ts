@@ -1,35 +1,9 @@
-import { UserEntity } from "@/api/services/auth/entity";
-import AuthService from "@/api/services/auth/service";
-import { toaster } from "@/components/ui/toaster";
+import AuthService from "./service";
+import { AuthActions, AuthState } from "./state";
 import { create } from "zustand";
+import { toaster } from "@/components/ui/toaster";
 
 const authService = new AuthService();
-
-interface AuthState {
-  user: UserEntity | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-}
-
-interface AuthActions {
-  setUser: (user: UserEntity) => void;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
-  setIsLoading: (isLoading: boolean) => void;
-
-  signIn: (
-    email: string,
-    password: string,
-    router: { push: (path: string) => void },
-  ) => void;
-  signUp: (
-    email: string,
-    waNumber: string,
-    password: string,
-    router: { push: (path: string) => void },
-  ) => void;
-  checkLogin: () => void;
-  signOut: () => void;
-}
 
 interface StoreState extends AuthState, AuthActions {}
 

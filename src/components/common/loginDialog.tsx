@@ -9,7 +9,6 @@ import {
   DialogRoot,
   DialogTitle,
 } from "@/components/ui/dialog";
-import useStore from "@/state/auth/store";
 import { Stack, Input, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuLogIn } from "react-icons/lu";
@@ -18,6 +17,7 @@ import useMainStore from "@/state/mainStore";
 import { useForm } from "react-hook-form";
 import LoginFormValues from "@/common/types/loginForm";
 import rules from "@/common/formRules/login";
+import useStore from "@/contexts/auth/reducer";
 
 export default function LoginDialog() {
   const router = useRouter();

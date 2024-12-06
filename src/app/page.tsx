@@ -1,6 +1,6 @@
 "use client";
+import useStore from "@/contexts/auth/reducer";
 import { useEffect } from "react";
-import useStore from "@/state/auth/store";
 
 export default function Home() {
   const { checkLogin } = useStore();

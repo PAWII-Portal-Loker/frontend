@@ -1,5 +1,5 @@
-import API from "@/api";
-import { ApplicationEntity } from "./entity";
+import API from "..";
+import { ApplicationEntity } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class ApplicationService {

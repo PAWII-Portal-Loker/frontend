@@ -1,7 +1,7 @@
 "use client";
 
+import useStore from "@/contexts/(vacancy)/reducer";
 import { useEffect } from "react";
-import useStore from "@/state/vacancy/store";
 import VacancyCard from "./VacancyCard";
 import { Skeleton } from "@/components/ui/skeleton";
 

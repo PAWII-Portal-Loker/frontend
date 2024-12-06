@@ -1,4 +1,4 @@
-import { VacancyEntity } from "@/api/services/vacancy/entity";
+import { VacancyEntity } from "@/contexts/(vacancy)/type";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";

@@ -1,5 +1,5 @@
-import API from "@/api";
-import { IsLoginRequest, SignInRequest, SignUpRequest } from "./entity";
+import API from "..";
+import { IsLoginRequest, SignInRequest, SignUpRequest } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class AuthService {

@@ -1,9 +1,9 @@
 "use client";
 
+import useStore from "@/contexts/(vacancy)/reducer";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
-import useStore from "@/state/vacancy/store";
 import clsx from "clsx";
 
 export default function VacancyDetailPage() {

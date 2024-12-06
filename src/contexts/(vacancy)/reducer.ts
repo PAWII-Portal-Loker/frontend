@@ -1,22 +1,9 @@
-import { VacancyEntity } from "@/api/services/vacancy/entity";
-import VacancyService from "@/api/services/vacancy/service";
-import { toaster } from "@/components/ui/toaster";
 import { create } from "zustand";
+import VacancyService from "./service";
+import { VacancyActions, VacancyState } from "./state";
+import { toaster } from "@/components/ui/toaster";
 
 const vacancyService = new VacancyService();
-interface VacancyState {
-  vacancies: VacancyEntity[];
-  vacancy: VacancyEntity | null;
-  isLoading: boolean;
-}
-
-interface VacancyActions {
-  setVacancies: (vacancies: VacancyEntity[]) => void;
-  setVacancy: (vacancy: VacancyEntity) => void;
-  setIsLoading: (loading: boolean) => void;
-  fetchVacancies: () => void;
-  fetchVacancy: (id: string) => void;
-}
 
 interface StoreState extends VacancyState, VacancyActions {}
 
