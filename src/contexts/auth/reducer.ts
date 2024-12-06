@@ -5,8 +5,7 @@ import { toaster } from "@/components/ui/toaster";
 
 const authService = new AuthService();
 
-interface StoreState extends AuthState, AuthActions {}
-
+type StoreState = AuthState & AuthActions;
 const useStore = create<StoreState>((set) => ({
   user: null,
   isAuthenticated: false,

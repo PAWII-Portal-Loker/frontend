@@ -13,7 +13,7 @@ import { Stack, Input, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuLogIn } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
-import useMainStore from "@/state/mainStore";
+import useMainStore from "@/hooks/mainStore";
 import { useForm } from "react-hook-form";
 import LoginFormValues from "@/common/types/loginForm";
 import rules from "@/common/formRules/login";
@@ -46,7 +46,7 @@ export default function LoginDialog() {
       open={isLoginDialogOpen}
       onOpenChange={() => setIsLoginDialogOpen(false)}
     >
-      <DialogContent>
+      <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>
           <DialogTitle
             textAlign="center"
@@ -85,7 +85,7 @@ export default function LoginDialog() {
               />
             </Field>
             <Button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-200"
+              className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded transition-all duration-200"
               type="submit"
               width="full"
               loading={isLoading}

@@ -20,7 +20,7 @@ export type WithPagination<T> = {
 };
 
 export type APIResponse<T = void> = {
-  status: boolean;
+  success: boolean;
   status_code: number;
   message: string;
   errors: APIFieldError[];

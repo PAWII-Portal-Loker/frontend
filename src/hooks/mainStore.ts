@@ -12,8 +12,7 @@ interface MainActions {
   setIsRegisterDialogOpen: (isOpen: boolean) => void;
 }
 
-interface StoreState extends MainState, MainActions {}
-
+type StoreState = MainState & MainActions;
 const useMainStore = create<StoreState>((set) => ({
   isNavigationOpen: false,
   setIsNavigationOpen: (isOpen) => set({ isNavigationOpen: isOpen }),

@@ -30,7 +30,7 @@ export default class VacancyService {
 
   async getAll(callback: FetchCallback<VacancyEntity[]>) {
     const res: APIResponse<VacancyEntity[]> = await this.api.GET("v1/vacancy");
-    if (!res?.status) {
+    if (!res?.success) {
       callback.onError(res.message);
     } else {
       callback.onSuccess(res.data);
@@ -44,7 +44,7 @@ export default class VacancyService {
     const res: APIResponse<VacancyEntity> = await this.api.GET(
       `v1/vacancy/${id}`,
     );
-    if (!res?.status) {
+    if (!res?.success) {
       callback.onError(res.message);
     } else {
       callback.onSuccess(res.data);

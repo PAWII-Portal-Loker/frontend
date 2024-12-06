@@ -29,7 +29,7 @@ export default function VacancyDetailPage() {
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="lg:w-1/2">
           <Image
-            src={vacancy.thumnailUrl}
+            src={vacancy.thumbnailUrl}
             alt={vacancy.position}
             width={800}
             height={400}
@@ -48,12 +48,12 @@ export default function VacancyDetailPage() {
             <span
               className={clsx(
                 "px-2 py-1 rounded-md text-xs font-bold",
-                vacancy.is_closed
+                vacancy.isClosed
                   ? "bg-red-500 text-white"
                   : "bg-green-500 text-white",
               )}
             >
-              {vacancy.is_closed ? "Closed" : "Open"}
+              {vacancy.isClosed ? "Closed" : "Open"}
             </span>
           </div>
           <h2 className="text-lg font-medium text-gray-800 mb-2">
@@ -61,7 +61,7 @@ export default function VacancyDetailPage() {
           </h2>
           <div className="flex items-center mb-4">
             <span className="text-gray-500 text-sm">
-              {vacancy.applied_count} Applied
+              {vacancy.appliedCount} Applied
             </span>
             <span className="text-primary text-sm font-medium ml-4">
               {vacancy.jobType} - {vacancy.incomeType}

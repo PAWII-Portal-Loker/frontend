@@ -12,7 +12,7 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
     <Link href={`/vacancy/${vacancy.id}`} className="block">
       <div className="bg-white rounded-lg shadow-md overflow-hidden relative">
         <Image
-          src={vacancy.thumnailUrl}
+          src={vacancy.thumbnailUrl}
           alt={vacancy.position}
           width={500}
           height={200}
@@ -25,12 +25,12 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
         <span
           className={clsx(
             "absolute top-2 right-2 px-2 py-1 rounded-md text-xs font-bold",
-            vacancy.is_closed
+            vacancy.isClosed
               ? "bg-red-500 text-white"
               : "bg-green-500 text-white",
           )}
         >
-          {vacancy.is_closed ? "Closed" : "Open"}
+          {vacancy.isClosed ? "Closed" : "Open"}
         </span>
         <div className="p-4">
           <p className="text-lg font-bold text-gray-800 hover:text-primary transition-colors duration-200">
@@ -41,7 +41,7 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
           </p>
           <div className="flex items-center justify-between">
             <span className="text-gray-500 text-xs">
-              {vacancy.applied_count} Applied
+              {vacancy.appliedCount} Applied
             </span>
             <span className="text-primary text-xs font-medium">
               {vacancy.jobType} - {vacancy.incomeType}

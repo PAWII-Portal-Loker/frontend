@@ -34,7 +34,7 @@ export default class ApplicationService {
     const res: APIResponse<ApplicationEntity[]> = await this.api.GET(
       "v1/application",
     );
-    if (!res?.status) {
+    if (!res?.success) {
       callback.onError(res.message);
     } else {
       callback.onSuccess(res.data);
@@ -48,7 +48,7 @@ export default class ApplicationService {
     const res: APIResponse<ApplicationEntity> = await this.api.GET(
       `v1/application/${id}`,
     );
-    if (!res?.status) {
+    if (!res?.success) {
       callback.onError(res.message);
     } else {
       callback.onSuccess(res.data);

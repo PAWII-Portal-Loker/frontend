@@ -12,7 +12,7 @@ import {
 import { Stack, Input, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import useMainStore from "@/state/mainStore";
+import useMainStore from "@/hooks/mainStore";
 import { LuUserPlus } from "react-icons/lu";
 import { useForm } from "react-hook-form";
 import RegisterFormValues from "@/common/types/registerForm";
@@ -51,7 +51,7 @@ export default function RegisterDialog() {
       open={isRegisterDialogOpen}
       onOpenChange={() => setIsRegisterDialogOpen(false)}
     >
-      <DialogContent>
+      <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>
           <DialogTitle
             textAlign="center"
@@ -116,7 +116,7 @@ export default function RegisterDialog() {
               />
             </Field>
             <Button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-200"
+              className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded transition-all duration-200"
               type="submit"
               width="full"
               loading={isLoading}

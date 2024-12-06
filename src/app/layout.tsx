@@ -29,15 +29,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-gray-100 text-gray-900`}>
+      <body className={`${inter.className} bg-slate-700 text-gray-100`}>
         <Provider>
           <Navbar />
           <Toaster />
-          <section className="container mx-auto p-4 mt-16">
+          <main className="mt-16">
             <LoginDialog />
             <RegisterDialog />
             {children}
-          </section>
+          </main>
           <Footer />
         </Provider>
       </body>

@@ -6,10 +6,10 @@ export interface VacancyEntity {
   jobType: string;
   incomeType: string;
   position: string;
-  thumnailUrl: string;
+  thumbnailUrl: string;
   description: string;
-  applied_count: number;
-  is_closed: boolean;
+  appliedCount: number;
+  isClosed: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

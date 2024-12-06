@@ -5,8 +5,7 @@ import { toaster } from "@/components/ui/toaster";
 
 const vacancyService = new VacancyService();
 
-interface StoreState extends VacancyState, VacancyActions {}
-
+type StoreState = VacancyState & VacancyActions;
 const useStore = create<StoreState>((set) => ({
   vacancies: [],
   vacancy: null,

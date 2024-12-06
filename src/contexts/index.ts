@@ -81,13 +81,13 @@ export default class API {
     } catch (err: unknown) {
       if (isAxiosError(err)) {
         return {
-          status: false,
+          success: false,
           message: err?.response?.data?.message || err?.response?.data,
           data: null,
         } as unknown as APIResponse<T>;
       } else {
         return {
-          status: false,
+          success: false,
           message: "Internal Server Error",
         } as APIResponse<T>;
       }
@@ -101,13 +101,13 @@ export default class API {
     } catch (err: unknown) {
       if (isAxiosError(err)) {
         return {
-          status: false,
+          success: false,
           message: err?.response?.data?.message || err?.response?.data,
           data: null,
         } as unknown as APIResponse<T>;
       } else {
         return {
-          status: false,
+          success: false,
           message: "Internal Server Error",
         } as APIResponse<T>;
       }
@@ -121,13 +121,13 @@ export default class API {
     } catch (err: unknown) {
       if (isAxiosError(err)) {
         return {
-          status: false,
+          success: false,
           message: err?.response?.data?.message || err?.response?.data,
           data: null,
         } as unknown as APIResponse<T>;
       } else {
         return {
-          status: false,
+          success: false,
           message: "Internal Server Error",
         } as APIResponse<T>;
       }
@@ -141,13 +141,13 @@ export default class API {
     } catch (err: unknown) {
       if (isAxiosError(err)) {
         return {
-          status: false,
+          success: false,
           message: err?.response?.data?.message || err?.response?.data,
           data: null,
         } as unknown as APIResponse<T>;
       } else {
         return {
-          status: false,
+          success: false,
           message: "Internal Server Error",
         } as APIResponse<T>;
       }
@@ -159,7 +159,7 @@ export default class API {
       const res = await this.api.delete(path);
       if (res.data === "") {
         return {
-          status: true,
+          success: true,
           message: "Success",
           data: null,
         } as unknown as APIResponse<T>;
@@ -168,13 +168,13 @@ export default class API {
     } catch (err: unknown) {
       if (isAxiosError(err)) {
         return {
-          status: false,
+          success: false,
           message: err?.response?.data?.message || err?.response?.data,
           data: null,
         } as unknown as APIResponse<T>;
       } else {
         return {
-          status: false,
+          success: false,
           message: "Internal Server Error",
         } as APIResponse<T>;
       }

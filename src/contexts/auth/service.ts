@@ -10,7 +10,7 @@ export default class AuthService {
       "v1/auth/signin",
       payload,
     );
-    if (!res?.status) {
+    if (!res?.success) {
       callback.onError(res.message);
     } else {
       callback.onSuccess(res.data);
@@ -25,7 +25,7 @@ export default class AuthService {
       "v1/users",
       payload,
     );
-    if (!res?.status) {
+    if (!res?.success) {
       callback.onError(res.message);
     } else {
       callback.onSuccess(res.data);
@@ -39,7 +39,7 @@ export default class AuthService {
     const res: APIResponse<IsLoginRequest> = await this.api.GET(
       "v1/auth/is-login",
     );
-    if (!res?.status) {
+    if (!res?.success) {
       callback.onError(res.message);
     } else {
       callback.onSuccess(res.data);
@@ -51,7 +51,7 @@ export default class AuthService {
 
   async signOut(callback: FetchCallback<void>) {
     const res: APIResponse<void> = await this.api.POST("v1/auth/signout", {});
-    if (!res?.status) {
+    if (!res?.success) {
       callback.onError(res.message);
     } else {
       callback.onSuccess(res.data);
