@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import RegisterFormValues from "@/common/types/registerForm";
 import rules from "@/common/formRules/register";
 import useStore from "@/contexts/auth/reducer";
+import FieldConfig from "@/common/types/fieldConfig";
 
 export default function RegisterDialog() {
   const router = useRouter();
@@ -28,6 +29,37 @@ export default function RegisterDialog() {
   } = useMainStore();
   const { isLoading, signUp } = useStore();
 
+  const fields: FieldConfig<RegisterFormValues>[] = [
+    {
+      name: "wa_number",
+      label: "Whatsapp Number",
+      type: "tel",
+      placeholder: "Enter your whatsapp number",
+      rules: rules.waNumber,
+    },
+    {
+      name: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "Enter your email",
+      rules: rules.email,
+    },
+    {
+      name: "password",
+      label: "Password",
+      type: "password",
+      placeholder: "Enter your password",
+      rules: rules.password,
+    },
+    {
+      name: "confirm_password",
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "Confirm your password",
+      rules: rules.confirmPassword,
+    },
+  ];
+
   const {
     register,
     handleSubmit,
@@ -35,14 +67,14 @@ export default function RegisterDialog() {
   } = useForm<RegisterFormValues>({
     defaultValues: {
       email: "",
-      waNumber: "",
+      wa_number: "",
       password: "",
-      confirmPassword: "",
+      confirm_password: "",
     },
   });
 
   const onSubmit = handleSubmit((data: RegisterFormValues) => {
-    signUp(data.email, data.waNumber, data.password, router);
+    signUp(data.email, data.wa_number, data.password, router);
   });
 
   return (
@@ -64,59 +96,24 @@ export default function RegisterDialog() {
         </DialogHeader>
         <DialogBody as="form" onSubmit={onSubmit}>
           <Stack wordSpacing={4}>
-            <Field
-              label="Email"
-              invalid={!!errors.email}
-              errorText={errors.email?.message}
-            >
-              <Input
-                {...register("email", rules.email)}
-                placeholder="Enter your email"
-                padding={4}
-                border="1px solid #e2e8f0"
-              />
-            </Field>
-            <Field
-              label="WA Number"
-              invalid={!!errors.waNumber}
-              errorText={errors.waNumber?.message}
-            >
-              <Input
-                {...register("waNumber", rules.waNumber)}
-                type="number"
-                placeholder="Enter your WA Number"
-                padding={4}
-                border="1px solid #e2e8f0"
-              />
-            </Field>
-            <Field
-              label="Password"
-              invalid={!!errors.password}
-              errorText={errors.password?.message}
-            >
-              <Input
-                {...register("password", rules.password)}
-                type="password"
-                placeholder="Enter your password"
-                padding={4}
-                border="1px solid #e2e8f0"
-              />
-            </Field>
-            <Field
-              label="Confirm Password"
-              invalid={!!errors.confirmPassword}
-              errorText={errors.confirmPassword?.message}
-            >
-              <Input
-                {...register("confirmPassword", rules.confirmPassword)}
-                type="password"
-                placeholder="Confirm your password"
-                padding={4}
-                border="1px solid #e2e8f0"
-              />
-            </Field>
+            {fields.map((field) => (
+              <Field
+                key={field.name}
+                label={field.label}
+                invalid={!!errors[field.name]}
+                errorText={errors[field.name]?.message}
+              >
+                <Input
+                  {...register(field.name, field.rules)}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  padding={4}
+                  className="rounded-lg border-2 bg-gray-100 border-gray-300 focus:border-blue-500 text-lg text-gray-800 placeholder-gray-400"
+                />
+              </Field>
+            ))}
             <Button
-              className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded transition-all duration-200"
+              className="mt-4 bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded transition-all duration-200"
               type="submit"
               width="full"
               loading={isLoading}

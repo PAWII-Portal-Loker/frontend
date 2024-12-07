@@ -9,13 +9,15 @@ type StoreState = AuthState & AuthActions;
 const useStore = create<StoreState>((set) => ({
   user: null,
   isAuthenticated: false,
+  role: null,
   isLoading: false,
 
   setUser: (user) => set({ user }),
   setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
+  setRole: (role) => set({ role }),
   setIsLoading: (isLoading) => set({ isLoading }),
 
-  signIn: async (email, password, router) => {
+  signIn: async (email, password) => {
     set({ isLoading: true });
 
     authService.signIn(
@@ -27,7 +29,7 @@ const useStore = create<StoreState>((set) => ({
             type: "success",
             duration: 3000,
           });
-          router.push("/");
+          set({ isAuthenticated: true });
         },
         onError: (message: string) => {
           toaster.create({
@@ -44,11 +46,11 @@ const useStore = create<StoreState>((set) => ({
     );
   },
 
-  signUp: async (email, waNumber, password, router) => {
+  signUp: async (email, wa_number, password) => {
     set({ isLoading: true });
 
     authService.signUp(
-      { email, password, waNumber },
+      { email, password, wa_number },
       {
         onSuccess: () => {
           toaster.create({
@@ -56,7 +58,6 @@ const useStore = create<StoreState>((set) => ({
             type: "success",
             duration: 3000,
           });
-          router.push("/auth/login");
         },
         onError: (message: string) => {
           toaster.create({
@@ -75,11 +76,13 @@ const useStore = create<StoreState>((set) => ({
 
   checkLogin: async () => {
     authService.isLogin({
-      onSuccess: () => {
-        set({ isAuthenticated: true });
+      onSuccess: (data) => {
+        set({ isAuthenticated: data.is_login });
+        set({ role: data.role });
       },
       onError: () => {
         set({ isAuthenticated: false });
+        set({ role: null });
       },
     });
   },
@@ -94,6 +97,7 @@ const useStore = create<StoreState>((set) => ({
         });
         set({ user: null });
         set({ isAuthenticated: false });
+        set({ role: null });
       },
       onError: () => {
         toaster.create({

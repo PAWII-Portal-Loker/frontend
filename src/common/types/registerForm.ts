@@ -1,8 +1,8 @@
 type RegisterFormValues = {
   email: string;
-  waNumber: string;
+  wa_number: string;
   password: string;
-  confirmPassword: string;
+  confirm_password: string;
 };
 
 export default RegisterFormValues;

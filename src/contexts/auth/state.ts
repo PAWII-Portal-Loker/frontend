@@ -3,12 +3,14 @@ import { UserEntity } from "./type";
 export interface AuthState {
   user: UserEntity | null;
   isAuthenticated: boolean;
+  role: "JOB_SEEKER" | "COMPANY" | null;
   isLoading: boolean;
 }
 
 export interface AuthActions {
   setUser: (user: UserEntity) => void;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
+  setRole: (role: "JOB_SEEKER" | "COMPANY") => void;
   setIsLoading: (isLoading: boolean) => void;
 
   signIn: (

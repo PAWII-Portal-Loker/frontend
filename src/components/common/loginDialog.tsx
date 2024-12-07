@@ -18,12 +18,30 @@ import { useForm } from "react-hook-form";
 import LoginFormValues from "@/common/types/loginForm";
 import rules from "@/common/formRules/login";
 import useStore from "@/contexts/auth/reducer";
+import FieldConfig from "@/common/types/fieldConfig";
 
 export default function LoginDialog() {
   const router = useRouter();
   const { isLoginDialogOpen, setIsLoginDialogOpen, setIsRegisterDialogOpen } =
     useMainStore();
   const { isLoading, signIn } = useStore();
+
+  const fields: FieldConfig<LoginFormValues>[] = [
+    {
+      name: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "Enter your email",
+      rules: rules.email,
+    },
+    {
+      name: "password",
+      label: "Password",
+      type: "password",
+      placeholder: "Enter your password",
+      rules: rules.password,
+    },
+  ];
 
   const {
     register,
@@ -59,33 +77,24 @@ export default function LoginDialog() {
         </DialogHeader>
         <DialogBody as="form" onSubmit={onSubmit}>
           <Stack wordSpacing={4}>
-            <Field
-              label="Email"
-              invalid={!!errors.email}
-              errorText={errors.email?.message}
-            >
-              <Input
-                {...register("email", rules.email)}
-                placeholder="Enter your email"
-                padding={4}
-                border="1px solid #e2e8f0"
-              />
-            </Field>
-            <Field
-              label="Password"
-              invalid={!!errors.password}
-              errorText={errors.password?.message}
-            >
-              <Input
-                {...register("password", rules.password)}
-                type="password"
-                placeholder="Enter your password"
-                padding={4}
-                border="1px solid #e2e8f0"
-              />
-            </Field>
+            {fields.map((field) => (
+              <Field
+                key={field.name}
+                label={field.label}
+                invalid={!!errors[field.name]}
+                errorText={errors[field.name]?.message}
+              >
+                <Input
+                  {...register(field.name, field.rules)}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  padding={4}
+                  className="rounded-lg border-2 bg-gray-100 border-gray-300 focus:border-blue-500 text-lg text-gray-800 placeholder-gray-400"
+                />
+              </Field>
+            ))}
             <Button
-              className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded transition-all duration-200"
+              className="mt-4 bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded transition-all duration-200"
               type="submit"
               width="full"
               loading={isLoading}

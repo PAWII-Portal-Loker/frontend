@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import useStore from "@/contexts/auth/reducer";
 import { useIncomeTypeStore, useJobTypeStore } from "@/contexts/const/reducer";
 import useDashboardStore from "@/hooks/dashboard/reducer";
 import { Input } from "@chakra-ui/react";
@@ -9,8 +8,8 @@ import { useEffect } from "react";
 import { FaChevronDown, FaKey } from "react-icons/fa";
 
 export default function Home() {
-  const { checkLogin } = useStore();
   const { isSearchFocused, setIsSearchFocused } = useDashboardStore();
+
   const {
     data: jobTypes,
     fetchData: fetchJobTypes,
@@ -21,10 +20,6 @@ export default function Home() {
     fetchData: fetchIncomeTypes,
     isLoading: isIncomeTypesLoading,
   } = useIncomeTypeStore();
-
-  useEffect(() => {
-    checkLogin();
-  }, [checkLogin]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

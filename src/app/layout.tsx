@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/components/ui/provider";
@@ -7,26 +8,26 @@ import Navbar from "@/components/common/navbar";
 import Footer from "@/components/common/footer";
 import LoginDialog from "@/components/common/loginDialog";
 import RegisterDialog from "@/components/common/registerDialog";
+import useMainStore from "@/hooks/mainStore";
+import useStore from "@/contexts/auth/reducer";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "PortalLoker",
-  applicationName: "PortalLoker",
-  keywords: ["job", "portal", "loker", "job portal"],
-  referrer: "no-referrer",
-  abstract: "PortalLoker is a job portal for job seekers and employers",
-  bookmarks: "yes",
-  category: "job portal",
-  classification: "job portal",
-  description: "PortalLoker is a job portal for job seekers and employers",
-};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { setIsLoginDialogOpen } = useMainStore();
+  const { isAuthenticated, checkLogin } = useStore();
+
+  useEffect(() => {
+    checkLogin();
+    if (isAuthenticated) {
+      setIsLoginDialogOpen(false);
+    }
+  }, [checkLogin, isAuthenticated, setIsLoginDialogOpen]);
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} bg-slate-700 text-gray-100`}>

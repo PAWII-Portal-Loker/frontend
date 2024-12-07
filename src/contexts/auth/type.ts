@@ -44,9 +44,10 @@ export type SignInRequest = {
 };
 
 export type SignUpRequest = SignInRequest & {
-  waNumber: string;
+  wa_number: string;
 };
 
-export type IsLoginRequest = {
-  user_id: string;
+export type IsLoginResponse = {
+  is_login: boolean;
+  role: "JOB_SEEKER" | "COMPANY";
 };
