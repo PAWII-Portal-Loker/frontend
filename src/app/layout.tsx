@@ -4,13 +4,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";
-import Navbar from "@/components/common/navbar";
-import Footer from "@/components/common/footer";
-import LoginDialog from "@/components/common/loginDialog";
-import RegisterDialog from "@/components/common/registerDialog";
-import useMainStore from "@/hooks/mainStore";
-import useStore from "@/contexts/auth/reducer";
+import Navbar from "@/components/layouts/navbar";
+import Footer from "@/components/layouts/footer";
+import LoginDialog from "@/components/layouts/loginDialog";
+import RegisterDialog from "@/components/layouts/registerDialog";
+import useAuthStore from "@/contexts/(auth)/reducer";
 import { useEffect } from "react";
+import RoleDialog from "@/components/layouts/roleDialog";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,15 +19,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { setIsLoginDialogOpen } = useMainStore();
-  const { isAuthenticated, checkLogin } = useStore();
+  const { checkLogin } = useAuthStore();
 
   useEffect(() => {
     checkLogin();
-    if (isAuthenticated) {
-      setIsLoginDialogOpen(false);
-    }
-  }, [checkLogin, isAuthenticated, setIsLoginDialogOpen]);
+
+    const intervalId = setInterval(() => {
+      checkLogin();
+    }, 60000);
+
+    return () => clearInterval(intervalId);
+  }, [checkLogin]);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} bg-slate-700 text-gray-100`}>
@@ -37,6 +40,7 @@ export default function RootLayout({
           <main className="mt-16">
             <LoginDialog />
             <RegisterDialog />
+            <RoleDialog />
             {children}
           </main>
           <Footer />

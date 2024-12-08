@@ -2,17 +2,17 @@ import AuthService from "./service";
 import { AuthActions, AuthState } from "./state";
 import { create } from "zustand";
 import { toaster } from "@/components/ui/toaster";
+import useMainStore from "@/hooks/main/reducer";
+import useRoleDialogStore from "@/hooks/(roleDialog)/reducer";
 
 const authService = new AuthService();
 
 type StoreState = AuthState & AuthActions;
-const useStore = create<StoreState>((set) => ({
-  user: null,
+const useAuthStore = create<StoreState>((set) => ({
   isAuthenticated: false,
   role: null,
   isLoading: false,
 
-  setUser: (user) => set({ user }),
   setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
   setRole: (role) => set({ role }),
   setIsLoading: (isLoading) => set({ isLoading }),
@@ -30,6 +30,8 @@ const useStore = create<StoreState>((set) => ({
             duration: 3000,
           });
           set({ isAuthenticated: true });
+          useMainStore.getState().setIsLoginDialogOpen(false);
+          useAuthStore.getState().checkLogin();
         },
         onError: (message: string) => {
           toaster.create({
@@ -58,6 +60,8 @@ const useStore = create<StoreState>((set) => ({
             type: "success",
             duration: 3000,
           });
+          useMainStore.getState().setIsRegisterDialogOpen(false);
+          useMainStore.getState().setIsLoginDialogOpen(true);
         },
         onError: (message: string) => {
           toaster.create({
@@ -79,6 +83,14 @@ const useStore = create<StoreState>((set) => ({
       onSuccess: (data) => {
         set({ isAuthenticated: data.is_login });
         set({ role: data.role });
+        useRoleDialogStore.getState().setSelectedRole(data.role);
+
+        if (
+          useAuthStore.getState().isAuthenticated &&
+          !useAuthStore.getState().role
+        ) {
+          useRoleDialogStore.getState().setIsRoleDialogOpen(true);
+        }
       },
       onError: () => {
         set({ isAuthenticated: false });
@@ -95,7 +107,6 @@ const useStore = create<StoreState>((set) => ({
           type: "success",
           duration: 3000,
         });
-        set({ user: null });
         set({ isAuthenticated: false });
         set({ role: null });
       },
@@ -110,4 +121,4 @@ const useStore = create<StoreState>((set) => ({
   },
 }));
 
-export default useStore;
+export default useAuthStore;

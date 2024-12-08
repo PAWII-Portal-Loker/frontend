@@ -4,20 +4,17 @@ import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosClose } from "react-icons/io";
 import Image from "next/image";
-import useMainStore from "@/hooks/mainStore";
-import {
-  MenuContent,
-  MenuItemCommand,
-  MenuRoot,
-  MenuTrigger,
-} from "../ui/menu";
-import { AvatarGroup } from "../ui/avatar";
+import useMainStore from "@/hooks/main/reducer";
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { motion, AnimatePresence } from "framer-motion";
-import { IconButton } from "@chakra-ui/react";
+import { Box, IconButton } from "@chakra-ui/react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import useStore from "@/contexts/auth/reducer";
+import useAuthStore from "@/contexts/(auth)/reducer";
 import { Button } from "../ui/button";
+import { BsPerson } from "react-icons/bs";
+import { LiaSignOutAltSolid } from "react-icons/lia";
+import useRoleDialogStore from "@/hooks/(roleDialog)/reducer";
 
 const navLinks = [
   { href: "/", label: "Dashboard" },
@@ -64,17 +61,10 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
 );
 
 export default function Navbar() {
-  const { isAuthenticated, signOut } = useStore();
+  const { isAuthenticated, role, signOut } = useAuthStore();
   const { isNavigationOpen, setIsNavigationOpen, setIsLoginDialogOpen } =
     useMainStore();
-
-  const handleLogout = () => {
-    signOut();
-  };
-
-  const toggleMenu = () => {
-    setIsNavigationOpen(!isNavigationOpen);
-  };
+  const { setIsRoleDialogOpen } = useRoleDialogStore();
 
   return (
     <header className="bg-slate-600 text-gray-100 px-4 py-3 fixed top-0 left-0 w-full z-10">
@@ -83,7 +73,7 @@ export default function Navbar() {
           size={"md"}
           aria-label={"Open Menu"}
           display={{ md: "none" }}
-          onClick={toggleMenu}
+          onClick={() => setIsNavigationOpen(!isNavigationOpen)}
         >
           {isNavigationOpen ? <IoIosClose /> : <RxHamburgerMenu />}
         </IconButton>
@@ -110,17 +100,38 @@ export default function Navbar() {
           {isAuthenticated ? (
             <MenuRoot>
               <MenuTrigger asChild>
-                <Button className="rounded-full cursor-pointer">
-                  <AvatarGroup size={"sm"} />
+                <Button className="rounded-full cursor-pointer hover:bg-gray-500 transition-all duration-200">
+                  <BsPerson size={24} />
                 </Button>
               </MenuTrigger>
               <MenuContent>
-                <Link href="/profile">
-                  <MenuItemCommand>Edit Profile</MenuItemCommand>
-                </Link>
-                <MenuItemCommand onClick={handleLogout}>
-                  Sign Out
-                </MenuItemCommand>
+                {role ? (
+                  <MenuItem value="profile" valueText="profile">
+                    <BsPerson size={24} />
+                    <Box flex="1">Profile</Box>
+                  </MenuItem>
+                ) : (
+                  <MenuItem
+                    onClick={() => setIsRoleDialogOpen(true)}
+                    value="role"
+                    valueText="role"
+                    color="fg.info"
+                    _hover={{ bg: "bg.info", color: "fg.info" }}
+                  >
+                    <BsPerson size={24} />
+                    <Box flex="1">Role</Box>
+                  </MenuItem>
+                )}
+                <MenuItem
+                  onClick={() => signOut()}
+                  value="sign out"
+                  valueText="sign out"
+                  color="fg.error"
+                  _hover={{ bg: "bg.error", color: "fg.error" }}
+                >
+                  <LiaSignOutAltSolid size={24} />
+                  <Box flex="1">Sign out</Box>
+                </MenuItem>
               </MenuContent>
             </MenuRoot>
           ) : (

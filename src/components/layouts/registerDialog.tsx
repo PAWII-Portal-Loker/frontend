@@ -1,80 +1,40 @@
-"use client";
-
 import { Field } from "@/components/ui/field";
 import {
   DialogBody,
   DialogCloseTrigger,
   DialogContent,
-  DialogHeader,
-  DialogRoot,
   DialogTitle,
+  DialogRoot,
+  DialogHeader,
 } from "@/components/ui/dialog";
 import { Stack, Input, Text } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import useMainStore from "@/hooks/mainStore";
 import { LuUserPlus } from "react-icons/lu";
+import { Button } from "@/components/ui/button";
+import useMainStore from "@/hooks/main/reducer";
 import { useForm } from "react-hook-form";
-import RegisterFormValues from "@/common/types/registerForm";
-import rules from "@/common/formRules/register";
-import useStore from "@/contexts/auth/reducer";
-import FieldConfig from "@/common/types/fieldConfig";
+import { yupResolver } from "@hookform/resolvers/yup";
+import useAuthStore from "@/contexts/(auth)/reducer";
+import { fields, FormValues, schema } from "@/common/types/formRules/register";
+import clsx from "clsx";
 
 export default function RegisterDialog() {
-  const router = useRouter();
   const {
     setIsLoginDialogOpen,
     isRegisterDialogOpen,
     setIsRegisterDialogOpen,
   } = useMainStore();
-  const { isLoading, signUp } = useStore();
-
-  const fields: FieldConfig<RegisterFormValues>[] = [
-    {
-      name: "wa_number",
-      label: "Whatsapp Number",
-      type: "tel",
-      placeholder: "Enter your whatsapp number",
-      rules: rules.waNumber,
-    },
-    {
-      name: "email",
-      label: "Email",
-      type: "email",
-      placeholder: "Enter your email",
-      rules: rules.email,
-    },
-    {
-      name: "password",
-      label: "Password",
-      type: "password",
-      placeholder: "Enter your password",
-      rules: rules.password,
-    },
-    {
-      name: "confirm_password",
-      label: "Confirm Password",
-      type: "password",
-      placeholder: "Confirm your password",
-      rules: rules.confirmPassword,
-    },
-  ];
+  const { isLoading, signUp } = useAuthStore();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterFormValues>({
-    defaultValues: {
-      email: "",
-      wa_number: "",
-      password: "",
-      confirm_password: "",
-    },
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
   });
 
-  const onSubmit = handleSubmit((data: RegisterFormValues) => {
-    signUp(data.email, data.wa_number, data.password, router);
+  const onSubmit = handleSubmit((data: FormValues) => {
+    signUp(data.email, data.wa_number, data.password);
   });
 
   return (
@@ -104,20 +64,31 @@ export default function RegisterDialog() {
                 errorText={errors[field.name]?.message}
               >
                 <Input
-                  {...register(field.name, field.rules)}
+                  {...register(field.name)}
                   type={field.type}
                   placeholder={field.placeholder}
-                  padding={4}
-                  className="rounded-lg border-2 bg-gray-100 border-gray-300 focus:border-blue-500 text-lg text-gray-800 placeholder-gray-400"
+                  className={clsx(
+                    "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400",
+                    !errors[field.name]
+                      ? "focus:ring-blue-500"
+                      : "focus:ring-red-500",
+                  )}
                 />
               </Field>
             ))}
             <Button
-              className="mt-4 bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded transition-all duration-200"
+              className={clsx(
+                "mt-4 bg-blue-300 text-white font-bold py-2 px-4 rounded",
+                isLoading || Object.keys(errors).length > 0
+                  ? "cursor-not-allowed"
+                  : "hover:bg-blue-400 transition-all duration-200",
+              )}
+              disabled={isLoading || Object.keys(errors).length > 0}
               type="submit"
               width="full"
               loading={isLoading}
               loadingText="Registering..."
+              size="lg"
             >
               <LuUserPlus />
               Register

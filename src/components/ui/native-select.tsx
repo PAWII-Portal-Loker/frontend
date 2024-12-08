@@ -2,6 +2,7 @@
 
 import { NativeSelect as Select } from "@chakra-ui/react";
 import * as React from "react";
+import { Skeleton } from "./skeleton";
 
 interface NativeSelectRootProps extends Select.RootProps {
   icon?: React.ReactNode;
@@ -28,13 +29,14 @@ interface NativeSelectItem {
 
 interface NativeSelectField extends Select.FieldProps {
   items?: Array<string | NativeSelectItem>;
+  isLoading?: boolean;
 }
 
 export const NativeSelectField = React.forwardRef<
   HTMLSelectElement,
   NativeSelectField
 >(function NativeSelectField(props, ref) {
-  const { items: itemsProp, children, ...rest } = props;
+  const { isLoading, items: itemsProp, children, ...rest } = props;
 
   const items = React.useMemo(
     () =>
@@ -45,13 +47,23 @@ export const NativeSelectField = React.forwardRef<
   );
 
   return (
-    <Select.Field ref={ref} {...rest}>
-      {children}
-      {items?.map((item) => (
-        <option key={item.value} value={item.value} disabled={item.disabled}>
-          {item.label}
-        </option>
-      ))}
-    </Select.Field>
+    <>
+      {isLoading ? (
+        <Skeleton className="w-full h-[44px] lg:w-[160px]" />
+      ) : (
+        <Select.Field ref={ref} {...rest}>
+          {children}
+          {items?.map((item) => (
+            <option
+              key={item.value}
+              value={item.value}
+              disabled={item.disabled}
+            >
+              {item.label}
+            </option>
+          ))}
+        </Select.Field>
+      )}
+    </>
   );
 });

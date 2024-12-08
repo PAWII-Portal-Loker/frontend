@@ -37,7 +37,7 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
             {vacancy.position}
           </p>
           <p className="text-gray-600 text-sm mb-2">
-            {vacancy.company.companyName}
+            {vacancy.company.company_name}
           </p>
           <div className="flex items-center justify-between">
             <span className="text-gray-500 text-xs">

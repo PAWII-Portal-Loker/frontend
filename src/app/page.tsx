@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import Dropdown from "@/components/containers/dropdown";
 import { useIncomeTypeStore, useJobTypeStore } from "@/contexts/const/reducer";
 import useDashboardStore from "@/hooks/dashboard/reducer";
 import { Input } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { FaChevronDown, FaKey } from "react-icons/fa";
+import { FaKey } from "react-icons/fa";
 
 export default function Home() {
   const { isSearchFocused, setIsSearchFocused } = useDashboardStore();
@@ -75,44 +75,18 @@ export default function Home() {
               </kbd>
             </div>
           </div>
-          <div className="relative">
-            {isJobTypesLoading ? (
-              <Skeleton className="lg:w-[160px] w-full h-[44px]" />
-            ) : (
-              <div className="relative">
-                <select className="w-full pl-3 pr-8 py-1 rounded-lg border-2 border-gray-300 text-lg text-gray-600 appearance-none">
-                  <option value="ALL">All</option>
-                  {jobTypes.map((jobType) => (
-                    <option key={jobType} value={jobType}>
-                      {jobType}
-                    </option>
-                  ))}
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-                  <FaChevronDown className="text-gray-400" />
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="relative">
-            {isIncomeTypesLoading ? (
-              <Skeleton className="lg:w-[160px] w-full h-[44px]" />
-            ) : (
-              <div className="relative">
-                <select className="w-full pl-3 pr-8 py-1 rounded-lg border-2 border-gray-300 text-lg text-gray-600 appearance-none">
-                  <option value="ALL">All</option>
-                  {incomeTypes.map((incomeType) => (
-                    <option key={incomeType} value={incomeType}>
-                      {incomeType}
-                    </option>
-                  ))}
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-                  <FaChevronDown className="text-gray-400" />
-                </div>
-              </div>
-            )}
-          </div>
+
+          <Dropdown
+            items={jobTypes}
+            name="Job Type"
+            isLoading={isJobTypesLoading}
+          />
+          <Dropdown
+            items={incomeTypes}
+            name="Income Type"
+            isLoading={isIncomeTypesLoading}
+          />
+
           <Button className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded">
             Search
           </Button>

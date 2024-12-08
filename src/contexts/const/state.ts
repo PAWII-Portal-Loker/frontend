@@ -1,24 +1,14 @@
+import { CommonActions, CommonState } from "@/common/types/commonStateAction";
 import { ConstEntity } from "./type";
 
-interface CommonConstState {
-  data: string[];
-  isLoading: boolean;
-}
-
-interface CommonConstActions {
-  setData: (data: string[]) => void;
-  setIsLoading: (loading: boolean) => void;
-  fetchData: () => void;
-}
-
-export type IncomeTypeState = CommonConstState;
-export type IncomeTypeActions = CommonConstActions;
-export type CompanyTypeActions = CommonConstActions;
-export type CompanyTypeState = CommonConstState;
-export type JobTypeActions = CommonConstActions;
-export type JobTypeState = CommonConstState;
-export type RoleState = CommonConstState;
-export type RoleActions = CommonConstActions;
+export type IncomeTypeState = CommonState;
+export type IncomeTypeActions = CommonActions;
+export type CompanyTypeActions = CommonActions;
+export type CompanyTypeState = CommonState;
+export type JobTypeActions = CommonActions;
+export type JobTypeState = CommonState;
+export type RoleState = CommonState;
+export type RoleActions = CommonActions;
 
 export interface ConstState {
   consts: ConstEntity;

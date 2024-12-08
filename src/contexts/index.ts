@@ -48,10 +48,9 @@ export default class API {
     );
 
     this.api.interceptors.response.use((response) => {
-      const accessToken = response.headers["X-Access-Token"];
-      const refreshToken = response.headers["X-Refresh-Token"];
-      const user_id = response.headers["X-User-Id"];
-      const device_id = response.headers["X-Device-Id"];
+      const accessToken = response.headers["x-access-token"];
+      const refreshToken = response.headers["x-refresh-token"];
+      const user_id = response.headers["x-user-id"];
 
       if (accessToken) {
         localStorage.setItem("access_token", accessToken);
@@ -61,9 +60,6 @@ export default class API {
       }
       if (user_id) {
         localStorage.setItem("user_id", user_id);
-      }
-      if (device_id) {
-        localStorage.setItem("device_id", device_id);
       }
 
       return response;

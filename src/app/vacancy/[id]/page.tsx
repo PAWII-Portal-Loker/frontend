@@ -57,7 +57,7 @@ export default function VacancyDetailPage() {
             </span>
           </div>
           <h2 className="text-lg font-medium text-gray-800 mb-2">
-            {vacancy.company.companyName}
+            {vacancy.company.company_name}
           </h2>
           <div className="flex items-center mb-4">
             <span className="text-gray-500 text-sm">

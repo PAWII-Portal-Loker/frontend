@@ -1,61 +1,37 @@
-"use client";
-
 import { Field } from "@/components/ui/field";
 import {
   DialogBody,
   DialogCloseTrigger,
   DialogContent,
-  DialogHeader,
-  DialogRoot,
   DialogTitle,
+  DialogRoot,
+  DialogHeader,
 } from "@/components/ui/dialog";
 import { Stack, Input, Text } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import { LuLogIn } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
-import useMainStore from "@/hooks/mainStore";
+import useMainStore from "@/hooks/main/reducer";
 import { useForm } from "react-hook-form";
-import LoginFormValues from "@/common/types/loginForm";
-import rules from "@/common/formRules/login";
-import useStore from "@/contexts/auth/reducer";
-import FieldConfig from "@/common/types/fieldConfig";
+import { yupResolver } from "@hookform/resolvers/yup";
+import useAuthStore from "@/contexts/(auth)/reducer";
+import { fields, FormValues, schema } from "@/common/types/formRules/login";
+import clsx from "clsx";
 
 export default function LoginDialog() {
-  const router = useRouter();
   const { isLoginDialogOpen, setIsLoginDialogOpen, setIsRegisterDialogOpen } =
     useMainStore();
-  const { isLoading, signIn } = useStore();
-
-  const fields: FieldConfig<LoginFormValues>[] = [
-    {
-      name: "email",
-      label: "Email",
-      type: "email",
-      placeholder: "Enter your email",
-      rules: rules.email,
-    },
-    {
-      name: "password",
-      label: "Password",
-      type: "password",
-      placeholder: "Enter your password",
-      rules: rules.password,
-    },
-  ];
+  const { isLoading, signIn } = useAuthStore();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormValues>({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
   });
 
-  const onSubmit = handleSubmit((data: LoginFormValues) => {
-    signIn(data.email, data.password, router);
+  const onSubmit = handleSubmit((data: FormValues) => {
+    signIn(data.email, data.password);
   });
 
   return (
@@ -85,16 +61,26 @@ export default function LoginDialog() {
                 errorText={errors[field.name]?.message}
               >
                 <Input
-                  {...register(field.name, field.rules)}
+                  {...register(field.name)}
                   type={field.type}
                   placeholder={field.placeholder}
-                  padding={4}
-                  className="rounded-lg border-2 bg-gray-100 border-gray-300 focus:border-blue-500 text-lg text-gray-800 placeholder-gray-400"
+                  className={clsx(
+                    "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400",
+                    !errors[field.name]
+                      ? "focus:ring-blue-500"
+                      : "focus:ring-red-500",
+                  )}
                 />
               </Field>
             ))}
             <Button
-              className="mt-4 bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded transition-all duration-200"
+              className={clsx(
+                "mt-4 bg-blue-300 text-white font-bold py-2 px-4 rounded",
+                isLoading || Object.keys(errors).length > 0
+                  ? "cursor-not-allowed"
+                  : "hover:bg-blue-400 transition-all duration-200",
+              )}
+              disabled={isLoading || Object.keys(errors).length > 0}
               type="submit"
               width="full"
               loading={isLoading}

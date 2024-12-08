@@ -1,12 +1,12 @@
-import { RegisterOptions } from "react-hook-form";
 import { FieldValues } from "react-hook-form";
+import { AnyObject, ISchema, Reference } from "yup";
 
 interface FieldConfig<T extends FieldValues> {
   name: keyof T;
   label: string;
   type: string;
-  placeholder: string;
-  rules: RegisterOptions<T>;
+  placeholder: string | undefined;
+  rules: Reference<unknown> | ISchema<string | number | Date, AnyObject>;
 }
 
 export default FieldConfig;
