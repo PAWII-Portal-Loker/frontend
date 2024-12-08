@@ -6,7 +6,7 @@ import { toaster } from "@/components/ui/toaster";
 const vacancyService = new VacancyService();
 
 type StoreState = VacancyState & VacancyActions;
-const useStore = create<StoreState>((set) => ({
+const useVacancyStore = create<StoreState>((set) => ({
   vacancies: [],
   vacancy: null,
   isLoading: false,
@@ -57,4 +57,4 @@ const useStore = create<StoreState>((set) => ({
   },
 }));
 
-export default useStore;
+export default useVacancyStore;

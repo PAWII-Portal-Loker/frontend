@@ -9,29 +9,24 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useEffect } from "react";
-import { Stack, Input } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import useRoleDialogStore from "@/hooks/(roleDialog)/reducer";
-import { Field } from "../ui/field";
 import { slideVariants } from "@/common/types/animationVariants";
-import clsx from "clsx";
 import { useCompanyTypeStore } from "@/contexts/const/reducer";
-import { NativeSelectField, NativeSelectRoot } from "../ui/native-select";
 import {
-  fields as companyFields,
   FormValues as companyFormValues,
   schema as companySchema,
 } from "@/common/types/formRules/company";
 import {
-  fields as jobSeekerFields,
   FormValues as jobSeekerFormValues,
   schema as jobSeekerSchema,
 } from "@/common/types/formRules/jobSeeker";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RoleCardPicker from "../containers/roleCardPicker";
-import { LuSave } from "react-icons/lu";
-import { Button } from "../ui/button";
+import { useCompanyStore } from "@/contexts/company/reducer";
+import { useJobSeekerStore } from "@/contexts/jobSeeker/reducer";
+import RoleForm from "./roleForm";
 
 export default function RoleDialog() {
   const {
@@ -39,14 +34,10 @@ export default function RoleDialog() {
     setIsRoleDialogOpen,
     selectedRole,
     setSelectedRole,
-    createCompanyRole,
-    createJobSeekerRole,
     isLoading,
   } = useRoleDialogStore();
-
-  // const [selectedFields, setSelectedFields] = useState<
-  //   FieldConfig<CompanyRequestEntity | JobSeekerRequestEntity>[] | null
-  // >(null);
+  const { createData: createCompanyRole } = useCompanyStore();
+  const { createData: createJobSeekerRole } = useJobSeekerStore();
 
   const {
     data: companyTypes,
@@ -108,103 +99,29 @@ export default function RoleDialog() {
               exit="exit"
             >
               {selectedRole == "COMPANY" && (
-                <Stack as="form" onSubmit={onCompanySubmit}>
-                  {companyFields?.map((field) => (
-                    <Field
-                      key={field.name}
-                      label={field.label}
-                      invalid={!!errorsCompany[field.name]}
-                      errorText={errorsCompany[field.name]?.message}
-                    >
-                      {field.type === "select" ? (
-                        <NativeSelectRoot size="md">
-                          <NativeSelectField
-                            isLoading={isCompanyTypesLoading}
-                            className="w-full pl-3 pr-8 py-1 rounded-lg border-2 bg-gray-100 border-gray-300 text-lg text-gray-600 appearance-none"
-                            {...controlCompany.register(field.name)}
-                            placeholder={field.placeholder}
-                            items={companyTypes}
-                            _loading={{ opacity: 0.5 }}
-                          />
-                        </NativeSelectRoot>
-                      ) : (
-                        <Input
-                          {...registerCompany(field.name)}
-                          type={field.type}
-                          placeholder={field.placeholder}
-                          className={clsx(
-                            "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400",
-                            !errorsCompany[field.name]
-                              ? "focus:ring-blue-500"
-                              : "focus:ring-red-500",
-                          )}
-                        />
-                      )}
-                    </Field>
-                  ))}
-                  <Button
-                    className={clsx(
-                      "mt-4 bg-blue-300 text-white font-bold py-2 px-4 rounded",
-                      isLoading || Object.keys(errorsCompany).length > 0
-                        ? "cursor-not-allowed"
-                        : "hover:bg-blue-400 transition-all duration-200",
-                    )}
-                    disabled={
-                      isLoading || Object.keys(errorsCompany).length > 0
-                    }
-                    type="submit"
-                    width="full"
-                    loading={isLoading}
-                    loadingText="Saving..."
-                    size="lg"
-                  >
-                    <LuSave />
-                    Save
-                  </Button>
-                </Stack>
+                <RoleForm
+                  role="COMPANY"
+                  onSubmit={onCompanySubmit}
+                  isLoading={isLoading}
+                  companyTypes={companyTypes}
+                  isCompanyTypesLoading={isCompanyTypesLoading}
+                  formState={{
+                    register: registerCompany,
+                    control: controlCompany,
+                    errors: errorsCompany,
+                  }}
+                />
               )}
               {selectedRole == "JOB_SEEKER" && (
-                <Stack as="form" onSubmit={onJobSeekerSubmit}>
-                  {jobSeekerFields?.map((field) => (
-                    <Field
-                      key={field.name}
-                      label={field.label}
-                      invalid={!!errorsJobSeeker[field.name]}
-                      errorText={errorsJobSeeker[field.name]?.message}
-                    >
-                      <Input
-                        {...registerJobSeeker(field.name)}
-                        type={field.type}
-                        placeholder={field.placeholder}
-                        className={clsx(
-                          "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400",
-                          !errorsJobSeeker[field.name]
-                            ? "focus:ring-blue-500"
-                            : "focus:ring-red-500",
-                        )}
-                      />
-                    </Field>
-                  ))}
-                  <Button
-                    className={clsx(
-                      "mt-4 bg-blue-300 text-white font-bold py-2 px-4 rounded",
-                      isLoading || Object.keys(errorsJobSeeker).length > 0
-                        ? "cursor-not-allowed"
-                        : "hover:bg-blue-400 transition-all duration-200",
-                    )}
-                    disabled={
-                      isLoading || Object.keys(errorsJobSeeker).length > 0
-                    }
-                    type="submit"
-                    width="full"
-                    loading={isLoading}
-                    loadingText="Saving..."
-                    size="lg"
-                  >
-                    <LuSave />
-                    Save
-                  </Button>
-                </Stack>
+                <RoleForm
+                  role="JOB_SEEKER"
+                  onSubmit={onJobSeekerSubmit}
+                  isLoading={isLoading}
+                  formState={{
+                    register: registerJobSeeker,
+                    errors: errorsJobSeeker,
+                  }}
+                />
               )}
             </motion.div>
           )}

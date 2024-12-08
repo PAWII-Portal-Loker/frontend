@@ -1,14 +1,14 @@
 import { CommonActions, CommonState } from "@/common/types/commonStateAction";
 import { ConstEntity } from "./type";
 
-export type IncomeTypeState = CommonState;
-export type IncomeTypeActions = CommonActions;
-export type CompanyTypeActions = CommonActions;
-export type CompanyTypeState = CommonState;
-export type JobTypeActions = CommonActions;
-export type JobTypeState = CommonState;
-export type RoleState = CommonState;
-export type RoleActions = CommonActions;
+export type IncomeTypeState = CommonState<string>;
+export type IncomeTypeActions = CommonActions<string>;
+export type CompanyTypeActions = CommonActions<string>;
+export type CompanyTypeState = CommonState<string>;
+export type JobTypeActions = CommonActions<string>;
+export type JobTypeState = CommonState<string>;
+export type RoleState = CommonState<string>;
+export type RoleActions = CommonActions<string>;
 
 export interface ConstState {
   consts: ConstEntity;

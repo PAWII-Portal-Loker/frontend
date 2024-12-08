@@ -91,6 +91,11 @@ const useAuthStore = create<StoreState>((set) => ({
         ) {
           useRoleDialogStore.getState().setIsRoleDialogOpen(true);
         }
+
+        if (!useAuthStore.getState().isAuthenticated) {
+          useRoleDialogStore.getState().setIsRoleDialogOpen(false);
+          useMainStore.getState().setIsLoginDialogOpen(true);
+        }
       },
       onError: () => {
         set({ isAuthenticated: false });

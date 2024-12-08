@@ -1,4 +1,4 @@
-import { UserEntity } from "../(auth)/type";
+import { defaultUserEntity, UserEntity } from "../(auth)/type";
 
 export interface JobSeekerRequestEntity {
   name: string;
@@ -13,3 +13,14 @@ export interface JobSeekerEntity extends JobSeekerRequestEntity {
   created_at: Date;
   updated_at: Date;
 }
+
+export const defaultJobSeekerEntity: JobSeekerEntity = {
+  id: "",
+  user: defaultUserEntity,
+  name: "",
+  last_education: "",
+  major: "",
+  gpa: 0,
+  created_at: new Date(),
+  updated_at: new Date(),
+};

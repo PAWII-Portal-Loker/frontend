@@ -52,7 +52,7 @@ export default class JobSeekerService {
   }
 
   async update(
-    payload: JobSeekerEntity,
+    payload: JobSeekerRequestEntity,
     callback: FetchCallback<JobSeekerEntity>,
   ) {
     const res: APIResponse<JobSeekerEntity> = await this.api.PUT(

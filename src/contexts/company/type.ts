@@ -1,4 +1,4 @@
-import { UserEntity } from "../(auth)/type";
+import { defaultUserEntity, UserEntity } from "../(auth)/type";
 
 export interface CompanyRequestEntity {
   company_type: string;
@@ -15,3 +15,16 @@ export interface CompanyEntity extends CompanyRequestEntity {
   created_at: Date;
   updated_at: Date;
 }
+
+export const defaultCompanyEntity: CompanyEntity = {
+  id: "",
+  user: defaultUserEntity,
+  company_type: "",
+  company_name: "",
+  founding_date: new Date(),
+  employee_total: 0,
+  early_working_hour: "",
+  end_working_hour: "",
+  created_at: new Date(),
+  updated_at: new Date(),
+};

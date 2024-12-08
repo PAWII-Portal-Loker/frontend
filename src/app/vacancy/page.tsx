@@ -1,12 +1,12 @@
 "use client";
 
-import useStore from "@/contexts/(vacancy)/reducer";
+import useVacancyStore from "@/contexts/(vacancy)/reducer";
 import { useEffect } from "react";
 import VacancyCard from "./VacancyCard";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function VacancyPage() {
-  const { vacancies, isLoading, fetchVacancies } = useStore();
+  const { vacancies, isLoading, fetchVacancies } = useVacancyStore();
 
   useEffect(() => {
     fetchVacancies();

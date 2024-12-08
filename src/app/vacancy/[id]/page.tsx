@@ -1,6 +1,6 @@
 "use client";
 
-import useStore from "@/contexts/(vacancy)/reducer";
+import useVacancyStore from "@/contexts/(vacancy)/reducer";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import clsx from "clsx";
 
 export default function VacancyDetailPage() {
   const { id } = useParams();
-  const { vacancy, isLoading, fetchVacancy } = useStore();
+  const { vacancy, isLoading, fetchVacancy } = useVacancyStore();
 
   useEffect(() => {
     if (typeof id === "string") {

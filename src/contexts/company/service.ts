@@ -52,9 +52,12 @@ export default class CompanyService {
     }
   }
 
-  async update(payload: CompanyEntity, callback: FetchCallback<CompanyEntity>) {
+  async update(
+    payload: CompanyRequestEntity,
+    callback: FetchCallback<CompanyEntity>,
+  ) {
     const res: APIResponse<CompanyEntity> = await this.api.PUT(
-      `v1/companies/${payload.id}`,
+      "v1/companies",
       payload,
     );
     if (!res?.success) {

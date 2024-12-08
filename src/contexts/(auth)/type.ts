@@ -14,6 +14,22 @@ export interface UserEntity {
   updated_at: Date;
 }
 
+export const defaultUserEntity: UserEntity = {
+  id: "",
+  role: "",
+  email: "",
+  wa_number: "",
+  image_url: "",
+  bio: "",
+  country: "",
+  province: "",
+  city: "",
+  subdistrict: "",
+  address: "",
+  created_at: new Date(),
+  updated_at: new Date(),
+};
+
 export type SignInRequest = {
   email: string;
   password: string;

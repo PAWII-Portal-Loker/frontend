@@ -29,7 +29,7 @@ const RoleCardPicker = ({
               : "hover:bg-green-100 hover:scale-105 transition-all duration-200",
           )}
         >
-          <Card.Body>
+          <Card.Body className="fex flex-col justify-between">
             <Image
               src="/company.png"
               alt="Company"
@@ -37,12 +37,14 @@ const RoleCardPicker = ({
               height={120}
               className="mx-auto"
             />
-            <Card.Title className="font-semibold" mt={4}>
-              Company
-            </Card.Title>
-            <Card.Description mt={2} fontSize="sm">
-              Register as a company
-            </Card.Description>
+            <div>
+              <Card.Title className="font-semibold" mt={4}>
+                Company
+              </Card.Title>
+              <Card.Description mt={2} fontSize="sm">
+                Register as a company
+              </Card.Description>
+            </div>
           </Card.Body>
         </Card.Root>
         <Card.Root
@@ -54,7 +56,7 @@ const RoleCardPicker = ({
               : "hover:bg-green-100 hover:scale-105 transition-all duration-200",
           )}
         >
-          <Card.Body>
+          <Card.Body className="fex flex-col justify-between">
             <Image
               src="/job_seeker.png"
               alt="Job Seeker"
@@ -62,12 +64,14 @@ const RoleCardPicker = ({
               height={120}
               className="mx-auto"
             />
-            <Card.Title className="font-semibold" mt={4}>
-              Job Seeker
-            </Card.Title>
-            <Card.Description mt={2} fontSize="sm">
-              Register as a job seeker
-            </Card.Description>
+            <div>
+              <Card.Title className="font-semibold" mt={4}>
+                Job Seeker
+              </Card.Title>
+              <Card.Description mt={2} fontSize="sm">
+                Register as a job seeker
+              </Card.Description>
+            </div>
           </Card.Body>
         </Card.Root>
       </Stack>
