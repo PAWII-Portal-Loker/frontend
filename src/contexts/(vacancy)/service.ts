@@ -1,11 +1,15 @@
 import API from "..";
 import { VacancyEntity } from "./type";
-import { APIResponse, FetchCallback } from "@/common/types";
+import { APIResponse, FetchCallback, FilterParams } from "@/common/types";
 
 export default class VacancyService {
   private api: API = new API();
 
-  async getDummy(callback: FetchCallback<VacancyEntity[]>) {
+  async getDummy(
+    callback: FetchCallback<VacancyEntity[]>,
+    params?: FilterParams,
+  ) {
+    Object.keys(params?.params || {}).forEach(() => {});
     const response = await fetch("/dummy.json");
     const data = await response.json();
     callback.onSuccess(data.vacancy);
@@ -28,8 +32,14 @@ export default class VacancyService {
     }
   }
 
-  async getAll(callback: FetchCallback<VacancyEntity[]>) {
-    const res: APIResponse<VacancyEntity[]> = await this.api.GET("v1/vacancy");
+  async getAll(
+    callback: FetchCallback<VacancyEntity[]>,
+    params?: FilterParams,
+  ) {
+    const res: APIResponse<VacancyEntity[]> = await this.api.GET(
+      "v1/vacancies",
+      params,
+    );
     if (!res?.success) {
       callback.onError(res.message);
     } else {
@@ -42,7 +52,7 @@ export default class VacancyService {
 
   async getOne(id: string, callback: FetchCallback<VacancyEntity>) {
     const res: APIResponse<VacancyEntity> = await this.api.GET(
-      `v1/vacancy/${id}`,
+      `v1/vacancies/${id}`,
     );
     if (!res?.success) {
       callback.onError(res.message);

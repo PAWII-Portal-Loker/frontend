@@ -4,3 +4,10 @@ export interface ConstEntity {
   job_types: string[];
   roles: string[];
 }
+
+export const defaultConstEntity: ConstEntity = {
+  company_types: [],
+  income_types: [],
+  job_types: [],
+  roles: [],
+};

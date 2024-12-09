@@ -8,3 +8,8 @@ export interface CommonActions<T> {
   setIsLoading: (loading: boolean) => void;
   fetchData: () => void;
 }
+
+export const initialCommonState = {
+  data: [],
+  isLoading: false,
+};

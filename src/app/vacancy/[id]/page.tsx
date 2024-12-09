@@ -1,19 +1,18 @@
 "use client";
 
-import useVacancyStore from "@/contexts/(vacancy)/reducer";
+import useVacancyStore from "@/contexts/(vacancy)/state";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
 import clsx from "clsx";
+import { isValidImageUrl } from "@/common/utils/validImageUrl";
 
 export default function VacancyDetailPage() {
   const { id } = useParams();
   const { vacancy, isLoading, fetchVacancy } = useVacancyStore();
 
   useEffect(() => {
-    if (typeof id === "string") {
-      fetchVacancy(id);
-    }
+    fetchVacancy(id as string);
   }, [fetchVacancy, id]);
 
   if (isLoading) {
@@ -26,10 +25,14 @@ export default function VacancyDetailPage() {
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-8 p-8">
         <div className="lg:w-1/2">
           <Image
-            src={vacancy.thumbnailUrl}
+            src={
+              isValidImageUrl(vacancy.thumbnail_url)
+                ? vacancy.thumbnail_url
+                : "/no-image.jpg"
+            }
             alt={vacancy.position}
             width={800}
             height={400}
@@ -40,20 +43,18 @@ export default function VacancyDetailPage() {
             }}
           />
         </div>
-        <div className="lg:w-1/2 p-4 bg-white rounded-lg shadow-md">
+        <div className="lg:w-1/2 p-4 bg-white text-gray-800 rounded-lg shadow-md">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-3xl font-bold text-primary">
               {vacancy.position}
             </h1>
             <span
               className={clsx(
-                "px-2 py-1 rounded-md text-xs font-bold",
-                vacancy.isClosed
-                  ? "bg-red-500 text-white"
-                  : "bg-green-500 text-white",
+                "px-2 py-1 rounded-md text-xs font-bold text-white",
+                vacancy.is_closed ? "bg-red-500 " : "bg-green-500 ",
               )}
             >
-              {vacancy.isClosed ? "Closed" : "Open"}
+              {vacancy.is_closed ? "Closed" : "Open"}
             </span>
           </div>
           <h2 className="text-lg font-medium text-gray-800 mb-2">
@@ -61,10 +62,10 @@ export default function VacancyDetailPage() {
           </h2>
           <div className="flex items-center mb-4">
             <span className="text-gray-500 text-sm">
-              {vacancy.appliedCount} Applied
+              {vacancy.applied_count} Applied
             </span>
             <span className="text-primary text-sm font-medium ml-4">
-              {vacancy.jobType} - {vacancy.incomeType}
+              {vacancy.job_type} - {vacancy.income_type}
             </span>
           </div>
           <p className="text-gray-700 text-lg leading-relaxed mb-6">

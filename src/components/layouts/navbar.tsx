@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Box, IconButton } from "@chakra-ui/react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import useAuthStore from "@/contexts/(auth)/reducer";
+import useAuthStore from "@/contexts/(auth)/state";
 import { Button } from "../ui/button";
 import { BsPerson } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";

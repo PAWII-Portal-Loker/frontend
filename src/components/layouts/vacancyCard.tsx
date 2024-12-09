@@ -1,3 +1,4 @@
+import { isValidImageUrl } from "@/common/utils/validImageUrl";
 import { VacancyEntity } from "@/contexts/(vacancy)/type";
 import clsx from "clsx";
 import Image from "next/image";
@@ -12,7 +13,11 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
     <Link href={`/vacancy/${vacancy.id}`} className="block">
       <div className="bg-white rounded-lg shadow-md overflow-hidden relative">
         <Image
-          src={vacancy.thumbnailUrl}
+          src={
+            isValidImageUrl(vacancy.thumbnail_url)
+              ? vacancy.thumbnail_url
+              : "/no-image.jpg"
+          }
           alt={vacancy.position}
           width={500}
           height={200}
@@ -25,12 +30,12 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
         <span
           className={clsx(
             "absolute top-2 right-2 px-2 py-1 rounded-md text-xs font-bold",
-            vacancy.isClosed
+            vacancy.is_closed
               ? "bg-red-500 text-white"
               : "bg-green-500 text-white",
           )}
         >
-          {vacancy.isClosed ? "Closed" : "Open"}
+          {vacancy.is_closed ? "Closed" : "Open"}
         </span>
         <div className="p-4">
           <p className="text-lg font-bold text-gray-800 hover:text-primary transition-colors duration-200">
@@ -41,10 +46,10 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
           </p>
           <div className="flex items-center justify-between">
             <span className="text-gray-500 text-xs">
-              {vacancy.appliedCount} Applied
+              {vacancy.applied_count} Applied
             </span>
             <span className="text-primary text-xs font-medium">
-              {vacancy.jobType} - {vacancy.incomeType}
+              {vacancy.job_type} - {vacancy.income_type}
             </span>
           </div>
         </div>

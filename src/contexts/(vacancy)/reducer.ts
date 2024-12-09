@@ -1,25 +1,17 @@
-import { create } from "zustand";
 import VacancyService from "./service";
-import { VacancyActions, VacancyState } from "./state";
+import useVacancyStore from "./state";
 import { toaster } from "@/components/ui/toaster";
 
 const vacancyService = new VacancyService();
 
-type StoreState = VacancyState & VacancyActions;
-const useVacancyStore = create<StoreState>((set) => ({
-  vacancies: [],
-  vacancy: null,
-  isLoading: false,
+export const fetchVacancies = () => {
+  const { setVacancies, setIsLoading } = useVacancyStore.getState();
+  setIsLoading(true);
 
-  setVacancies: (vacancies) => set({ vacancies }),
-  setVacancy: (vacancy) => set({ vacancy }),
-  setIsLoading: (loading) => set({ isLoading: loading }),
-  fetchVacancies: async () => {
-    set({ isLoading: true });
-
-    vacancyService.getDummy({
+  vacancyService.getAll(
+    {
       onSuccess: (vacancies) => {
-        set({ vacancies });
+        setVacancies(vacancies);
       },
       onError: (message: string) => {
         toaster.create({
@@ -30,31 +22,31 @@ const useVacancyStore = create<StoreState>((set) => ({
         });
       },
       onFullfilled() {
-        set({ isLoading: false });
+        setIsLoading(false);
       },
-    });
-  },
+    },
+    Object.assign(useVacancyStore.getState().filters),
+  );
+};
 
-  fetchVacancy: async (id) => {
-    set({ isLoading: true });
+export const fetchVacancy = (id: string) => {
+  const { setIsLoading, setVacancy } = useVacancyStore.getState();
+  setIsLoading(true);
 
-    vacancyService.getOneDummy(id, {
-      onSuccess: (vacancy) => {
-        set({ vacancy });
-      },
-      onError: (message: string) => {
-        toaster.create({
-          title: "Failed to fetch vacancy",
-          description: message,
-          type: "error",
-          duration: 3000,
-        });
-      },
-      onFullfilled() {
-        set({ isLoading: false });
-      },
-    });
-  },
-}));
-
-export default useVacancyStore;
+  vacancyService.getOne(id, {
+    onSuccess: (vacancy) => {
+      setVacancy(vacancy);
+    },
+    onError: (message: string) => {
+      toaster.create({
+        title: "Failed to fetch vacancy",
+        description: message,
+        type: "error",
+        duration: 3000,
+      });
+    },
+    onFullfilled() {
+      setIsLoading(false);
+    },
+  });
+};

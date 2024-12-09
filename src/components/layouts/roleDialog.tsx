@@ -13,7 +13,6 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import useRoleDialogStore from "@/hooks/(roleDialog)/reducer";
 import { slideVariants } from "@/common/types/animationVariants";
-import { useCompanyTypeStore } from "@/contexts/const/reducer";
 import {
   FormValues as companyFormValues,
   schema as companySchema,
@@ -24,9 +23,10 @@ import {
 } from "@/common/types/formRules/jobSeeker";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RoleCardPicker from "../containers/roleCardPicker";
-import { useCompanyStore } from "@/contexts/company/reducer";
-import { useJobSeekerStore } from "@/contexts/jobSeeker/reducer";
+import { useCompanyStore } from "@/contexts/company/state";
+import { useJobSeekerStore } from "@/contexts/jobSeeker/state";
 import RoleForm from "./roleForm";
+import { useCompanyTypeStore } from "@/contexts/const/state";
 
 export default function RoleDialog() {
   const {

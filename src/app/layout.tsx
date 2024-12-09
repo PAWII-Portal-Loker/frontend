@@ -8,9 +8,10 @@ import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/layouts/footer";
 import LoginDialog from "@/components/layouts/loginDialog";
 import RegisterDialog from "@/components/layouts/registerDialog";
-import useAuthStore from "@/contexts/(auth)/reducer";
+import useAuthStore from "@/contexts/(auth)/state";
 import { useEffect } from "react";
 import RoleDialog from "@/components/layouts/roleDialog";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,9 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <link rel="icon" href="/logo.png" sizes="any" />
+      </Head>
       <body className={`${inter.className} bg-slate-700 text-gray-100`}>
         <Provider>
           <Navbar />

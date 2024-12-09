@@ -3,9 +3,9 @@ import { JobSeekerEntity } from "../jobSeeker/type";
 
 export interface ApplicationEntity {
   id: string;
-  jobSeeker: JobSeekerEntity;
+  job_seeker: JobSeekerEntity;
   vacancy: VacancyEntity;
-  documentUrls: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  document_urls: string[];
+  created_at: Date;
+  updated_at: Date;
 }

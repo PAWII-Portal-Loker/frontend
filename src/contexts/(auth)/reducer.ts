@@ -1,129 +1,125 @@
 import AuthService from "./service";
-import { AuthActions, AuthState } from "./state";
-import { create } from "zustand";
+import useAuthStore from "./state";
 import { toaster } from "@/components/ui/toaster";
 import useMainStore from "@/hooks/main/reducer";
 import useRoleDialogStore from "@/hooks/(roleDialog)/reducer";
+import { SignInRequest, SignUpRequest } from "./type";
 
 const authService = new AuthService();
 
-type StoreState = AuthState & AuthActions;
-const useAuthStore = create<StoreState>((set) => ({
-  isAuthenticated: false,
-  role: null,
-  isLoading: false,
+export const signIn = (request: SignInRequest) => {
+  const { setIsLoading, setIsAuthenticated, checkLogin } =
+    useAuthStore.getState();
+  const { setIsLoginDialogOpen } = useMainStore.getState();
+  const { email, password } = request;
 
-  setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
-  setRole: (role) => set({ role }),
-  setIsLoading: (isLoading) => set({ isLoading }),
-
-  signIn: async (email, password) => {
-    set({ isLoading: true });
-
-    authService.signIn(
-      { email, password },
-      {
-        onSuccess: () => {
-          toaster.create({
-            title: "Login successful",
-            type: "success",
-            duration: 3000,
-          });
-          set({ isAuthenticated: true });
-          useMainStore.getState().setIsLoginDialogOpen(false);
-          useAuthStore.getState().checkLogin();
-        },
-        onError: (message: string) => {
-          toaster.create({
-            title: "Login failed",
-            description: message || "Failed to login",
-            type: "error",
-            duration: 3000,
-          });
-        },
-        onFullfilled() {
-          set({ isLoading: false });
-        },
-      },
-    );
-  },
-
-  signUp: async (email, wa_number, password) => {
-    set({ isLoading: true });
-
-    authService.signUp(
-      { email, password, wa_number },
-      {
-        onSuccess: () => {
-          toaster.create({
-            title: "Registration successful",
-            type: "success",
-            duration: 3000,
-          });
-          useMainStore.getState().setIsRegisterDialogOpen(false);
-          useMainStore.getState().setIsLoginDialogOpen(true);
-        },
-        onError: (message: string) => {
-          toaster.create({
-            title: "Registration failed",
-            description: message || "Failed to register",
-            type: "error",
-            duration: 3000,
-          });
-        },
-        onFullfilled() {
-          set({ isLoading: false });
-        },
-      },
-    );
-  },
-
-  checkLogin: async () => {
-    authService.isLogin({
-      onSuccess: (data) => {
-        set({ isAuthenticated: data.is_login });
-        set({ role: data.role });
-        useRoleDialogStore.getState().setSelectedRole(data.role);
-
-        if (
-          useAuthStore.getState().isAuthenticated &&
-          !useAuthStore.getState().role
-        ) {
-          useRoleDialogStore.getState().setIsRoleDialogOpen(true);
-        }
-
-        if (!useAuthStore.getState().isAuthenticated) {
-          useRoleDialogStore.getState().setIsRoleDialogOpen(false);
-          useMainStore.getState().setIsLoginDialogOpen(true);
-        }
-      },
-      onError: () => {
-        set({ isAuthenticated: false });
-        set({ role: null });
-      },
-    });
-  },
-
-  signOut: async () => {
-    authService.signOut({
+  authService.signIn(
+    { email, password },
+    {
       onSuccess: () => {
         toaster.create({
-          title: "Logout successful",
+          title: "Login successful",
           type: "success",
           duration: 3000,
         });
-        set({ isAuthenticated: false });
-        set({ role: null });
+        setIsAuthenticated(true);
+        setIsLoginDialogOpen(false);
+        checkLogin();
       },
-      onError: () => {
+      onError: (message: string) => {
         toaster.create({
-          title: "Logout failed",
+          title: "Login failed",
+          description: message || "Failed to login",
           type: "error",
           duration: 3000,
         });
       },
-    });
-  },
-}));
+      onFullfilled() {
+        setIsLoading(false);
+      },
+    },
+  );
+};
 
-export default useAuthStore;
+export const signUp = (request: SignUpRequest) => {
+  const { setIsLoading } = useAuthStore.getState();
+  const { setIsRegisterDialogOpen, setIsLoginDialogOpen } =
+    useMainStore.getState();
+  const { email, wa_number, password } = request;
+  setIsLoading(true);
+
+  authService.signUp(
+    { email, password, wa_number },
+    {
+      onSuccess: () => {
+        toaster.create({
+          title: "Registration successful",
+          type: "success",
+          duration: 3000,
+        });
+        setIsRegisterDialogOpen(false);
+        setIsLoginDialogOpen(true);
+      },
+      onError: (message: string) => {
+        toaster.create({
+          title: "Registration failed",
+          description: message || "Failed to register",
+          type: "error",
+          duration: 3000,
+        });
+      },
+      onFullfilled() {
+        setIsLoading(false);
+      },
+    },
+  );
+};
+
+export const checkLogin = () => {
+  const { setIsAuthenticated, setRole } = useAuthStore.getState();
+  authService.isLogin({
+    onSuccess: (data) => {
+      setIsAuthenticated(data.is_login);
+      setRole(data.role);
+      useRoleDialogStore.getState().setSelectedRole(data.role);
+
+      if (
+        useAuthStore.getState().isAuthenticated &&
+        !useAuthStore.getState().role
+      ) {
+        useRoleDialogStore.getState().setIsRoleDialogOpen(true);
+      }
+
+      if (!useAuthStore.getState().isAuthenticated) {
+        useRoleDialogStore.getState().setIsRoleDialogOpen(false);
+        useMainStore.getState().setIsLoginDialogOpen(true);
+      }
+    },
+    onError: () => {
+      setIsAuthenticated(false);
+      setRole(null);
+    },
+  });
+};
+
+export const signOut = () => {
+  const { setIsAuthenticated, setRole } = useAuthStore.getState();
+  authService.signOut({
+    onSuccess: () => {
+      toaster.create({
+        title: "Logout successful",
+        type: "success",
+        duration: 3000,
+      });
+      setIsAuthenticated(false);
+      setRole(null);
+    },
+    onError: () => {
+      toaster.create({
+        title: "Logout failed",
+        type: "error",
+        duration: 3000,
+      });
+    },
+  });
+};

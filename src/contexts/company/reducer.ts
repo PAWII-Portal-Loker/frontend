@@ -1,114 +1,111 @@
-import { create } from "zustand";
+import { CompanyRequestEntity } from "./type";
+import { useCompanyStore } from "./state";
+import useRoleDialogStore from "@/hooks/(roleDialog)/reducer";
 import { toaster } from "@/components/ui/toaster";
 import CompanyService from "./service";
-import { CompanyActions, CompanyState } from "./state";
-import { CompanyRequestEntity, defaultCompanyEntity } from "./type";
-import useAuthStore from "../(auth)/reducer";
-import useRoleDialogStore from "@/hooks/(roleDialog)/reducer";
+import useAuthStore from "../(auth)/state";
 
 const companyService = new CompanyService();
 
-type CompanyStoreState = CompanyState & CompanyActions;
-export const useCompanyStore = create<CompanyStoreState>((set) => ({
-  data: [],
-  isLoading: false,
-  singleData: defaultCompanyEntity,
+export class CompanyReducer {}
+export const fetchData = () => {
+  const { setIsLoading, setData } = useCompanyStore.getState();
 
-  setData: (data) => set({ data }),
-  setSingleData: (singleData) => set({ singleData }),
-  setIsLoading: (isLoading) => set({ isLoading }),
+  setIsLoading(true);
 
-  fetchData: () => {
-    set({ isLoading: true });
+  companyService.getAll({
+    onSuccess: (data) => {
+      setData(data);
+    },
+    onError: (message: string) => {
+      toaster.create({
+        title: "Failed to fetch company",
+        description: message,
+        type: "error",
+        duration: 3000,
+      });
+    },
+    onFullfilled() {
+      setIsLoading(false);
+    },
+  });
+};
 
-    companyService.getAll({
-      onSuccess: (data) => {
-        set({ data });
-      },
-      onError: (message: string) => {
-        toaster.create({
-          title: "Failed to fetch company",
-          description: message,
-          type: "error",
-          duration: 3000,
-        });
-      },
-      onFullfilled() {
-        set({ isLoading: false });
-      },
-    });
-  },
+export const fetchSingleData = (id: string) => {
+  const { setIsLoading, setSingleData } = useCompanyStore.getState();
 
-  fetchSingleData: (id) => {
-    set({ isLoading: true });
+  setIsLoading(true);
 
-    companyService.getOne(id, {
-      onSuccess: (singleData) => {
-        set({ singleData });
-      },
-      onError: (message: string) => {
-        toaster.create({
-          title: "Failed to fetch company",
-          description: message,
-          type: "error",
-          duration: 3000,
-        });
-      },
-      onFullfilled() {
-        set({ isLoading: false });
-      },
-    });
-  },
+  companyService.getOne(id, {
+    onSuccess: (singleData) => {
+      setSingleData(singleData);
+    },
+    onError: (message: string) => {
+      toaster.create({
+        title: "Failed to fetch company",
+        description: message,
+        type: "error",
+        duration: 3000,
+      });
+    },
+    onFullfilled() {
+      setIsLoading(false);
+    },
+  });
+};
 
-  createData: (request) => {
-    set({ isLoading: true });
+export const createData = (request: CompanyRequestEntity) => {
+  const { setIsLoading } = useCompanyStore.getState();
 
-    companyService.create(request as CompanyRequestEntity, {
-      onSuccess: () => {
-        toaster.create({
-          title: `Company ${request.company_name} created`,
-          type: "success",
-          duration: 3000,
-        });
-        useRoleDialogStore.getState().setIsRoleDialogOpen(false);
-        useAuthStore.getState().checkLogin();
-      },
-      onError: (message: string) => {
-        toaster.create({
-          title: "Failed to create company",
-          description: message,
-          type: "error",
-          duration: 3000,
-        });
-      },
-      onFullfilled() {
-        set({ isLoading: false });
-      },
-    });
-  },
+  setIsLoading(true);
 
-  updateData: (request) => {
-    set({ isLoading: true });
+  companyService.create(request, {
+    onSuccess: () => {
+      toaster.create({
+        title: `Company ${request.company_name} created`,
+        type: "success",
+        duration: 3000,
+      });
+      useRoleDialogStore.getState().setIsRoleDialogOpen(false);
+      useAuthStore.getState().checkLogin();
+    },
+    onError: (message: string) => {
+      toaster.create({
+        title: "Failed to create company",
+        description: message,
+        type: "error",
+        duration: 3000,
+      });
+    },
+    onFullfilled() {
+      setIsLoading(false);
+    },
+  });
+};
 
-    companyService.update(request as CompanyRequestEntity, {
-      onSuccess: () => {
-        toaster.create({
-          title: "Company updated",
-          type: "success",
-          duration: 3000,
-        });
-      },
-      onError: (message: string) => {
-        toaster.create({
-          title: "Failed to update company",
-          description: message,
-          type: "error",
-          duration: 3000,
-        });
-      },
-      onFullfilled() {
-        set({ isLoading: false });
-      },
-    });
-  },
-}));
+export const updateData = (request: CompanyRequestEntity) => {
+  const { setIsLoading } = useCompanyStore.getState();
+
+  setIsLoading(true);
+
+  companyService.update(request, {
+    onSuccess: () => {
+      toaster.create({
+        title: "Company updated",
+        type: "success",
+        duration: 3000,
+      });
+    },
+    onError: (message: string) => {
+      toaster.create({
+        title: "Failed to update company",
+        description: message,
+        type: "error",
+        duration: 3000,
+      });
+    },
+    onFullfilled() {
+      setIsLoading(false);
+    },
+  });
+};

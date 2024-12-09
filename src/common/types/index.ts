@@ -29,8 +29,10 @@ export type APIResponse<T = void> = {
 };
 
 export type FilterType = {
-  order_by?: "desc" | "asc";
-  sort?: string;
+  page: Pagination["page"];
+  limit: Pagination["limit"];
+  order: "desc" | "asc";
+  sort: "createdAt" | "updatedAt";
 };
 
 export type FetchCallback<T> = {
@@ -47,11 +49,4 @@ export type FilterParams = {
   params: {
     [key: string]: string | number;
   };
-};
-
-export type CommonParams = {
-  limit: number;
-  page: number;
-  order_by: "created_at" | "updated_at";
-  sort: "desc" | "asc";
 };

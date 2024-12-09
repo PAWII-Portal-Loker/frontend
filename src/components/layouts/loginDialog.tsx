@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import useMainStore from "@/hooks/main/reducer";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import useAuthStore from "@/contexts/(auth)/reducer";
+import useAuthStore from "@/contexts/(auth)/state";
 import { fields, FormValues, schema } from "@/common/types/formRules/login";
 import clsx from "clsx";
 
@@ -31,7 +31,10 @@ export default function LoginDialog() {
   });
 
   const onSubmit = handleSubmit((data: FormValues) => {
-    signIn(data.email, data.password);
+    signIn({
+      email: data.email,
+      password: data.password,
+    });
   });
 
   return (
@@ -65,7 +68,7 @@ export default function LoginDialog() {
                   type={field.type}
                   placeholder={field.placeholder}
                   className={clsx(
-                    "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400",
+                    "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
                     !errors[field.name]
                       ? "focus:ring-blue-500"
                       : "focus:ring-red-500",

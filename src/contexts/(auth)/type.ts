@@ -1,3 +1,5 @@
+import { AuthState } from "./state";
+
 export interface UserEntity {
   id: string;
   role: string;
@@ -42,4 +44,10 @@ export type SignUpRequest = SignInRequest & {
 export type IsLoginResponse = {
   is_login: boolean;
   role: "JOB_SEEKER" | "COMPANY";
+};
+
+export const defaultAuthState: AuthState = {
+  isAuthenticated: false,
+  role: null,
+  isLoading: false,
 };

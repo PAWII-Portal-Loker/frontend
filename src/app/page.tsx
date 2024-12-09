@@ -1,7 +1,8 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import Dropdown from "@/components/containers/dropdown";
-import { useIncomeTypeStore, useJobTypeStore } from "@/contexts/const/reducer";
+import { useIncomeTypeStore, useJobTypeStore } from "@/contexts/const/state";
 import useDashboardStore from "@/hooks/dashboard/reducer";
 import { Input } from "@chakra-ui/react";
 import { useEffect } from "react";
