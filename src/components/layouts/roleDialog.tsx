@@ -11,7 +11,7 @@ import {
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import useRoleDialogStore from "@/hooks/(roleDialog)/reducer";
+import useRoleDialogStore from "@/hooks/(roleDialog)/store";
 import { slideVariants } from "@/common/types/animationVariants";
 import {
   FormValues as companyFormValues,
@@ -23,10 +23,10 @@ import {
 } from "@/common/types/formRules/jobSeeker";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RoleCardPicker from "../containers/roleCardPicker";
-import { useCompanyStore } from "@/contexts/company/state";
-import { useJobSeekerStore } from "@/contexts/jobSeeker/state";
+import { useCompanyStore } from "@/contexts/company/store";
+import { useJobSeekerStore } from "@/contexts/jobSeeker/store";
 import RoleForm from "./roleForm";
-import { useCompanyTypeStore } from "@/contexts/const/state";
+import { useCompanyTypeStore } from "@/contexts/const/store";
 
 export default function RoleDialog() {
   const {

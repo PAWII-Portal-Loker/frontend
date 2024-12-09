@@ -1,9 +1,7 @@
-export interface CommonState<T> {
+export interface CommonStoreState<T> {
   data: T[];
   isLoading: boolean;
-}
 
-export interface CommonActions<T> {
   setData: (data: T[]) => void;
   setIsLoading: (loading: boolean) => void;
   fetchData: () => void;

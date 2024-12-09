@@ -1,8 +1,7 @@
 import { create } from "zustand";
-import { DashboardActions, DashboardState } from "./state";
+import { DashboardStoreState } from "./type";
 
-type StoreState = DashboardState & DashboardActions;
-const useDashboardStore = create<StoreState>((set) => ({
+const useDashboardStore = create<DashboardStoreState>((set) => ({
   isSearchFocused: false,
 
   setIsSearchFocused: (isFocused) => set({ isSearchFocused: isFocused }),

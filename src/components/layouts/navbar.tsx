@@ -4,17 +4,17 @@ import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosClose } from "react-icons/io";
 import Image from "next/image";
-import useMainStore from "@/hooks/main/reducer";
+import useMainStore from "@/hooks/main/store";
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, IconButton } from "@chakra-ui/react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import useAuthStore from "@/contexts/(auth)/state";
+import useAuthStore from "@/contexts/(auth)/store";
 import { Button } from "../ui/button";
 import { BsPerson } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";
-import useRoleDialogStore from "@/hooks/(roleDialog)/reducer";
+import useRoleDialogStore from "@/hooks/(roleDialog)/store";
 
 const navLinks = [
   { href: "/", label: "Dashboard" },

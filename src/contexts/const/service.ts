@@ -70,4 +70,18 @@ export default class ConstService {
       callback.onFullfilled();
     }
   }
+
+  async getLastEducationTypes(callback: FetchCallback<string[]>) {
+    const res: APIResponse<string[]> = await this.api.GET(
+      "v1/consts/last-education-types",
+    );
+    if (!res?.success) {
+      callback.onError(res.message);
+    } else {
+      callback.onSuccess(res.data);
+    }
+    if (callback.onFullfilled) {
+      callback.onFullfilled();
+    }
+  }
 }

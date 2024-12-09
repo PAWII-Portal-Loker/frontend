@@ -1,8 +1,7 @@
 import { create } from "zustand";
-import { RoleDialogActions, RoleDialogState } from "./state";
+import { RoleDialogStoreState } from "./type";
 
-type StoreState = RoleDialogState & RoleDialogActions;
-const useRoleDialogStore = create<StoreState>((set) => ({
+const useRoleDialogStore = create<RoleDialogStoreState>((set) => ({
   selectedRole: null,
   isRoleDialogOpen: false,
   isLoading: false,

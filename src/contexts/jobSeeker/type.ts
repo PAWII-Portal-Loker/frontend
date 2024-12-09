@@ -1,3 +1,4 @@
+import { CommonStoreState } from "@/common/types/commonStoreState";
 import { defaultUserEntity, UserEntity } from "../(auth)/type";
 
 export interface JobSeekerRequestEntity {
@@ -24,3 +25,12 @@ export const defaultJobSeekerEntity: JobSeekerEntity = {
   created_at: new Date(),
   updated_at: new Date(),
 };
+
+export interface JobSeekerStoreState extends CommonStoreState<JobSeekerEntity> {
+  singleData: JobSeekerEntity;
+
+  setSingleData: (data: JobSeekerEntity) => void;
+  fetchSingleData: (id: string) => void;
+  createData: (data: JobSeekerRequestEntity) => void;
+  updateData: (data: JobSeekerRequestEntity) => void;
+}

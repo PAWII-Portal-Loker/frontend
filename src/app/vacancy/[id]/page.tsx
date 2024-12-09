@@ -1,6 +1,6 @@
 "use client";
 
-import useVacancyStore from "@/contexts/(vacancy)/state";
+import useVacancyStore from "@/contexts/(vacancy)/store";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
@@ -9,7 +9,11 @@ import { isValidImageUrl } from "@/common/utils/validImageUrl";
 
 export default function VacancyDetailPage() {
   const { id } = useParams();
-  const { vacancy, isLoading, fetchVacancy } = useVacancyStore();
+  const {
+    singleData: vacancy,
+    isLoading,
+    fetchSingleData: fetchVacancy,
+  } = useVacancyStore();
 
   useEffect(() => {
     fetchVacancy(id as string);

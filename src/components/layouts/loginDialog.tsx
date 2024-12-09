@@ -10,10 +10,10 @@ import {
 import { Stack, Input, Text } from "@chakra-ui/react";
 import { LuLogIn } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
-import useMainStore from "@/hooks/main/reducer";
+import useMainStore from "@/hooks/main/store";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import useAuthStore from "@/contexts/(auth)/state";
+import useAuthStore from "@/contexts/(auth)/store";
 import { fields, FormValues, schema } from "@/common/types/formRules/login";
 import clsx from "clsx";
 

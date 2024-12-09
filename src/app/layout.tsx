@@ -8,7 +8,7 @@ import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/layouts/footer";
 import LoginDialog from "@/components/layouts/loginDialog";
 import RegisterDialog from "@/components/layouts/registerDialog";
-import useAuthStore from "@/contexts/(auth)/state";
+import useAuthStore from "@/contexts/(auth)/store";
 import { useEffect } from "react";
 import RoleDialog from "@/components/layouts/roleDialog";
 import Head from "next/head";

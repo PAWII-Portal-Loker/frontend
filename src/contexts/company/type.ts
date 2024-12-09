@@ -1,3 +1,4 @@
+import { CommonStoreState } from "@/common/types/commonStoreState";
 import { defaultUserEntity, UserEntity } from "../(auth)/type";
 
 export interface CompanyRequestEntity {
@@ -28,3 +29,12 @@ export const defaultCompanyEntity: CompanyEntity = {
   created_at: new Date(),
   updated_at: new Date(),
 };
+
+export interface CompanyStoreState extends CommonStoreState<CompanyEntity> {
+  singleData: CompanyEntity;
+
+  setSingleData: (data: CompanyEntity) => void;
+  fetchSingleData: (id: string) => void;
+  createData: (data: CompanyRequestEntity) => void;
+  updateData: (data: CompanyRequestEntity) => void;
+}

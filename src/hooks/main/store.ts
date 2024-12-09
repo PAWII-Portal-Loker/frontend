@@ -1,8 +1,7 @@
 import { create } from "zustand";
-import { MainActions, MainState } from "./state";
+import { MainStoreState } from "./type";
 
-type StoreState = MainState & MainActions;
-const useMainStore = create<StoreState>((set) => ({
+const useMainStore = create<MainStoreState>((set) => ({
   isNavigationOpen: false,
   setIsNavigationOpen: (isOpen) => set({ isNavigationOpen: isOpen }),
   isLoginDialogOpen: false,

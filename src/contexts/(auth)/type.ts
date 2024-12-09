@@ -1,5 +1,3 @@
-import { AuthState } from "./state";
-
 export interface UserEntity {
   id: string;
   role: string;
@@ -46,8 +44,17 @@ export type IsLoginResponse = {
   role: "JOB_SEEKER" | "COMPANY";
 };
 
-export const defaultAuthState: AuthState = {
-  isAuthenticated: false,
-  role: null,
-  isLoading: false,
-};
+export interface AuthStoreState {
+  isAuthenticated: boolean;
+  role: "JOB_SEEKER" | "COMPANY" | null;
+  isLoading: boolean;
+
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  setRole: (role: "JOB_SEEKER" | "COMPANY" | null) => void;
+  setIsLoading: (isLoading: boolean) => void;
+
+  signIn: (request: SignInRequest) => void;
+  signUp: (request: SignUpRequest) => void;
+  checkLogin: () => void;
+  signOut: () => void;
+}
