@@ -1,5 +1,5 @@
 import { initialCommonState } from "@/common/types/commonStoreState";
-import { defaultJobSeekerEntity, JobSeekerStoreState } from "./type";
+import { defaultJobSeekerDto, JobSeekerStoreState } from "./type";
 import { create } from "zustand";
 import JobSeekerService from "./service";
 import { toaster } from "@/components/ui/toaster";
@@ -13,7 +13,7 @@ const { checkLogin } = useAuthStore.getState();
 
 export const useJobSeekerStore = create<JobSeekerStoreState>((set, get) => ({
   ...initialCommonState,
-  singleData: defaultJobSeekerEntity,
+  singleData: defaultJobSeekerDto,
 
   setData: (data) => set({ data }),
   setSingleData: (singleData) => set({ singleData }),

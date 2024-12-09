@@ -1,15 +1,13 @@
 import { formatDate } from "@/common/utils/date";
 import API from "..";
-import { CompanyEntity, CompanyRequestEntity } from "./type";
+import { CompanyDto, CompanyRequestDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class CompanyService {
   private api: API = new API();
 
-  async getAll(callback: FetchCallback<CompanyEntity[]>) {
-    const res: APIResponse<CompanyEntity[]> = await this.api.GET(
-      "v1/companies",
-    );
+  async getAll(callback: FetchCallback<CompanyDto[]>) {
+    const res: APIResponse<CompanyDto[]> = await this.api.GET("v1/companies");
     if (!res?.success) {
       callback.onError(res.message);
     } else {
@@ -20,8 +18,8 @@ export default class CompanyService {
     }
   }
 
-  async getOne(id: string, callback: FetchCallback<CompanyEntity>) {
-    const res: APIResponse<CompanyEntity> = await this.api.GET(
+  async getOne(id: string, callback: FetchCallback<CompanyDto>) {
+    const res: APIResponse<CompanyDto> = await this.api.GET(
       `v1/companies/${id}`,
     );
     if (!res?.success) {
@@ -35,13 +33,13 @@ export default class CompanyService {
   }
 
   async create(
-    payload: CompanyRequestEntity,
-    callback: FetchCallback<CompanyEntity>,
+    payload: CompanyRequestDto,
+    callback: FetchCallback<CompanyDto>,
   ) {
-    const res: APIResponse<CompanyEntity> = await this.api.POST(
-      "v1/companies",
-      { ...payload, founding_date: formatDate(payload.founding_date) },
-    );
+    const res: APIResponse<CompanyDto> = await this.api.POST("v1/companies", {
+      ...payload,
+      founding_date: formatDate(payload.founding_date),
+    });
     if (!res?.success) {
       callback.onError(res.message);
     } else {
@@ -53,10 +51,10 @@ export default class CompanyService {
   }
 
   async update(
-    payload: CompanyRequestEntity,
-    callback: FetchCallback<CompanyEntity>,
+    payload: CompanyRequestDto,
+    callback: FetchCallback<CompanyDto>,
   ) {
-    const res: APIResponse<CompanyEntity> = await this.api.PUT(
+    const res: APIResponse<CompanyDto> = await this.api.PUT(
       "v1/companies",
       payload,
     );

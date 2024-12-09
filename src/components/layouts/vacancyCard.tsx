@@ -1,11 +1,11 @@
 import { isValidImageUrl } from "@/common/utils/validImageUrl";
-import { VacancyEntity } from "@/contexts/(vacancy)/type";
+import { VacancyDto } from "@/contexts/(vacancy)/type";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 
 interface VacancyCardProps {
-  vacancy: VacancyEntity;
+  vacancy: VacancyDto;
 }
 
 export default function VacancyCard({ vacancy }: VacancyCardProps) {

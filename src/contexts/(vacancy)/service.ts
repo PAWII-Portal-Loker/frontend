@@ -1,14 +1,11 @@
 import API from "..";
-import { VacancyEntity } from "./type";
+import { VacancyDto } from "./type";
 import { APIResponse, FetchCallback, FilterParams } from "@/common/types";
 
 export default class VacancyService {
   private api: API = new API();
 
-  async getDummy(
-    callback: FetchCallback<VacancyEntity[]>,
-    params?: FilterParams,
-  ) {
+  async getDummy(callback: FetchCallback<VacancyDto[]>, params?: FilterParams) {
     Object.keys(params?.params || {}).forEach(() => {});
     const response = await fetch("/dummy.json");
     const data = await response.json();
@@ -18,10 +15,10 @@ export default class VacancyService {
     }
   }
 
-  async getOneDummy(id: string, callback: FetchCallback<VacancyEntity>) {
+  async getOneDummy(id: string, callback: FetchCallback<VacancyDto>) {
     const response = await fetch("/dummy.json");
     const data = await response.json();
-    const vacancy = data.vacancy.find((v: VacancyEntity) => v.id === id);
+    const vacancy = data.vacancy.find((v: VacancyDto) => v.id === id);
     if (vacancy) {
       callback.onSuccess(vacancy);
     } else {
@@ -32,11 +29,8 @@ export default class VacancyService {
     }
   }
 
-  async getAll(
-    callback: FetchCallback<VacancyEntity[]>,
-    params?: FilterParams,
-  ) {
-    const res: APIResponse<VacancyEntity[]> = await this.api.GET(
+  async getAll(callback: FetchCallback<VacancyDto[]>, params?: FilterParams) {
+    const res: APIResponse<VacancyDto[]> = await this.api.GET(
       "v1/vacancies",
       params,
     );
@@ -50,8 +44,8 @@ export default class VacancyService {
     }
   }
 
-  async getOne(id: string, callback: FetchCallback<VacancyEntity>) {
-    const res: APIResponse<VacancyEntity> = await this.api.GET(
+  async getOne(id: string, callback: FetchCallback<VacancyDto>) {
+    const res: APIResponse<VacancyDto> = await this.api.GET(
       `v1/vacancies/${id}`,
     );
     if (!res?.success) {

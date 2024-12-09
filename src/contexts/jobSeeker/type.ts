@@ -1,23 +1,23 @@
 import { CommonStoreState } from "@/common/types/commonStoreState";
-import { defaultUserEntity, UserEntity } from "../(auth)/type";
+import { defaultUserDto, UserDto } from "../(auth)/type";
 
-export interface JobSeekerRequestEntity {
+export interface JobSeekerRequestDto {
   name: string;
   last_education: string;
   major: string;
   gpa: number;
 }
 
-export interface JobSeekerEntity extends JobSeekerRequestEntity {
+export interface JobSeekerDto extends JobSeekerRequestDto {
   id: string;
-  user: UserEntity;
+  user: UserDto;
   created_at: Date;
   updated_at: Date;
 }
 
-export const defaultJobSeekerEntity: JobSeekerEntity = {
+export const defaultJobSeekerDto: JobSeekerDto = {
   id: "",
-  user: defaultUserEntity,
+  user: defaultUserDto,
   name: "",
   last_education: "",
   major: "",
@@ -26,11 +26,11 @@ export const defaultJobSeekerEntity: JobSeekerEntity = {
   updated_at: new Date(),
 };
 
-export interface JobSeekerStoreState extends CommonStoreState<JobSeekerEntity> {
-  singleData: JobSeekerEntity;
+export interface JobSeekerStoreState extends CommonStoreState<JobSeekerDto> {
+  singleData: JobSeekerDto;
 
-  setSingleData: (data: JobSeekerEntity) => void;
+  setSingleData: (data: JobSeekerDto) => void;
   fetchSingleData: (id: string) => void;
-  createData: (data: JobSeekerRequestEntity) => void;
-  updateData: (data: JobSeekerRequestEntity) => void;
+  createData: (data: JobSeekerRequestDto) => void;
+  updateData: (data: JobSeekerRequestDto) => void;
 }

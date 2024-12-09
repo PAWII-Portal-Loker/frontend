@@ -1,12 +1,12 @@
 import API from "..";
-import { JobSeekerEntity, JobSeekerRequestEntity } from "./type";
+import { JobSeekerDto, JobSeekerRequestDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class JobSeekerService {
   private api: API = new API();
 
-  async getAll(callback: FetchCallback<JobSeekerEntity[]>) {
-    const res: APIResponse<JobSeekerEntity[]> = await this.api.GET(
+  async getAll(callback: FetchCallback<JobSeekerDto[]>) {
+    const res: APIResponse<JobSeekerDto[]> = await this.api.GET(
       "v1/job-seekers",
     );
     if (!res?.success) {
@@ -19,8 +19,8 @@ export default class JobSeekerService {
     }
   }
 
-  async getOne(id: string, callback: FetchCallback<JobSeekerEntity>) {
-    const res: APIResponse<JobSeekerEntity> = await this.api.GET(
+  async getOne(id: string, callback: FetchCallback<JobSeekerDto>) {
+    const res: APIResponse<JobSeekerDto> = await this.api.GET(
       `v1/job-seekers/${id}`,
     );
     if (!res?.success) {
@@ -34,10 +34,10 @@ export default class JobSeekerService {
   }
 
   async create(
-    payload: JobSeekerRequestEntity,
-    callback: FetchCallback<JobSeekerEntity>,
+    payload: JobSeekerRequestDto,
+    callback: FetchCallback<JobSeekerDto>,
   ) {
-    const res: APIResponse<JobSeekerEntity> = await this.api.POST(
+    const res: APIResponse<JobSeekerDto> = await this.api.POST(
       "v1/job-seekers",
       payload,
     );
@@ -52,10 +52,10 @@ export default class JobSeekerService {
   }
 
   async update(
-    payload: JobSeekerRequestEntity,
-    callback: FetchCallback<JobSeekerEntity>,
+    payload: JobSeekerRequestDto,
+    callback: FetchCallback<JobSeekerDto>,
   ) {
-    const res: APIResponse<JobSeekerEntity> = await this.api.PUT(
+    const res: APIResponse<JobSeekerDto> = await this.api.PUT(
       "v1/job-seekers",
       payload,
     );

@@ -1,11 +1,11 @@
 import API from "..";
-import { ApplicationEntity } from "./type";
+import { ApplicationDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class ApplicationService {
   private api: API = new API();
 
-  async getDummy(callback: FetchCallback<ApplicationEntity[]>) {
+  async getDummy(callback: FetchCallback<ApplicationDto[]>) {
     const response = await fetch("/dummy.json");
     const data = await response.json();
     callback.onSuccess(data.application);
@@ -14,11 +14,11 @@ export default class ApplicationService {
     }
   }
 
-  async getOneDummy(id: string, callback: FetchCallback<ApplicationEntity>) {
+  async getOneDummy(id: string, callback: FetchCallback<ApplicationDto>) {
     const response = await fetch("/dummy.json");
     const data = await response.json();
     const application = data.application.find(
-      (v: ApplicationEntity) => v.id === id,
+      (v: ApplicationDto) => v.id === id,
     );
     if (application) {
       callback.onSuccess(application);
@@ -30,8 +30,8 @@ export default class ApplicationService {
     }
   }
 
-  async getAll(callback: FetchCallback<ApplicationEntity[]>) {
-    const res: APIResponse<ApplicationEntity[]> = await this.api.GET(
+  async getAll(callback: FetchCallback<ApplicationDto[]>) {
+    const res: APIResponse<ApplicationDto[]> = await this.api.GET(
       "v1/application",
     );
     if (!res?.success) {
@@ -44,8 +44,8 @@ export default class ApplicationService {
     }
   }
 
-  async getOne(id: string, callback: FetchCallback<ApplicationEntity>) {
-    const res: APIResponse<ApplicationEntity> = await this.api.GET(
+  async getOne(id: string, callback: FetchCallback<ApplicationDto>) {
+    const res: APIResponse<ApplicationDto> = await this.api.GET(
       `v1/application/${id}`,
     );
     if (!res?.success) {

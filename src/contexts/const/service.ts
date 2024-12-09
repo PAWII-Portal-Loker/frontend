@@ -1,12 +1,12 @@
 import API from "..";
 import { APIResponse, FetchCallback } from "@/common/types";
-import { ConstEntity } from "./type";
+import { ConstDto } from "./type";
 
 export default class ConstService {
   private api: API = new API();
 
-  async getConsts(callback: FetchCallback<ConstEntity>) {
-    const res: APIResponse<ConstEntity> = await this.api.GET("v1/consts");
+  async getConsts(callback: FetchCallback<ConstDto>) {
+    const res: APIResponse<ConstDto> = await this.api.GET("v1/consts");
     if (!res?.success) {
       callback.onError(res.message);
     } else {

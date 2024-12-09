@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import clsx from "clsx";
 import { isValidImageUrl } from "@/common/utils/validImageUrl";
+import LoadingCard from "@/components/containers/loadingCard";
 
 export default function VacancyDetailPage() {
   const { id } = useParams();
@@ -20,11 +21,10 @@ export default function VacancyDetailPage() {
   }, [fetchVacancy, id]);
 
   if (isLoading) {
-    return <div className="text-center">Loading...</div>;
+    return <LoadingCard />;
   }
-
   if (!vacancy) {
-    return <div className="text-center text-gray-500">Vacancy not found</div>;
+    return <div className="text-center text-yellow-500">Vacancy not found</div>;
   }
 
   return (

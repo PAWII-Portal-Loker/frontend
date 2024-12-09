@@ -2,7 +2,7 @@ import { initialCommonState } from "@/common/types/commonStoreState";
 import {
   CompanyTypeStoreState,
   ConstStoreState,
-  defaultConstEntity,
+  defaultConstDto,
   IncomeTypeStoreState,
   JobTypeStoreState,
   LastEducationTypeStoreState,
@@ -15,7 +15,7 @@ import { toaster } from "@/components/ui/toaster";
 const constService = new ConstService();
 
 export const useConstStore = create<ConstStoreState>((set, get) => ({
-  data: defaultConstEntity,
+  data: defaultConstDto,
   isLoading: false,
 
   setData: (data) => set({ data }),

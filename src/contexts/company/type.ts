@@ -1,7 +1,7 @@
 import { CommonStoreState } from "@/common/types/commonStoreState";
-import { defaultUserEntity, UserEntity } from "../(auth)/type";
+import { defaultUserDto, UserDto } from "../(auth)/type";
 
-export interface CompanyRequestEntity {
+export interface CompanyRequestDto {
   company_type: string;
   company_name: string;
   founding_date: Date;
@@ -10,16 +10,16 @@ export interface CompanyRequestEntity {
   end_working_hour: string;
 }
 
-export interface CompanyEntity extends CompanyRequestEntity {
+export interface CompanyDto extends CompanyRequestDto {
   id: string;
-  user: UserEntity;
+  user: UserDto;
   created_at: Date;
   updated_at: Date;
 }
 
-export const defaultCompanyEntity: CompanyEntity = {
+export const defaultCompanyDto: CompanyDto = {
   id: "",
-  user: defaultUserEntity,
+  user: defaultUserDto,
   company_type: "",
   company_name: "",
   founding_date: new Date(),
@@ -30,11 +30,11 @@ export const defaultCompanyEntity: CompanyEntity = {
   updated_at: new Date(),
 };
 
-export interface CompanyStoreState extends CommonStoreState<CompanyEntity> {
-  singleData: CompanyEntity;
+export interface CompanyStoreState extends CommonStoreState<CompanyDto> {
+  singleData: CompanyDto;
 
-  setSingleData: (data: CompanyEntity) => void;
+  setSingleData: (data: CompanyDto) => void;
   fetchSingleData: (id: string) => void;
-  createData: (data: CompanyRequestEntity) => void;
-  updateData: (data: CompanyRequestEntity) => void;
+  createData: (data: CompanyRequestDto) => void;
+  updateData: (data: CompanyRequestDto) => void;
 }

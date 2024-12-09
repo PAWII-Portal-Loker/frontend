@@ -1,10 +1,10 @@
 import { FilterType, Pagination } from "@/common/types";
-import { CompanyEntity } from "../company/type";
+import { CompanyDto } from "../company/type";
 import { CommonStoreState } from "@/common/types/commonStoreState";
 
-export interface VacancyEntity {
+export interface VacancyDto {
   id: string;
-  company: CompanyEntity;
+  company: CompanyDto;
   job_type: string;
   income_type: string;
   position: string;
@@ -38,12 +38,12 @@ export const defaultVacancyFilter: VacancyFilter = {
   isClosed: false,
 };
 
-export interface VacancyStoreState extends CommonStoreState<VacancyEntity> {
-  singleData: VacancyEntity | null;
+export interface VacancyStoreState extends CommonStoreState<VacancyDto> {
+  singleData: VacancyDto | null;
   filters: VacancyFilter;
   pagination: Pagination;
 
-  setSingleData: (data: VacancyEntity) => void;
+  setSingleData: (data: VacancyDto) => void;
   setFilters: (filters: VacancyFilter) => void;
   setPagination: (pagination: Pagination) => void;
   fetchData: () => void;

@@ -1,13 +1,13 @@
 import { CommonStoreState } from "@/common/types/commonStoreState";
 
-export interface ConstEntity {
+export interface ConstDto {
   company_types: string[];
   income_types: string[];
   job_types: string[];
   roles: string[];
 }
 
-export const defaultConstEntity: ConstEntity = {
+export const defaultConstDto: ConstDto = {
   company_types: [],
   income_types: [],
   job_types: [],
@@ -21,10 +21,10 @@ export type RoleStoreState = CommonStoreState<string>;
 export type LastEducationTypeStoreState = CommonStoreState<string>;
 
 export type ConstStoreState = {
-  data: ConstEntity;
+  data: ConstDto;
   isLoading: boolean;
 
-  setData: (data: ConstEntity) => void;
+  setData: (data: ConstDto) => void;
   setIsLoading: (loading: boolean) => void;
   fetchData: () => void;
 };

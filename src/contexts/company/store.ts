@@ -1,5 +1,5 @@
 import { initialCommonState } from "@/common/types/commonStoreState";
-import { CompanyStoreState, defaultCompanyEntity } from "./type";
+import { CompanyStoreState, defaultCompanyDto } from "./type";
 import { create } from "zustand";
 import CompanyService from "./service";
 import { toaster } from "@/components/ui/toaster";
@@ -13,7 +13,7 @@ const { checkLogin } = useAuthStore.getState();
 
 export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
   ...initialCommonState,
-  singleData: defaultCompanyEntity,
+  singleData: defaultCompanyDto,
 
   setData: (data) => set({ data }),
   setSingleData: (singleData) => set({ singleData }),

@@ -1,4 +1,4 @@
-export interface UserEntity {
+export interface UserDto {
   id: string;
   role: string;
   email: string;
@@ -14,7 +14,7 @@ export interface UserEntity {
   updated_at: Date;
 }
 
-export const defaultUserEntity: UserEntity = {
+export const defaultUserDto: UserDto = {
   id: "",
   role: "",
   email: "",
