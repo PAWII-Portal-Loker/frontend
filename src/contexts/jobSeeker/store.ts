@@ -1,10 +1,11 @@
 import { initialCommonState } from "@/common/types/commonStoreState";
-import { defaultJobSeekerDto, JobSeekerStoreState } from "./type";
+import { JobSeekerStoreState } from "./type";
 import { create } from "zustand";
 import JobSeekerService from "./service";
 import { toaster } from "@/components/ui/toaster";
 import useRoleDialogStore from "@/hooks/roleDialog/store";
 import useAuthStore from "../(auth)/store";
+import { DefaultJobSeekerDto } from "./util";
 
 const jobSeekerService = new JobSeekerService();
 
@@ -13,7 +14,7 @@ const { checkLogin } = useAuthStore.getState();
 
 export const useJobSeekerStore = create<JobSeekerStoreState>((set, get) => ({
   ...initialCommonState,
-  singleData: defaultJobSeekerDto,
+  singleData: DefaultJobSeekerDto,
 
   setData: (data) => set({ data }),
   setSingleData: (singleData) => set({ singleData }),

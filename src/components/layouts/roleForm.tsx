@@ -7,15 +7,13 @@ import clsx from "clsx";
 import { NativeSelectField, NativeSelectRoot } from "../ui/native-select";
 import { LuSave } from "react-icons/lu";
 import { Button } from "../ui/button";
-import {
-  fields as jobSeekerFields,
-  FormValues as jobSeekerFormValues,
-} from "@/common/types/formRules/jobSeeker";
 import { BaseSyntheticEvent } from "react";
 import { CompanyCreateDto } from "@/contexts/company/type";
 import { CompanyCreateField } from "@/contexts/company/util";
+import { JobSeekerCreateDto } from "@/contexts/jobSeeker/type";
+import { JobSeekerCreateField } from "@/contexts/jobSeeker/util";
 
-type RoleFormProps<T extends CompanyCreateDto | jobSeekerFormValues> = {
+type RoleFormProps<T extends CompanyCreateDto | JobSeekerCreateDto> = {
   role: "COMPANY" | "JOB_SEEKER";
   onSubmit: (data: BaseSyntheticEvent<object> | undefined) => void;
   formState: {
@@ -24,19 +22,19 @@ type RoleFormProps<T extends CompanyCreateDto | jobSeekerFormValues> = {
     errors: FieldErrors<T>;
   };
   isLoading: boolean;
-  companyTypes?: string[];
-  isCompanyTypesLoading?: boolean;
+  selectData?: string[];
+  isSelectDataLoading?: boolean;
 };
 
-const RoleForm = <T extends CompanyCreateDto | jobSeekerFormValues>({
+const RoleForm = <T extends CompanyCreateDto | JobSeekerCreateDto>({
   role,
   onSubmit,
   formState: { register, control, errors },
   isLoading,
-  companyTypes,
-  isCompanyTypesLoading,
+  selectData,
+  isSelectDataLoading,
 }: RoleFormProps<T>) => {
-  const fields = role === "COMPANY" ? CompanyCreateField : jobSeekerFields;
+  const fields = role === "COMPANY" ? CompanyCreateField : JobSeekerCreateField;
 
   return (
     <Stack as="form" onSubmit={onSubmit}>
@@ -52,23 +50,23 @@ const RoleForm = <T extends CompanyCreateDto | jobSeekerFormValues>({
           {field.type === "select" ? (
             <NativeSelectRoot size="md">
               <NativeSelectField
-                isLoading={isCompanyTypesLoading}
+                isLoading={isSelectDataLoading}
                 className="w-full pl-3 pr-8 py-1 rounded-lg border-2 bg-gray-100 border-gray-300 text-lg text-gray-600 appearance-none"
                 {...register(
-                  field.name as keyof (CompanyCreateDto | jobSeekerFormValues),
+                  field.name as keyof (CompanyCreateDto | JobSeekerCreateDto),
                 )}
                 {...control?.register(
-                  field.name as keyof (CompanyCreateDto | jobSeekerFormValues),
+                  field.name as keyof (CompanyCreateDto | JobSeekerCreateDto),
                 )}
                 placeholder={field.placeholder}
-                items={companyTypes}
+                items={selectData}
                 _loading={{ opacity: 0.5 }}
               />
             </NativeSelectRoot>
           ) : (
             <Input
               {...register(
-                field.name as keyof (CompanyCreateDto | jobSeekerFormValues),
+                field.name as keyof (CompanyCreateDto | JobSeekerCreateDto),
                 {
                   valueAsNumber: field.type === "number",
                 },

@@ -156,7 +156,7 @@ export const useRoleStore = create<RoleStoreState>((set, get) => ({
   },
 }));
 
-export const useLastEducationStore = create<LastEducationTypeStoreState>(
+export const useLastEducationTypeStore = create<LastEducationTypeStoreState>(
   (set, get) => ({
     ...initialCommonState,
 

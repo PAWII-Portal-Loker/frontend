@@ -14,6 +14,11 @@ export type NoPagination<T> = {
   data: T;
 };
 
+export type Timestamps = {
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type WithPagination<T> = {
   data: T;
   pagination: Pagination;

@@ -13,18 +13,19 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import useRoleDialogStore from "@/hooks/roleDialog/store";
 import { slideVariants } from "@/common/types/animationVariants";
-import {
-  FormValues as jobSeekerFormValues,
-  schema as jobSeekerSchema,
-} from "@/common/types/formRules/jobSeeker";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RoleCardPicker from "../containers/roleCardPicker";
 import { useCompanyStore } from "@/contexts/company/store";
 import { useJobSeekerStore } from "@/contexts/jobSeeker/store";
 import RoleForm from "./roleForm";
-import { useCompanyTypeStore } from "@/contexts/enums/store";
+import {
+  useCompanyTypeStore,
+  useLastEducationTypeStore,
+} from "@/contexts/enums/store";
 import { CompanyCreateSchema } from "@/contexts/company/util";
 import { CompanyCreateDto } from "@/contexts/company/type";
+import { JobSeekerCreateDto } from "@/contexts/jobSeeker/type";
+import { JobSeekerCreateSchema } from "@/contexts/jobSeeker/util";
 
 export default function RoleDialog() {
   const {
@@ -42,10 +43,19 @@ export default function RoleDialog() {
     fetchData: fetchCompanyTypes,
     isLoading: isCompanyTypesLoading,
   } = useCompanyTypeStore();
+  const {
+    data: lastEducationTypes,
+    fetchData: fetchLastEducationTypes,
+    isLoading: isLastEducationTypesLoading,
+  } = useLastEducationTypeStore();
 
   useEffect(() => {
     fetchCompanyTypes();
   }, [fetchCompanyTypes]);
+
+  useEffect(() => {
+    fetchLastEducationTypes();
+  }, [fetchLastEducationTypes]);
 
   const {
     register: registerCompany,
@@ -60,8 +70,8 @@ export default function RoleDialog() {
     register: registerJobSeeker,
     handleSubmit: handleSubmitJobSeeker,
     formState: { errors: errorsJobSeeker },
-  } = useForm<jobSeekerFormValues>({
-    resolver: yupResolver(jobSeekerSchema),
+  } = useForm<JobSeekerCreateDto>({
+    resolver: yupResolver(JobSeekerCreateSchema),
   });
 
   const onCompanySubmit = handleSubmitCompany((data) => {
@@ -69,7 +79,7 @@ export default function RoleDialog() {
   });
 
   const onJobSeekerSubmit = handleSubmitJobSeeker((data) => {
-    createJobSeekerRole(data as jobSeekerFormValues);
+    createJobSeekerRole(data);
   });
 
   return (
@@ -101,8 +111,8 @@ export default function RoleDialog() {
                   role="COMPANY"
                   onSubmit={onCompanySubmit}
                   isLoading={isLoading}
-                  companyTypes={companyTypes}
-                  isCompanyTypesLoading={isCompanyTypesLoading}
+                  selectData={companyTypes}
+                  isSelectDataLoading={isCompanyTypesLoading}
                   formState={{
                     register: registerCompany,
                     control: controlCompany,
@@ -115,6 +125,8 @@ export default function RoleDialog() {
                   role="JOB_SEEKER"
                   onSubmit={onJobSeekerSubmit}
                   isLoading={isLoading}
+                  selectData={lastEducationTypes}
+                  isSelectDataLoading={isLastEducationTypesLoading}
                   formState={{
                     register: registerJobSeeker,
                     errors: errorsJobSeeker,

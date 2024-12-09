@@ -1,12 +1,12 @@
 import * as Yup from "yup";
-import { defaultUserDto } from "../(auth)/type";
 import { CompanyCreateDto, CompanyDto } from "./type";
 import FieldConfig from "@/common/types/fieldConfig";
 import { COMPANY_TYPES } from "../enums/types/companyTypes";
+import { DefaultUserDto } from "../(auth)/util";
 
 export const DefaultCompanyDto: CompanyDto = {
   id: "",
-  user: defaultUserDto,
+  user: DefaultUserDto,
   company_type: "",
   company_name: "",
   founding_date: new Date(),
@@ -22,7 +22,7 @@ export const CompanyCreateSchema = Yup.object({
     .required("Company type is required")
     .oneOf(
       COMPANY_TYPES,
-      `Invalid company_type, must be one of "${COMPANY_TYPES.join(", ")}"`,
+      `Invalid company type, must be one of "${COMPANY_TYPES.join(", ")}"`,
     ),
 
   company_name: Yup.string()
