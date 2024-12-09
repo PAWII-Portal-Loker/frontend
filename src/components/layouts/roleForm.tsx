@@ -8,16 +8,14 @@ import { NativeSelectField, NativeSelectRoot } from "../ui/native-select";
 import { LuSave } from "react-icons/lu";
 import { Button } from "../ui/button";
 import {
-  fields as companyFields,
-  FormValues as companyFormValues,
-} from "@/common/types/formRules/company";
-import {
   fields as jobSeekerFields,
   FormValues as jobSeekerFormValues,
 } from "@/common/types/formRules/jobSeeker";
 import { BaseSyntheticEvent } from "react";
+import { CompanyCreateDto } from "@/contexts/company/type";
+import { CompanyCreateField } from "@/contexts/company/util";
 
-type RoleFormProps<T extends companyFormValues | jobSeekerFormValues> = {
+type RoleFormProps<T extends CompanyCreateDto | jobSeekerFormValues> = {
   role: "COMPANY" | "JOB_SEEKER";
   onSubmit: (data: BaseSyntheticEvent<object> | undefined) => void;
   formState: {
@@ -30,7 +28,7 @@ type RoleFormProps<T extends companyFormValues | jobSeekerFormValues> = {
   isCompanyTypesLoading?: boolean;
 };
 
-const RoleForm = <T extends companyFormValues | jobSeekerFormValues>({
+const RoleForm = <T extends CompanyCreateDto | jobSeekerFormValues>({
   role,
   onSubmit,
   formState: { register, control, errors },
@@ -38,7 +36,7 @@ const RoleForm = <T extends companyFormValues | jobSeekerFormValues>({
   companyTypes,
   isCompanyTypesLoading,
 }: RoleFormProps<T>) => {
-  const fields = role === "COMPANY" ? companyFields : jobSeekerFields;
+  const fields = role === "COMPANY" ? CompanyCreateField : jobSeekerFields;
 
   return (
     <Stack as="form" onSubmit={onSubmit}>
@@ -57,10 +55,10 @@ const RoleForm = <T extends companyFormValues | jobSeekerFormValues>({
                 isLoading={isCompanyTypesLoading}
                 className="w-full pl-3 pr-8 py-1 rounded-lg border-2 bg-gray-100 border-gray-300 text-lg text-gray-600 appearance-none"
                 {...register(
-                  field.name as keyof (companyFormValues | jobSeekerFormValues),
+                  field.name as keyof (CompanyCreateDto | jobSeekerFormValues),
                 )}
                 {...control?.register(
-                  field.name as keyof (companyFormValues | jobSeekerFormValues),
+                  field.name as keyof (CompanyCreateDto | jobSeekerFormValues),
                 )}
                 placeholder={field.placeholder}
                 items={companyTypes}
@@ -70,7 +68,10 @@ const RoleForm = <T extends companyFormValues | jobSeekerFormValues>({
           ) : (
             <Input
               {...register(
-                field.name as keyof (companyFormValues | jobSeekerFormValues),
+                field.name as keyof (CompanyCreateDto | jobSeekerFormValues),
+                {
+                  valueAsNumber: field.type === "number",
+                },
               )}
               type={field.type}
               placeholder={field.placeholder}

@@ -1,6 +1,5 @@
-import { formatDate } from "@/common/utils/date";
 import API from "..";
-import { CompanyDto, CompanyRequestDto } from "./type";
+import { CompanyDto, CompanyCreateDto, CompanyUpdateDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class CompanyService {
@@ -32,13 +31,9 @@ export default class CompanyService {
     }
   }
 
-  async create(
-    payload: CompanyRequestDto,
-    callback: FetchCallback<CompanyDto>,
-  ) {
+  async create(payload: CompanyCreateDto, callback: FetchCallback<CompanyDto>) {
     const res: APIResponse<CompanyDto> = await this.api.POST("v1/companies", {
       ...payload,
-      founding_date: formatDate(payload.founding_date),
     });
     if (!res?.success) {
       callback.onError(res.message);
@@ -50,10 +45,7 @@ export default class CompanyService {
     }
   }
 
-  async update(
-    payload: CompanyRequestDto,
-    callback: FetchCallback<CompanyDto>,
-  ) {
+  async update(payload: CompanyUpdateDto, callback: FetchCallback<CompanyDto>) {
     const res: APIResponse<CompanyDto> = await this.api.PUT(
       "v1/companies",
       payload,

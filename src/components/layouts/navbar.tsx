@@ -14,7 +14,7 @@ import useAuthStore from "@/contexts/(auth)/store";
 import { Button } from "../ui/button";
 import { BsPerson } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";
-import useRoleDialogStore from "@/hooks/(roleDialog)/store";
+import useRoleDialogStore from "@/hooks/roleDialog/store";
 
 const navLinks = [
   { href: "/", label: "Dashboard" },

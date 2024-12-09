@@ -1,14 +1,14 @@
 import { CommonStoreState } from "@/common/types/commonStoreState";
 import { defaultUserDto, UserDto } from "../(auth)/type";
 
-export interface JobSeekerRequestDto {
+export interface JobSeekerReqDto {
   name: string;
   last_education: string;
   major: string;
   gpa: number;
 }
 
-export interface JobSeekerDto extends JobSeekerRequestDto {
+export interface JobSeekerDto extends JobSeekerReqDto {
   id: string;
   user: UserDto;
   created_at: Date;
@@ -31,6 +31,6 @@ export interface JobSeekerStoreState extends CommonStoreState<JobSeekerDto> {
 
   setSingleData: (data: JobSeekerDto) => void;
   fetchSingleData: (id: string) => void;
-  createData: (data: JobSeekerRequestDto) => void;
-  updateData: (data: JobSeekerRequestDto) => void;
+  createData: (data: JobSeekerReqDto) => void;
+  updateData: (data: JobSeekerReqDto) => void;
 }

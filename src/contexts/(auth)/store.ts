@@ -3,7 +3,7 @@ import { AuthStoreState } from "./type";
 import AuthService from "./service";
 import useMainStore from "@/hooks/main/store";
 import { toaster } from "@/components/ui/toaster";
-import useRoleDialogStore from "@/hooks/(roleDialog)/store";
+import useRoleDialogStore from "@/hooks/roleDialog/store";
 
 const authService = new AuthService();
 

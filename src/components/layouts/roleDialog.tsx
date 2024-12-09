@@ -11,12 +11,8 @@ import {
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import useRoleDialogStore from "@/hooks/(roleDialog)/store";
+import useRoleDialogStore from "@/hooks/roleDialog/store";
 import { slideVariants } from "@/common/types/animationVariants";
-import {
-  FormValues as companyFormValues,
-  schema as companySchema,
-} from "@/common/types/formRules/company";
 import {
   FormValues as jobSeekerFormValues,
   schema as jobSeekerSchema,
@@ -26,7 +22,9 @@ import RoleCardPicker from "../containers/roleCardPicker";
 import { useCompanyStore } from "@/contexts/company/store";
 import { useJobSeekerStore } from "@/contexts/jobSeeker/store";
 import RoleForm from "./roleForm";
-import { useCompanyTypeStore } from "@/contexts/const/store";
+import { useCompanyTypeStore } from "@/contexts/enums/store";
+import { CompanyCreateSchema } from "@/contexts/company/util";
+import { CompanyCreateDto } from "@/contexts/company/type";
 
 export default function RoleDialog() {
   const {
@@ -54,8 +52,8 @@ export default function RoleDialog() {
     control: controlCompany,
     handleSubmit: handleSubmitCompany,
     formState: { errors: errorsCompany },
-  } = useForm<companyFormValues>({
-    resolver: yupResolver(companySchema),
+  } = useForm<CompanyCreateDto>({
+    resolver: yupResolver(CompanyCreateSchema),
   });
 
   const {
@@ -67,7 +65,7 @@ export default function RoleDialog() {
   });
 
   const onCompanySubmit = handleSubmitCompany((data) => {
-    createCompanyRole(data as companyFormValues);
+    createCompanyRole(data);
   });
 
   const onJobSeekerSubmit = handleSubmitJobSeeker((data) => {

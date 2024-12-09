@@ -3,7 +3,7 @@ import { defaultJobSeekerDto, JobSeekerStoreState } from "./type";
 import { create } from "zustand";
 import JobSeekerService from "./service";
 import { toaster } from "@/components/ui/toaster";
-import useRoleDialogStore from "@/hooks/(roleDialog)/store";
+import useRoleDialogStore from "@/hooks/roleDialog/store";
 import useAuthStore from "../(auth)/store";
 
 const jobSeekerService = new JobSeekerService();

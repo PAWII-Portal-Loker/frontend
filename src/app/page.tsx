@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Dropdown from "@/components/containers/dropdown";
-import { useIncomeTypeStore, useJobTypeStore } from "@/contexts/const/store";
+import { useIncomeTypeStore, useJobTypeStore } from "@/contexts/enums/store";
 import useDashboardStore from "@/hooks/dashboard/store";
 import { Input } from "@chakra-ui/react";
 import { useEffect } from "react";
