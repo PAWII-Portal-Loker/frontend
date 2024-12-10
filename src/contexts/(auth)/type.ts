@@ -14,16 +14,18 @@ export interface UserDto {
   updated_at: Date;
 }
 
-export type SignInRequest = {
+export type SignInDto = {
   email: string;
   password: string;
 };
 
-export type SignUpRequest = SignInRequest & {
+export type SignUpDto = {
   wa_number: string;
+  email: string;
+  password: string;
 };
 
-export type IsLoginResponse = {
+export type IsLoginDto = {
   is_login: boolean;
   role: "JOB_SEEKER" | "COMPANY";
 };
@@ -37,8 +39,8 @@ export interface AuthStoreState {
   setRole: (role: "JOB_SEEKER" | "COMPANY" | null) => void;
   setIsLoading: (isLoading: boolean) => void;
 
-  signIn: (request: SignInRequest) => void;
-  signUp: (request: SignUpRequest) => void;
+  signIn: (request: SignInDto) => void;
+  signUp: (request: SignUpDto) => void;
   checkLogin: () => void;
   signOut: () => void;
 }

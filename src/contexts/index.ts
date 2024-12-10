@@ -1,6 +1,6 @@
 import { APIResponse, FilterParams } from "@/common/types";
 import axios, { AxiosInstance, AxiosRequestConfig, isAxiosError } from "axios";
-import { DeviceUUID } from "device-uuid";
+// import { DeviceUUID } from "device-uuid";
 
 type Headers = {
   Accept: string;
@@ -25,19 +25,20 @@ export default class API {
         const accessToken = localStorage.getItem("access_token");
         const refreshToken = localStorage.getItem("refresh_token");
         const userId = localStorage.getItem("user_id");
-        const deviceId = new DeviceUUID().get();
+        // const deviceId = new DeviceUUID().get();
+        const deviceId = "123456";
 
         if (accessToken) {
-          config.headers["X-Access-Token"] = accessToken;
+          config.headers["x-access-token"] = accessToken;
         }
         if (refreshToken) {
-          config.headers["X-Refresh-Token"] = refreshToken;
+          config.headers["x-refresh-token"] = refreshToken;
         }
         if (userId) {
-          config.headers["X-User-Id"] = userId;
+          config.headers["x-user-id"] = userId;
         }
         if (deviceId) {
-          config.headers["X-Device-Id"] = deviceId;
+          config.headers["x-device-id"] = deviceId;
         }
 
         return config;

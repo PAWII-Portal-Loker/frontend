@@ -1,12 +1,12 @@
 import API from "..";
-import { IsLoginResponse, SignInRequest, SignUpRequest } from "./type";
+import { IsLoginDto, SignInDto, SignUpDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class AuthService {
   private api: API = new API();
 
-  async signIn(payload: SignInRequest, callback: FetchCallback<SignInRequest>) {
-    const res: APIResponse<SignInRequest> = await this.api.POST(
+  async signIn(payload: SignInDto, callback: FetchCallback<SignInDto>) {
+    const res: APIResponse<SignInDto> = await this.api.POST(
       "v1/auth/signin",
       payload,
     );
@@ -20,8 +20,8 @@ export default class AuthService {
     }
   }
 
-  async signUp(payload: SignUpRequest, callback: FetchCallback<SignUpRequest>) {
-    const res: APIResponse<SignUpRequest> = await this.api.POST(
+  async signUp(payload: SignUpDto, callback: FetchCallback<SignUpDto>) {
+    const res: APIResponse<SignUpDto> = await this.api.POST(
       "v1/users",
       payload,
     );
@@ -35,10 +35,8 @@ export default class AuthService {
     }
   }
 
-  async isLogin(callback: FetchCallback<IsLoginResponse>) {
-    const res: APIResponse<IsLoginResponse> = await this.api.GET(
-      "v1/auth/is-login",
-    );
+  async isLogin(callback: FetchCallback<IsLoginDto>) {
+    const res: APIResponse<IsLoginDto> = await this.api.GET("v1/auth/is-login");
     if (!res?.success) {
       callback.onError(res.message);
     } else {

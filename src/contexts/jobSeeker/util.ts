@@ -22,7 +22,9 @@ export const JobSeekerCreateSchema = Yup.object({
     .test("is-decimal", "GPA must be decimal", (value) => {
       return /^\d+(\.\d+)?$/.test(value.toString());
     }),
-});
+})
+  .noUnknown(true)
+  .strict(true);
 
 export const JobSeekerCreateField: FieldConfig<JobSeekerCreateDto>[] = [
   {

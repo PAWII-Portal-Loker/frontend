@@ -14,8 +14,9 @@ import useMainStore from "@/hooks/main/store";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useAuthStore from "@/contexts/(auth)/store";
-import { fields, FormValues, schema } from "@/common/types/formRules/register";
 import clsx from "clsx";
+import { SignUpField, SignUpSchema } from "@/contexts/(auth)/util";
+import { SignUpDto } from "@/contexts/(auth)/type";
 
 export default function RegisterDialog() {
   const {
@@ -29,11 +30,11 @@ export default function RegisterDialog() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
-    resolver: yupResolver(schema),
+  } = useForm<SignUpDto & { confirm_password: string }>({
+    resolver: yupResolver(SignUpSchema),
   });
 
-  const onSubmit = handleSubmit((data: FormValues) => {
+  const onSubmit = handleSubmit((data) => {
     signUp({
       email: data.email,
       wa_number: data.wa_number,
@@ -60,7 +61,7 @@ export default function RegisterDialog() {
         </DialogHeader>
         <DialogBody as="form" onSubmit={onSubmit}>
           <Stack wordSpacing={4}>
-            {fields.map((field) => (
+            {SignUpField.map((field) => (
               <Field
                 key={field.name}
                 label={field.label}

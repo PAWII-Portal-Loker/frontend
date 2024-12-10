@@ -14,8 +14,9 @@ import useMainStore from "@/hooks/main/store";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useAuthStore from "@/contexts/(auth)/store";
-import { fields, FormValues, schema } from "@/common/types/formRules/login";
 import clsx from "clsx";
+import { SignInDto } from "@/contexts/(auth)/type";
+import { SignInField, SignInSchema } from "@/contexts/(auth)/util";
 
 export default function LoginDialog() {
   const { isLoginDialogOpen, setIsLoginDialogOpen, setIsRegisterDialogOpen } =
@@ -26,11 +27,11 @@ export default function LoginDialog() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
-    resolver: yupResolver(schema),
+  } = useForm<SignInDto>({
+    resolver: yupResolver(SignInSchema),
   });
 
-  const onSubmit = handleSubmit((data: FormValues) => {
+  const onSubmit = handleSubmit((data) => {
     signIn({
       email: data.email,
       password: data.password,
@@ -56,7 +57,7 @@ export default function LoginDialog() {
         </DialogHeader>
         <DialogBody as="form" onSubmit={onSubmit}>
           <Stack wordSpacing={4}>
-            {fields.map((field) => (
+            {SignInField.map((field) => (
               <Field
                 key={field.name}
                 label={field.label}
