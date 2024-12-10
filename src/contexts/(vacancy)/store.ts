@@ -3,7 +3,7 @@ import { defaultPagination } from "@/common/utils/defaultPagination";
 import { create } from "zustand";
 import VacancyService from "./service";
 import { toaster } from "@/components/ui/toaster";
-import { DefaultCompanyDto } from "../company/store";
+import { DefaultCompanyDto } from "../(company)/store";
 
 const vacancyService = new VacancyService();
 

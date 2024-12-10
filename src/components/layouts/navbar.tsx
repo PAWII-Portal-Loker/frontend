@@ -9,7 +9,7 @@ import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, IconButton } from "@chakra-ui/react";
 import clsx from "clsx";
-import useAuthStore from "@/contexts/(auth)/store";
+import useAuthStore from "@/contexts/auth/store";
 import { Button } from "../ui/button";
 import { BsPerson } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";

@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import useMainStore from "@/hooks/main/store";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import useAuthStore from "@/contexts/(auth)/store";
+import useAuthStore from "@/contexts/auth/store";
 import clsx from "clsx";
 import { UserCreateDto } from "@/contexts/user/type";
 import useUserStore from "@/contexts/user/store";

@@ -1,5 +1,5 @@
 import { VacancyDto } from "../(vacancy)/type";
-import { JobSeekerDto } from "../jobSeeker/type";
+import { JobSeekerDto } from "../(jobSeeker)/type";
 
 export interface ApplicationDto {
   id: string;

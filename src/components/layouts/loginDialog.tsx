@@ -13,10 +13,10 @@ import { Button } from "@/components/ui/button";
 import useMainStore from "@/hooks/main/store";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import useAuthStore from "@/contexts/(auth)/store";
+import useAuthStore from "@/contexts/auth/store";
 import clsx from "clsx";
-import { SignInDto } from "@/contexts/(auth)/type";
-import { SignInField, SignInSchema } from "@/contexts/(auth)/util";
+import { SignInDto } from "@/contexts/auth/type";
+import { SignInField, SignInSchema } from "@/contexts/auth/util";
 
 const LoginDialog = () => {
   const { isLoginDialogOpen, setIsLoginDialogOpen, setIsRegisterDialogOpen } =

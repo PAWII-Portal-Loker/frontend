@@ -8,10 +8,10 @@ import { NativeSelectField, NativeSelectRoot } from "../ui/native-select";
 import { LuSave } from "react-icons/lu";
 import { Button } from "../ui/button";
 import { BaseSyntheticEvent } from "react";
-import { CompanyCreateDto } from "@/contexts/company/type";
-import { CompanyCreateField } from "@/contexts/company/util";
-import { JobSeekerCreateDto } from "@/contexts/jobSeeker/type";
-import { JobSeekerCreateField } from "@/contexts/jobSeeker/util";
+import { CompanyCreateDto } from "@/contexts/(company)/type";
+import { CompanyCreateField } from "@/contexts/(company)/util";
+import { JobSeekerCreateDto } from "@/contexts/(jobSeeker)/type";
+import { JobSeekerCreateField } from "@/contexts/(jobSeeker)/util";
 
 type RoleFormProps<T extends CompanyCreateDto | JobSeekerCreateDto> = {
   role: "COMPANY" | "JOB_SEEKER";

@@ -1,5 +1,5 @@
 import { FilterType, Pagination } from "@/common/types";
-import { CompanyDto } from "../company/type";
+import { CompanyDto } from "../(company)/type";
 
 export interface VacancyDto {
   id: string;
