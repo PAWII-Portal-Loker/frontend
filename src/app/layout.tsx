@@ -12,6 +12,8 @@ import useAuthStore from "@/contexts/(auth)/store";
 import { useEffect } from "react";
 import RoleDialog from "@/components/layouts/roleDialog";
 import Head from "next/head";
+import { useIsNotHomePage } from "@/common/utils/checkPathName";
+import clsx from "clsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const { checkLogin } = useAuthStore();
+  const isNotHomePage = useIsNotHomePage();
 
   useEffect(() => {
     checkLogin();
@@ -39,15 +42,15 @@ export default function RootLayout({
       </Head>
       <body className={`${inter.className} bg-slate-700 text-gray-100`}>
         <Provider>
-          <Navbar />
+          {isNotHomePage && <Navbar />}
           <Toaster />
-          <main className="mt-16">
+          <main className={clsx(isNotHomePage && "pt-16")}>
             <LoginDialog />
             <RegisterDialog />
             <RoleDialog />
             {children}
           </main>
-          <Footer />
+          {isNotHomePage && <Footer />}
         </Provider>
       </body>
     </html>

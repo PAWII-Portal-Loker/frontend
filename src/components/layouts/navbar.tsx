@@ -9,15 +9,18 @@ import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, IconButton } from "@chakra-ui/react";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
 import useAuthStore from "@/contexts/(auth)/store";
 import { Button } from "../ui/button";
 import { BsPerson } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import useRoleDialogStore from "@/hooks/roleDialog/store";
+import {
+  useHideNavbarOnScroll,
+  useIsNavbarActive,
+} from "@/common/utils/navbar";
+import { slideVariants } from "@/common/types/animationVariants";
 
 const navLinks = [
-  { href: "/", label: "Dashboard" },
   { href: "/vacancy", label: "Vacancy" },
   { href: "/history", label: "History" },
   { href: "/notification", label: "Notification" },
@@ -33,11 +36,11 @@ const NavLink = ({ href, label }: NavLinkProps) => (
     <Button
       className={clsx(
         "px-3 py-2 rounded-md",
-        usePathname() === href
+        useIsNavbarActive(href)
           ? "bg-gray-500 text-blue-300 font-semibold"
           : "hover:text-blue-400 hover:bg-gray-500 transition-all duration-200",
       )}
-      disabled={usePathname() === href}
+      disabled={useIsNavbarActive(href)}
     >
       {label}
     </Button>
@@ -49,11 +52,11 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
     <Button
       className={clsx(
         "w-full px-3 py-2 rounded-md",
-        usePathname() === href
+        useIsNavbarActive(href)
           ? "bg-gray-500 text-blue-300 font-semibold"
           : "hover:text-blue-400 hover:bg-gray-500 transition-all duration-200",
       )}
-      disabled={usePathname() === href}
+      disabled={useIsNavbarActive(href)}
     >
       {label}
     </Button>
@@ -65,9 +68,15 @@ export default function Navbar() {
   const { isNavigationOpen, setIsNavigationOpen, setIsLoginDialogOpen } =
     useMainStore();
   const { setIsRoleDialogOpen } = useRoleDialogStore();
+  const isNavbarHidden = useHideNavbarOnScroll();
 
   return (
-    <header className="bg-slate-600 text-gray-100 px-4 py-3 fixed top-0 left-0 w-full z-10">
+    <motion.header
+      className="bg-slate-600 text-gray-100 px-4 py-3 fixed top-0 left-0 w-full z-10"
+      variants={slideVariants}
+      initial="initial"
+      animate={isNavbarHidden ? "exit" : "animate"}
+    >
       <nav className="flex items-center justify-between">
         <IconButton
           size={"md"}
@@ -100,7 +109,7 @@ export default function Navbar() {
           {isLogin ? (
             <MenuRoot>
               <MenuTrigger asChild>
-                <Button className="rounded-full cursor-pointer hover:bg-gray-500 transition-all duration-200">
+                <Button className="rounded-full cursor-pointer bg-blue-500 hover:bg-blue-700 transition-all duration-200">
                   <BsPerson size={24} />
                 </Button>
               </MenuTrigger>
@@ -161,6 +170,6 @@ export default function Navbar() {
           </motion.ul>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }

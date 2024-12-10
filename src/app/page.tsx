@@ -8,13 +8,20 @@ import { useEffect } from "react";
 import { FaKey } from "react-icons/fa";
 import { useJobTypestore } from "@/contexts/enums/stores/jobType";
 import { useIncomeTypestore } from "@/contexts/enums/stores/incomeType";
+import { motion } from "framer-motion";
+import {
+  fadeVariants,
+  scaleVariants,
+  slideVariants,
+} from "@/common/types/animationVariants";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { isSearchFocused, setIsSearchFocused } = useDashboardStore();
-
   const { jobTypes, getJobTypes, isJobTypesLoading } = useJobTypestore();
   const { incomeTypes, getIncomeTypes, isIncomeTypesLoading } =
     useIncomeTypestore();
+  const router = useRouter();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -34,7 +41,7 @@ export default function Home() {
   }, [getJobTypes, getIncomeTypes]);
 
   return (
-    <div
+    <motion.div
       className="flex min-h-screen flex-col items-center justify-center bg-slate-500 text-gray-100"
       style={{
         backgroundImage: "url('/hero.png')",
@@ -43,9 +50,20 @@ export default function Home() {
         backgroundSize: "cover",
         backgroundBlendMode: "multiply",
       }}
+      variants={fadeVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
     >
       <div className="container flex flex-col items-center gap-6 px-4 py-16">
-        <div className="flex flex-col">
+        <motion.div
+          className="flex flex-col"
+          variants={slideVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ delay: 0.3 }}
+        >
           <p className="text-5xl font-bold tracking-tight text-center text-blue-300 sm:text-6xl">
             Find Your Dream Job
           </p>
@@ -53,8 +71,15 @@ export default function Home() {
             Explore thousands of job vacancies and find the right career for
             you.
           </p>
-        </div>
-        <div className="bg-slate-500 p-4 flex flex-col gap-4 lg:flex-row lg:gap-8 rounded-md">
+        </motion.div>
+        <motion.div
+          className="bg-slate-500 p-4 flex flex-col gap-4 lg:flex-row lg:gap-8 rounded-md"
+          variants={scaleVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ delay: 0.5 }}
+        >
           <div className="flex-1 relative">
             <Input
               placeholder="Keyword e.g. (Job Title, Description, Company Name)"
@@ -82,11 +107,14 @@ export default function Home() {
             isLoading={isIncomeTypesLoading}
           />
 
-          <Button className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded">
+          <Button
+            className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded"
+            onClick={() => router.push("/vacancy")}
+          >
             Search
           </Button>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
