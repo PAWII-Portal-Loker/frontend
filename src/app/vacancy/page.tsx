@@ -40,8 +40,12 @@ export default function VacancyPage() {
         <div className="text-center text-yellow-500">No vacancies found</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {vacancies.map((vacancy) => (
-            <VacancyCard key={vacancy.id} vacancy={vacancy} />
+          {vacancies.map((vacancy, index) => (
+            <VacancyCard
+              key={vacancy.id}
+              vacancy={vacancy}
+              delay={index / 10}
+            />
           ))}
         </div>
       )}

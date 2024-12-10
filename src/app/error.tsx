@@ -10,7 +10,7 @@ interface ErrorPageProps extends FallbackProps {
 
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-slate-200 to-slate-300 text-gray-800">
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="p-8 rounded-lg shadow-2xl bg-white text-center">
         <Image
           src="/error.png"

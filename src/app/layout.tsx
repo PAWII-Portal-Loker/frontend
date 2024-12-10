@@ -38,9 +38,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <Head>
-        <link rel="icon" href="/logo.png" sizes="any" />
+        <link rel="icon" href="/logo.ico" />
       </Head>
-      <body className={`${inter.className} bg-slate-700 text-gray-100`}>
+      <body
+        className={`${inter.className} bg-gradient-to-r from-slate-200 to-slate-400 text-gray-800`}
+      >
         <Provider>
           {isNotHomePage && <Navbar />}
           <Toaster />

@@ -3,15 +3,26 @@ import { VacancyDto } from "@/contexts/(vacancy)/type";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { slideVariants } from "@/common/types/animationVariants";
 
 interface VacancyCardProps {
   vacancy: VacancyDto;
+  delay?: number;
 }
 
-export default function VacancyCard({ vacancy }: VacancyCardProps) {
+export default function VacancyCard({ vacancy, delay }: VacancyCardProps) {
   return (
     <Link href={`/vacancy/${vacancy.id}`} className="block">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden relative">
+      <motion.div
+        className="bg-white rounded-lg shadow-md overflow-hidden relative"
+        variants={slideVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{ delay: delay }}
+        whileHover={{ scale: 1.01 }}
+      >
         <Image
           src={
             isValidImageUrl(vacancy.thumbnail_url)
@@ -53,7 +64,7 @@ export default function VacancyCard({ vacancy }: VacancyCardProps) {
             </span>
           </div>
         </div>
-      </div>
+      </motion.div>
     </Link>
   );
 }
