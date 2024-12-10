@@ -1,10 +1,6 @@
 import Head from "next/head";
 
-export default function VacancyLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const VacancyLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Head>
@@ -13,4 +9,6 @@ export default function VacancyLayout({
       <section className="p-8">{children}</section>
     </>
   );
-}
+};
+
+export default VacancyLayout;

@@ -18,7 +18,7 @@ const SocialLink = ({ href, icon }: SocialLinkProps) => (
   </li>
 );
 
-export default function Footer() {
+const Footer = () => {
   return (
     <footer className="bg-slate-600 text-gray-100 text-center">
       <div className="px-4 py-3 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
@@ -31,4 +31,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

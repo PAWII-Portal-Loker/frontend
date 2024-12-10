@@ -16,7 +16,7 @@ import {
 } from "@/common/types/animationVariants";
 import { useRouter } from "next/navigation";
 
-export default function Home() {
+const Home = () => {
   const { isSearchFocused, setIsSearchFocused } = useDashboardStore();
   const { jobTypes, getJobTypes, isJobTypesLoading } = useJobTypestore();
   const { incomeTypes, getIncomeTypes, isIncomeTypesLoading } =
@@ -117,4 +117,6 @@ export default function Home() {
       </div>
     </motion.div>
   );
-}
+};
+
+export default Home;

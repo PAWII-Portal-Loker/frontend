@@ -18,7 +18,7 @@ import clsx from "clsx";
 import { SignInDto } from "@/contexts/(auth)/type";
 import { SignInField, SignInSchema } from "@/contexts/(auth)/util";
 
-export default function LoginDialog() {
+const LoginDialog = () => {
   const { isLoginDialogOpen, setIsLoginDialogOpen, setIsRegisterDialogOpen } =
     useMainStore();
   const { isLoading, signIn } = useAuthStore();
@@ -115,4 +115,6 @@ export default function LoginDialog() {
       </DialogContent>
     </DialogRoot>
   );
-}
+};
+
+export default LoginDialog;

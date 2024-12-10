@@ -25,7 +25,7 @@ import { JobSeekerCreateSchema } from "@/contexts/jobSeeker/util";
 import { useCompanyTypeStore } from "@/contexts/enums/stores/companyType";
 import { useLastEducationTypeStore } from "@/contexts/enums/stores/lastEducationType";
 
-export default function RoleDialog() {
+const RoleDialog = () => {
   const {
     isRoleDialogOpen,
     setIsRoleDialogOpen,
@@ -135,4 +135,6 @@ export default function RoleDialog() {
       </DialogContent>
     </DialogRoot>
   );
-}
+};
+
+export default RoleDialog;

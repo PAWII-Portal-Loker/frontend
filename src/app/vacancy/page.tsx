@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import VacancyCard from "@/components/layouts/vacancyCard";
 
-export default function VacancyPage() {
+const VacancyPage = () => {
   const { vacancies, isVacanciesLoading, getVacancies } = useVacancyStore();
 
   useEffect(() => {
@@ -51,4 +51,6 @@ export default function VacancyPage() {
       )}
     </div>
   );
-}
+};
+
+export default VacancyPage;

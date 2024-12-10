@@ -8,7 +8,7 @@ interface ErrorPageProps extends FallbackProps {
   reset: () => void;
 }
 
-export default function ErrorPage({ error, reset }: ErrorPageProps) {
+const ErrorPage = ({ error, reset }: ErrorPageProps) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="p-8 rounded-lg shadow-2xl bg-white text-center">
@@ -38,4 +38,6 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
       </div>
     </div>
   );
-}
+};
+
+export default ErrorPage;

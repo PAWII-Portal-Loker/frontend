@@ -17,11 +17,11 @@ import clsx from "clsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   const { checkLogin } = useAuthStore();
   const isNotHomePage = useIsNotHomePage();
 
@@ -57,4 +57,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

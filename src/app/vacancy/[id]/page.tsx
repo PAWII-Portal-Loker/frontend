@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { isValidImageUrl } from "@/common/utils/validImageUrl";
 import LoadingCard from "@/components/containers/loadingCard";
 
-export default function VacancyDetailPage() {
+const VacancyDetailPage = () => {
   const { id } = useParams();
   const { vacancy, isVacancyLoading, getVacancy } = useVacancyStore();
 
@@ -75,4 +75,6 @@ export default function VacancyDetailPage() {
       </div>
     </div>
   );
-}
+};
+
+export default VacancyDetailPage;

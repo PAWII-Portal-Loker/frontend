@@ -63,7 +63,7 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
   </Link>
 );
 
-export default function Navbar() {
+const Navbar = () => {
   const { isLogin, role, signOut } = useAuthStore();
   const { isNavigationOpen, setIsNavigationOpen, setIsLoginDialogOpen } =
     useMainStore();
@@ -172,4 +172,6 @@ export default function Navbar() {
       </AnimatePresence>
     </motion.header>
   );
-}
+};
+
+export default Navbar;

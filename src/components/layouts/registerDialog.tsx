@@ -18,7 +18,7 @@ import clsx from "clsx";
 import { SignUpField, SignUpSchema } from "@/contexts/(auth)/util";
 import { SignUpDto } from "@/contexts/(auth)/type";
 
-export default function RegisterDialog() {
+const RegisterDialog = () => {
   const {
     setIsLoginDialogOpen,
     isRegisterDialogOpen,
@@ -119,4 +119,6 @@ export default function RegisterDialog() {
       </DialogContent>
     </DialogRoot>
   );
-}
+};
+
+export default RegisterDialog;

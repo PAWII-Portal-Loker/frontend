@@ -11,7 +11,7 @@ interface VacancyCardProps {
   delay?: number;
 }
 
-export default function VacancyCard({ vacancy, delay }: VacancyCardProps) {
+const VacancyCard = ({ vacancy, delay }: VacancyCardProps) => {
   return (
     <Link href={`/vacancy/${vacancy.id}`} className="block">
       <motion.div
@@ -67,4 +67,6 @@ export default function VacancyCard({ vacancy, delay }: VacancyCardProps) {
       </motion.div>
     </Link>
   );
-}
+};
+
+export default VacancyCard;
