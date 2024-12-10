@@ -1,4 +1,4 @@
-import { UserDto } from "../(auth)/type";
+import { UserDto } from "../user/type";
 
 export interface CompanyDto {
   id: string;

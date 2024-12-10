@@ -1,39 +1,42 @@
 import API from "..";
-import { IsLoginDto, SignInDto } from "./type";
+import { UserCreateDto, UserDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
-export default class AuthService {
+export default class UserService {
   private api: API = new API();
 
-  async signIn(payload: SignInDto, callback: FetchCallback<SignInDto>) {
-    const res: APIResponse<SignInDto> = await this.api.POST(
-      "v1/auth/signin",
+  async getUsers(callback: FetchCallback<UserDto[]>) {
+    const res: APIResponse<UserDto[]> = await this.api.GET("v1/users");
+    if (!res?.success) {
+      callback.onError(res.message);
+    } else {
+      callback.onSuccess(res.data);
+    }
+    if (callback.onFullfilled) {
+      callback.onFullfilled();
+    }
+  }
+
+  async getUser(id: string, callback: FetchCallback<UserDto>) {
+    const res: APIResponse<UserDto> = await this.api.GET(`v1/users/${id}`);
+    if (!res?.success) {
+      callback.onError(res.message);
+    } else {
+      callback.onSuccess(res.data);
+    }
+    if (callback.onFullfilled) {
+      callback.onFullfilled();
+    }
+  }
+
+  async createUser(
+    payload: UserCreateDto,
+    callback: FetchCallback<UserCreateDto>,
+  ) {
+    const res: APIResponse<UserCreateDto> = await this.api.POST(
+      "v1/users",
       payload,
     );
-    if (!res?.success) {
-      callback.onError(res.message);
-    } else {
-      callback.onSuccess(res.data);
-    }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
-  }
-
-  async isLogin(callback: FetchCallback<IsLoginDto>) {
-    const res: APIResponse<IsLoginDto> = await this.api.GET("v1/auth/is-login");
-    if (!res?.success) {
-      callback.onError(res.message);
-    } else {
-      callback.onSuccess(res.data);
-    }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
-  }
-
-  async signOut(callback: FetchCallback<void>) {
-    const res: APIResponse<void> = await this.api.POST("v1/auth/signout", {});
     if (!res?.success) {
       callback.onError(res.message);
     } else {

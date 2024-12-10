@@ -5,28 +5,9 @@ import useMainStore from "@/hooks/main/store";
 import { toaster } from "@/components/ui/toaster";
 import useRoleDialogStore from "@/hooks/roleDialog/store";
 
-import { UserDto } from "./type";
-
-export const DefaultUserDto: UserDto = {
-  id: "",
-  role: "",
-  email: "",
-  wa_number: "",
-  image_url: "",
-  bio: "",
-  country: "",
-  province: "",
-  city: "",
-  subdistrict: "",
-  address: "",
-  created_at: new Date(),
-  updated_at: new Date(),
-};
-
 const authService = new AuthService();
 
-const { setIsLoginDialogOpen, setIsRegisterDialogOpen } =
-  useMainStore.getState();
+const { setIsLoginDialogOpen } = useMainStore.getState();
 const { setSelectedRole, setIsRoleDialogOpen } = useRoleDialogStore.getState();
 
 const useAuthStore = create<AuthStoreState>((set, get) => ({
@@ -58,37 +39,6 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
           toaster.create({
             title: "Login failed",
             description: message || "Failed to login",
-            type: "error",
-            duration: 3000,
-          });
-        },
-        onFullfilled() {
-          get().setIsLoading(false);
-        },
-      },
-    );
-  },
-
-  signUp: (request) => {
-    const { email, wa_number, password } = request;
-    get().setIsLoading(true);
-
-    authService.signUp(
-      { email, password, wa_number },
-      {
-        onSuccess: () => {
-          toaster.create({
-            title: "Registration successful",
-            type: "success",
-            duration: 3000,
-          });
-          setIsRegisterDialogOpen(false);
-          setIsLoginDialogOpen(true);
-        },
-        onError: (message: string) => {
-          toaster.create({
-            title: "Registration failed",
-            description: message || "Failed to register",
             type: "error",
             duration: 3000,
           });

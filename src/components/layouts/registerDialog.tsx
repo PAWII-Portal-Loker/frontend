@@ -15,8 +15,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useAuthStore from "@/contexts/(auth)/store";
 import clsx from "clsx";
-import { SignUpField, SignUpSchema } from "@/contexts/(auth)/util";
-import { SignUpDto } from "@/contexts/(auth)/type";
+import { UserCreateDto } from "@/contexts/user/type";
+import useUserStore from "@/contexts/user/store";
+import { UserCreateField, UserCreateSchema } from "@/contexts/user/util";
 
 const RegisterDialog = () => {
   const {
@@ -24,18 +25,19 @@ const RegisterDialog = () => {
     isRegisterDialogOpen,
     setIsRegisterDialogOpen,
   } = useMainStore();
-  const { isLoading, signUp } = useAuthStore();
+  const { isLoading } = useAuthStore();
+  const { createUser } = useUserStore();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpDto & { confirm_password: string }>({
-    resolver: yupResolver(SignUpSchema),
+  } = useForm<UserCreateDto & { confirm_password: string }>({
+    resolver: yupResolver(UserCreateSchema),
   });
 
   const onSubmit = handleSubmit((data) => {
-    signUp({
+    createUser({
       email: data.email,
       wa_number: data.wa_number,
       password: data.password,
@@ -61,7 +63,7 @@ const RegisterDialog = () => {
         </DialogHeader>
         <DialogBody as="form" onSubmit={onSubmit}>
           <Stack wordSpacing={4}>
-            {SignUpField.map((field) => (
+            {UserCreateField.map((field) => (
               <Field
                 key={field.name}
                 label={field.label}
