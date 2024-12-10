@@ -2,25 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import Dropdown from "@/components/containers/dropdown";
-import { useIncomeTypeStore, useJobTypeStore } from "@/contexts/enums/store";
 import useDashboardStore from "@/hooks/dashboard/store";
 import { Input } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { FaKey } from "react-icons/fa";
+import { useJobTypestore } from "@/contexts/enums/stores/jobType";
+import { useIncomeTypestore } from "@/contexts/enums/stores/incomeType";
 
 export default function Home() {
   const { isSearchFocused, setIsSearchFocused } = useDashboardStore();
 
-  const {
-    data: jobTypes,
-    fetchData: fetchJobTypes,
-    isLoading: isJobTypesLoading,
-  } = useJobTypeStore();
-  const {
-    data: incomeTypes,
-    fetchData: fetchIncomeTypes,
-    isLoading: isIncomeTypesLoading,
-  } = useIncomeTypeStore();
+  const { jobTypes, getJobTypes, isJobTypesLoading } = useJobTypestore();
+  const { incomeTypes, getIncomeTypes, isIncomeTypesLoading } =
+    useIncomeTypestore();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -35,9 +29,9 @@ export default function Home() {
   }, [setIsSearchFocused]);
 
   useEffect(() => {
-    fetchJobTypes();
-    fetchIncomeTypes();
-  }, [fetchJobTypes, fetchIncomeTypes]);
+    getJobTypes();
+    getIncomeTypes();
+  }, [getJobTypes, getIncomeTypes]);
 
   return (
     <div

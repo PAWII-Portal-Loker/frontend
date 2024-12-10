@@ -18,14 +18,12 @@ import RoleCardPicker from "../containers/roleCardPicker";
 import { useCompanyStore } from "@/contexts/company/store";
 import { useJobSeekerStore } from "@/contexts/jobSeeker/store";
 import RoleForm from "./roleForm";
-import {
-  useCompanyTypeStore,
-  useLastEducationTypeStore,
-} from "@/contexts/enums/store";
 import { CompanyCreateSchema } from "@/contexts/company/util";
 import { CompanyCreateDto } from "@/contexts/company/type";
 import { JobSeekerCreateDto } from "@/contexts/jobSeeker/type";
 import { JobSeekerCreateSchema } from "@/contexts/jobSeeker/util";
+import { useCompanyTypeStore } from "@/contexts/enums/stores/companyType";
+import { useLastEducationTypeStore } from "@/contexts/enums/stores/lastEducationType";
 
 export default function RoleDialog() {
   const {
@@ -35,27 +33,24 @@ export default function RoleDialog() {
     setSelectedRole,
     isLoading,
   } = useRoleDialogStore();
-  const { createData: createCompanyRole } = useCompanyStore();
-  const { createData: createJobSeekerRole } = useJobSeekerStore();
+  const { createCompany } = useCompanyStore();
+  const { createJobSeeker } = useJobSeekerStore();
 
+  const { companyTypes, getCompanyTypes, isCompanyTypesLoading } =
+    useCompanyTypeStore();
   const {
-    data: companyTypes,
-    fetchData: fetchCompanyTypes,
-    isLoading: isCompanyTypesLoading,
-  } = useCompanyTypeStore();
-  const {
-    data: lastEducationTypes,
-    fetchData: fetchLastEducationTypes,
-    isLoading: isLastEducationTypesLoading,
+    lastEducationTypes,
+    getLastEducationTypes,
+    isLastEducationTypesLoading,
   } = useLastEducationTypeStore();
 
   useEffect(() => {
-    fetchCompanyTypes();
-  }, [fetchCompanyTypes]);
+    getCompanyTypes();
+  }, [getCompanyTypes]);
 
   useEffect(() => {
-    fetchLastEducationTypes();
-  }, [fetchLastEducationTypes]);
+    getLastEducationTypes();
+  }, [getLastEducationTypes]);
 
   const {
     register: registerCompany,
@@ -75,11 +70,11 @@ export default function RoleDialog() {
   });
 
   const onCompanySubmit = handleSubmitCompany((data) => {
-    createCompanyRole(data);
+    createCompany(data);
   });
 
   const onJobSeekerSubmit = handleSubmitJobSeeker((data) => {
-    createJobSeekerRole(data);
+    createJobSeeker(data);
   });
 
   return (

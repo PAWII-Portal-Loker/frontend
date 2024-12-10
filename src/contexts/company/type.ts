@@ -1,4 +1,3 @@
-import { CommonStoreState } from "@/common/types/commonStoreState";
 import { UserDto } from "../(auth)/type";
 
 export interface CompanyDto {
@@ -32,11 +31,18 @@ export interface CompanyUpdateDto {
   end_working_hour: CompanyDto["end_working_hour"];
 }
 
-export interface CompanyStoreState extends CommonStoreState<CompanyDto> {
-  singleData: CompanyDto;
+export interface CompanyStoreState {
+  companies: CompanyDto[];
+  isCompaniesLoading: boolean;
+  company: CompanyDto;
+  isCompanyLoading: boolean;
 
-  setSingleData: (data: CompanyDto) => void;
-  fetchSingleData: (id: string) => void;
-  createData: (data: CompanyCreateDto) => void;
-  updateData: (data: CompanyUpdateDto) => void;
+  setCompanies: (companies: CompanyDto[]) => void;
+  setIsCompaniesLoading: (isCompaniesLoading: boolean) => void;
+  setCompany: (company: CompanyDto) => void;
+  setIsCompanyLoading: (isCompanyLoading: boolean) => void;
+  getCompanies: () => void;
+  getCompany: (id: string) => void;
+  createCompany: (request: CompanyCreateDto) => void;
+  updateCompany: (request: CompanyUpdateDto) => void;
 }

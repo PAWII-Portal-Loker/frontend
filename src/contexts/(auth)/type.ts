@@ -29,11 +29,11 @@ export type IsLoginResponse = {
 };
 
 export interface AuthStoreState {
-  isAuthenticated: boolean;
+  isLogin: boolean;
   role: "JOB_SEEKER" | "COMPANY" | null;
   isLoading: boolean;
 
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  setIsLogin: (isLogin: boolean) => void;
   setRole: (role: "JOB_SEEKER" | "COMPANY" | null) => void;
   setIsLoading: (isLoading: boolean) => void;
 

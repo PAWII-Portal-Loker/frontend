@@ -13,3 +13,14 @@ export const JOB_TYPES = [
   JOB_TYPE_CONTRACT,
   JOB_TYPE_OTHER,
 ];
+
+export type JobTypeDto = string;
+
+export type JobTypeStoreState = {
+  jobTypes: JobTypeDto[];
+  isJobTypesLoading: boolean;
+
+  setJobTypes: (jobTypes: JobTypeDto[]) => void;
+  setIsJobTypesLoading: (isJobTypesLoading: boolean) => void;
+  getJobTypes: () => void;
+};

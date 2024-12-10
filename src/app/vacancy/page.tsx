@@ -6,17 +6,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import VacancyCard from "@/components/layouts/vacancyCard";
 
 export default function VacancyPage() {
-  const {
-    data: vacancies,
-    isLoading,
-    fetchData: fetchVacancies,
-  } = useVacancyStore();
+  const { vacancies, isVacanciesLoading, getVacancies } = useVacancyStore();
 
   useEffect(() => {
-    fetchVacancies();
-  }, [fetchVacancies]);
+    getVacancies();
+  }, [getVacancies]);
 
-  if (isLoading) {
+  if (isVacanciesLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {[...Array(6)].map((_, index) => (

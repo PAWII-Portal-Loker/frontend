@@ -11,3 +11,14 @@ export const INCOME_TYPES = [
   INCOME_TYPE_CONDITIONAL_PAID,
   INCOME_TYPE_OTHER,
 ];
+
+export type IncomeTypeDto = string;
+
+export type IncomeTypeStoreState = {
+  incomeTypes: IncomeTypeDto[];
+  isIncomeTypesLoading: boolean;
+
+  setIncomeTypes: (incomeTypes: IncomeTypeDto[]) => void;
+  setIsIncomeTypesLoading: (isIncomeTypesLoading: boolean) => void;
+  getIncomeTypes: () => void;
+};

@@ -1,6 +1,11 @@
 import API from "..";
 import { APIResponse, FetchCallback } from "@/common/types";
-import { ConstDto } from "./type";
+import { ConstDto } from "./types/conts";
+import { CompanyTypeDto } from "./types/companyTypes";
+import { IncomeTypeDto } from "./types/incomeTypes";
+import { JobTypeDto } from "./types/jobTypes";
+import { RoleDto } from "./types/roles";
+import { LastEducationTypeDto } from "./types/lastEducationTypes";
 
 export default class ConstService {
   private api: API = new API();
@@ -17,8 +22,8 @@ export default class ConstService {
     }
   }
 
-  async getCompanyTypes(callback: FetchCallback<string[]>) {
-    const res: APIResponse<string[]> = await this.api.GET(
+  async getCompanyTypes(callback: FetchCallback<CompanyTypeDto[]>) {
+    const res: APIResponse<CompanyTypeDto[]> = await this.api.GET(
       "v1/consts/company-types",
     );
     if (!res?.success) {
@@ -31,8 +36,8 @@ export default class ConstService {
     }
   }
 
-  async getIncomeTypes(callback: FetchCallback<string[]>) {
-    const res: APIResponse<string[]> = await this.api.GET(
+  async getIncomeTypes(callback: FetchCallback<IncomeTypeDto[]>) {
+    const res: APIResponse<IncomeTypeDto[]> = await this.api.GET(
       "v1/consts/income-types",
     );
     if (!res?.success) {
@@ -45,8 +50,8 @@ export default class ConstService {
     }
   }
 
-  async getJobTypes(callback: FetchCallback<string[]>) {
-    const res: APIResponse<string[]> = await this.api.GET(
+  async getJobTypes(callback: FetchCallback<JobTypeDto[]>) {
+    const res: APIResponse<JobTypeDto[]> = await this.api.GET(
       "v1/consts/job-types",
     );
     if (!res?.success) {
@@ -59,8 +64,8 @@ export default class ConstService {
     }
   }
 
-  async getRoles(callback: FetchCallback<string[]>) {
-    const res: APIResponse<string[]> = await this.api.GET("v1/consts/roles");
+  async getRoles(callback: FetchCallback<RoleDto[]>) {
+    const res: APIResponse<RoleDto[]> = await this.api.GET("v1/consts/roles");
     if (!res?.success) {
       callback.onError(res.message);
     } else {
@@ -71,8 +76,8 @@ export default class ConstService {
     }
   }
 
-  async getLastEducationTypes(callback: FetchCallback<string[]>) {
-    const res: APIResponse<string[]> = await this.api.GET(
+  async getLastEducationTypes(callback: FetchCallback<LastEducationTypeDto[]>) {
+    const res: APIResponse<LastEducationTypeDto[]> = await this.api.GET(
       "v1/consts/last-education-types",
     );
     if (!res?.success) {

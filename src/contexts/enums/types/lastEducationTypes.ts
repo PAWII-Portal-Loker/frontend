@@ -19,3 +19,16 @@ export const LAST_EDUCATION_TYPE = [
   LAST_EDUCATION_DOCTORATE_DEGREE,
   LAST_EDUCATION_OTHER,
 ];
+
+export type LastEducationTypeDto = string;
+
+export type LastEducationTypeStoreState = {
+  lastEducationTypes: LastEducationTypeDto[];
+  isLastEducationTypesLoading: boolean;
+
+  setLastEducationTypes: (lastEducationTypes: LastEducationTypeDto[]) => void;
+  setIsLastEducationTypesLoading: (
+    isLastEducationTypesLoading: boolean,
+  ) => void;
+  getLastEducationTypes: () => void;
+};

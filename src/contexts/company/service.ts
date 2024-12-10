@@ -5,7 +5,7 @@ import { APIResponse, FetchCallback } from "@/common/types";
 export default class CompanyService {
   private api: API = new API();
 
-  async getAll(callback: FetchCallback<CompanyDto[]>) {
+  async getCompanies(callback: FetchCallback<CompanyDto[]>) {
     const res: APIResponse<CompanyDto[]> = await this.api.GET("v1/companies");
     if (!res?.success) {
       callback.onError(res.message);
@@ -17,7 +17,7 @@ export default class CompanyService {
     }
   }
 
-  async getOne(id: string, callback: FetchCallback<CompanyDto>) {
+  async getCompany(id: string, callback: FetchCallback<CompanyDto>) {
     const res: APIResponse<CompanyDto> = await this.api.GET(
       `v1/companies/${id}`,
     );
@@ -31,7 +31,10 @@ export default class CompanyService {
     }
   }
 
-  async create(payload: CompanyCreateDto, callback: FetchCallback<CompanyDto>) {
+  async createCompany(
+    payload: CompanyCreateDto,
+    callback: FetchCallback<CompanyDto>,
+  ) {
     const res: APIResponse<CompanyDto> = await this.api.POST("v1/companies", {
       ...payload,
     });
@@ -45,7 +48,10 @@ export default class CompanyService {
     }
   }
 
-  async update(payload: CompanyUpdateDto, callback: FetchCallback<CompanyDto>) {
+  async updateCompany(
+    payload: CompanyUpdateDto,
+    callback: FetchCallback<CompanyDto>,
+  ) {
     const res: APIResponse<CompanyDto> = await this.api.PUT(
       "v1/companies",
       payload,

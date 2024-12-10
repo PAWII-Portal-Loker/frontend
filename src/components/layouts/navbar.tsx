@@ -61,7 +61,7 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
 );
 
 export default function Navbar() {
-  const { isAuthenticated, role, signOut } = useAuthStore();
+  const { isLogin, role, signOut } = useAuthStore();
   const { isNavigationOpen, setIsNavigationOpen, setIsLoginDialogOpen } =
     useMainStore();
   const { setIsRoleDialogOpen } = useRoleDialogStore();
@@ -97,7 +97,7 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          {isAuthenticated ? (
+          {isLogin ? (
             <MenuRoot>
               <MenuTrigger asChild>
                 <Button className="rounded-full cursor-pointer hover:bg-gray-500 transition-all duration-200">

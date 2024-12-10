@@ -1,11 +1,22 @@
-import { initialCommonState } from "@/common/types/commonStoreState";
-import { CompanyStoreState } from "./type";
+import { CompanyDto, CompanyStoreState } from "./type";
 import { create } from "zustand";
 import CompanyService from "./service";
 import { toaster } from "@/components/ui/toaster";
 import useRoleDialogStore from "@/hooks/roleDialog/store";
-import useAuthStore from "../(auth)/store";
-import { DefaultCompanyDto } from "./util";
+import useAuthStore, { DefaultUserDto } from "../(auth)/store";
+
+export const DefaultCompanyDto: CompanyDto = {
+  id: "",
+  user: DefaultUserDto,
+  company_type: "",
+  company_name: "",
+  founding_date: new Date(),
+  employee_total: 0,
+  early_working_hour: "",
+  end_working_hour: "",
+  created_at: new Date(),
+  updated_at: new Date(),
+};
 
 const companyService = new CompanyService();
 
@@ -13,59 +24,62 @@ const { setIsRoleDialogOpen } = useRoleDialogStore.getState();
 const { checkLogin } = useAuthStore.getState();
 
 export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
-  ...initialCommonState,
-  singleData: DefaultCompanyDto,
+  companies: [],
+  isCompaniesLoading: false,
+  company: DefaultCompanyDto,
+  isCompanyLoading: false,
 
-  setData: (data) => set({ data }),
-  setSingleData: (singleData) => set({ singleData }),
-  setIsLoading: (isLoading) => set({ isLoading }),
+  setCompanies: (companies) => set({ companies }),
+  setIsCompaniesLoading: (isCompaniesLoading) => set({ isCompaniesLoading }),
+  setCompany: (company) => set({ company }),
+  setIsCompanyLoading: (isCompanyLoading) => set({ isCompanyLoading }),
 
-  fetchData: () => {
-    get().setIsLoading(true);
+  getCompanies: () => {
+    get().setIsCompaniesLoading(true);
 
-    companyService.getAll({
-      onSuccess: (data) => {
-        get().setData(data);
+    companyService.getCompanies({
+      onSuccess: (companies) => {
+        get().setCompanies(companies);
       },
       onError: (message: string) => {
         toaster.create({
-          title: "Failed to fetch company",
+          title: "Failed to get companies",
           description: message,
           type: "error",
           duration: 3000,
         });
       },
       onFullfilled() {
-        get().setIsLoading(false);
+        get().setIsCompaniesLoading(false);
       },
     });
   },
 
-  fetchSingleData: (id) => {
-    get().setIsLoading(true);
+  getCompany: (id) => {
+    get().setIsCompanyLoading(true);
 
-    companyService.getOne(id, {
-      onSuccess: (singleData) => {
-        get().setSingleData(singleData);
+    companyService.getCompany(id, {
+      onSuccess: (company) => {
+        get().setCompany(company);
       },
       onError: (message: string) => {
         toaster.create({
-          title: "Failed to fetch company",
+          title: "Failed to get company",
           description: message,
           type: "error",
           duration: 3000,
         });
       },
       onFullfilled() {
-        get().setIsLoading(false);
+        get().setIsCompanyLoading(false);
       },
     });
   },
 
-  createData: (request) => {
-    get().setIsLoading(true);
+  createCompany: (request) => {
+    get().setIsCompanyLoading(true);
 
-    companyService.create(request, {
+    companyService.createCompany(request, {
       onSuccess: () => {
         toaster.create({
           title: `Company ${request.company_name} created`,
@@ -84,15 +98,15 @@ export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsLoading(false);
+        get().setIsCompanyLoading(false);
       },
     });
   },
 
-  updateData: (request) => {
-    get().setIsLoading(true);
+  updateCompany: (request) => {
+    get().setIsCompanyLoading(true);
 
-    companyService.update(request, {
+    companyService.updateCompany(request, {
       onSuccess: () => {
         toaster.create({
           title: "Company updated",
@@ -109,7 +123,7 @@ export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsLoading(false);
+        get().setIsCompanyLoading(false);
       },
     });
   },

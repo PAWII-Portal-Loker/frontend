@@ -10,17 +10,13 @@ import LoadingCard from "@/components/containers/loadingCard";
 
 export default function VacancyDetailPage() {
   const { id } = useParams();
-  const {
-    singleData: vacancy,
-    isLoading,
-    fetchSingleData: fetchVacancy,
-  } = useVacancyStore();
+  const { vacancy, isVacancyLoading, getVacancy } = useVacancyStore();
 
   useEffect(() => {
-    fetchVacancy(id as string);
-  }, [fetchVacancy, id]);
+    getVacancy(id as string);
+  }, [getVacancy, id]);
 
-  if (isLoading) {
+  if (isVacancyLoading) {
     return <LoadingCard />;
   }
   if (!vacancy) {

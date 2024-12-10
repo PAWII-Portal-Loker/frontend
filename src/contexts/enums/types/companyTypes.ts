@@ -13,3 +13,14 @@ export const COMPANY_TYPES = [
   COMPANY_TYPE_FOREIGN,
   COMPANY_TYPE_OTHER,
 ];
+
+export type CompanyTypeDto = string;
+
+export type CompanyTypeStoreState = {
+  companyTypes: CompanyTypeDto[];
+  isCompanyTypesLoading: boolean;
+
+  setCompanyTypes: (companyTypes: CompanyTypeDto[]) => void;
+  setIsCompanyTypesLoading: (isCompanyTypesLoading: boolean) => void;
+  getCompanyTypes: () => void;
+};

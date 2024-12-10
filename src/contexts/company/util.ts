@@ -1,21 +1,7 @@
 import * as Yup from "yup";
-import { CompanyCreateDto, CompanyDto } from "./type";
+import { CompanyCreateDto } from "./type";
 import FieldConfig from "@/common/types/fieldConfig";
 import { COMPANY_TYPES } from "../enums/types/companyTypes";
-import { DefaultUserDto } from "../(auth)/util";
-
-export const DefaultCompanyDto: CompanyDto = {
-  id: "",
-  user: DefaultUserDto,
-  company_type: "",
-  company_name: "",
-  founding_date: new Date(),
-  employee_total: 0,
-  early_working_hour: "",
-  end_working_hour: "",
-  created_at: new Date(),
-  updated_at: new Date(),
-};
 
 export const CompanyCreateSchema = Yup.object({
   company_type: Yup.string()

@@ -5,6 +5,24 @@ import useMainStore from "@/hooks/main/store";
 import { toaster } from "@/components/ui/toaster";
 import useRoleDialogStore from "@/hooks/roleDialog/store";
 
+import { UserDto } from "./type";
+
+export const DefaultUserDto: UserDto = {
+  id: "",
+  role: "",
+  email: "",
+  wa_number: "",
+  image_url: "",
+  bio: "",
+  country: "",
+  province: "",
+  city: "",
+  subdistrict: "",
+  address: "",
+  created_at: new Date(),
+  updated_at: new Date(),
+};
+
 const authService = new AuthService();
 
 const { setIsLoginDialogOpen, setIsRegisterDialogOpen } =
@@ -12,11 +30,11 @@ const { setIsLoginDialogOpen, setIsRegisterDialogOpen } =
 const { setSelectedRole, setIsRoleDialogOpen } = useRoleDialogStore.getState();
 
 const useAuthStore = create<AuthStoreState>((set, get) => ({
-  isAuthenticated: false,
+  isLogin: false,
   role: null,
   isLoading: false,
 
-  setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
+  setIsLogin: (isLogin) => set({ isLogin }),
   setRole: (role) => set({ role }),
   setIsLoading: (isLoading) => set({ isLoading }),
 
@@ -32,7 +50,7 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
             type: "success",
             duration: 3000,
           });
-          get().setIsAuthenticated(true);
+          get().setIsLogin(true);
           setIsLoginDialogOpen(false);
           get().checkLogin();
         },
@@ -85,21 +103,21 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
   checkLogin: () => {
     authService.isLogin({
       onSuccess: (data) => {
-        get().setIsAuthenticated(data.is_login);
+        get().setIsLogin(data.is_login);
         get().setRole(data.role);
         setSelectedRole(data.role);
 
-        if (get().isAuthenticated && !get().role) {
+        if (get().isLogin && !get().role) {
           setIsRoleDialogOpen(true);
         }
 
-        if (!useAuthStore.getState().isAuthenticated) {
+        if (!useAuthStore.getState().isLogin) {
           setIsRoleDialogOpen(false);
           setIsLoginDialogOpen(true);
         }
       },
       onError: () => {
-        get().setIsAuthenticated(false);
+        get().setIsLogin(false);
         get().setRole(null);
       },
     });
@@ -113,7 +131,7 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
           type: "success",
           duration: 3000,
         });
-        get().setIsAuthenticated(false);
+        get().setIsLogin(false);
         get().setRole(null);
       },
       onError: () => {

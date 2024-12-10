@@ -3,10 +3,11 @@ import { MainStoreState } from "./type";
 
 const useMainStore = create<MainStoreState>((set) => ({
   isNavigationOpen: false,
-  setIsNavigationOpen: (isOpen) => set({ isNavigationOpen: isOpen }),
   isLoginDialogOpen: false,
-  setIsLoginDialogOpen: (isOpen) => set({ isLoginDialogOpen: isOpen }),
   isRegisterDialogOpen: false,
+
+  setIsNavigationOpen: (isOpen) => set({ isNavigationOpen: isOpen }),
+  setIsLoginDialogOpen: (isOpen) => set({ isLoginDialogOpen: isOpen }),
   setIsRegisterDialogOpen: (isOpen) => set({ isRegisterDialogOpen: isOpen }),
 }));
 

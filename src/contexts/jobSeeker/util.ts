@@ -1,19 +1,7 @@
 import FieldConfig from "@/common/types/fieldConfig";
-import { DefaultUserDto } from "../(auth)/util";
-import { JobSeekerCreateDto, JobSeekerDto } from "./type";
+import { JobSeekerCreateDto } from "./type";
 import * as Yup from "yup";
 import { LAST_EDUCATION_TYPE } from "../enums/types/lastEducationTypes";
-
-export const DefaultJobSeekerDto: JobSeekerDto = {
-  id: "",
-  user: DefaultUserDto,
-  name: "",
-  last_education: "",
-  major: "",
-  gpa: 0,
-  created_at: new Date(),
-  updated_at: new Date(),
-};
 
 export const JobSeekerCreateSchema = Yup.object({
   name: Yup.string()

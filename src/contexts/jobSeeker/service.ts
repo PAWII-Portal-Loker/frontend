@@ -5,7 +5,7 @@ import { APIResponse, FetchCallback } from "@/common/types";
 export default class JobSeekerService {
   private api: API = new API();
 
-  async getAll(callback: FetchCallback<JobSeekerDto[]>) {
+  async getJobSeekers(callback: FetchCallback<JobSeekerDto[]>) {
     const res: APIResponse<JobSeekerDto[]> = await this.api.GET(
       "v1/job-seekers",
     );
@@ -19,7 +19,7 @@ export default class JobSeekerService {
     }
   }
 
-  async getOne(id: string, callback: FetchCallback<JobSeekerDto>) {
+  async getJobSeeker(id: string, callback: FetchCallback<JobSeekerDto>) {
     const res: APIResponse<JobSeekerDto> = await this.api.GET(
       `v1/job-seekers/${id}`,
     );
@@ -33,7 +33,7 @@ export default class JobSeekerService {
     }
   }
 
-  async create(
+  async createJobSeeker(
     payload: JobSeekerCreateDto,
     callback: FetchCallback<JobSeekerDto>,
   ) {
@@ -51,7 +51,7 @@ export default class JobSeekerService {
     }
   }
 
-  async update(
+  async updateJobSeeker(
     payload: JobSeekerUpdateDto,
     callback: FetchCallback<JobSeekerDto>,
   ) {
