@@ -58,7 +58,7 @@ const RoleCardPicker = ({
         >
           <Card.Body className="fex flex-col justify-between">
             <Image
-              src="/job_seeker.png"
+              src="/job-seeker.png"
               alt="Job Seeker"
               width={100}
               height={120}
