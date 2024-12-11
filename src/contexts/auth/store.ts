@@ -51,7 +51,7 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
   },
 
   checkLogin: () => {
-    authService.isLogin({
+    authService.checkLogin({
       onSuccess: (data) => {
         get().setIsLogin(data.is_login);
         get().setRole(data.role);

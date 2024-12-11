@@ -1,5 +1,5 @@
 import API from "..";
-import { IsLoginDto, SignInDto } from "./type";
+import { CheckLoginDto, SignInDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class AuthService {
@@ -20,8 +20,10 @@ export default class AuthService {
     }
   }
 
-  async isLogin(callback: FetchCallback<IsLoginDto>) {
-    const res: APIResponse<IsLoginDto> = await this.api.GET("v1/auth/is-login");
+  async checkLogin(callback: FetchCallback<CheckLoginDto>) {
+    const res: APIResponse<CheckLoginDto> = await this.api.GET(
+      "v1/auth/is-login",
+    );
     if (!res?.success) {
       callback.onError(res.message);
     } else {

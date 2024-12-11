@@ -3,7 +3,7 @@ export type SignInDto = {
   password: string;
 };
 
-export type IsLoginDto = {
+export type CheckLoginDto = {
   is_login: boolean;
   role: "JOB_SEEKER" | "COMPANY";
 };
