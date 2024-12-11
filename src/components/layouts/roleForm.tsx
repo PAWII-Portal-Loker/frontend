@@ -11,7 +11,7 @@ import { BaseSyntheticEvent } from "react";
 import { CompanyCreateDto } from "@/contexts/(company)/type";
 import { CompanyCreateField } from "@/contexts/(company)/util";
 import { CreateJobSeekerDto } from "@/contexts/(jobSeeker)/type";
-import { JobSeekerCreateField } from "@/contexts/(jobSeeker)/util";
+import { CreateJobSeekerField } from "@/contexts/(jobSeeker)/util";
 
 type RoleFormProps<T extends CompanyCreateDto | CreateJobSeekerDto> = {
   role: "COMPANY" | "JOB_SEEKER";
@@ -34,7 +34,7 @@ const RoleForm = <T extends CompanyCreateDto | CreateJobSeekerDto>({
   selectData,
   isSelectDataLoading,
 }: RoleFormProps<T>) => {
-  const fields = role === "COMPANY" ? CompanyCreateField : JobSeekerCreateField;
+  const fields = role === "COMPANY" ? CompanyCreateField : CreateJobSeekerField;
 
   return (
     <Stack as="form" onSubmit={onSubmit}>

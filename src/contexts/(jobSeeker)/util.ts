@@ -3,7 +3,7 @@ import { CreateJobSeekerDto, UpdateJobSeekerDto } from "./type";
 import * as Yup from "yup";
 import { LAST_EDUCATION_TYPE } from "../enums/types/lastEducationTypes";
 
-export const JobSeekerCreateSchema = Yup.object({
+export const CreateJobSeekerSchema = Yup.object({
   name: Yup.string()
     .required("Name is required")
     .min(3, "Name must be at least 3 characters")
@@ -29,38 +29,38 @@ export const JobSeekerCreateSchema = Yup.object({
   .noUnknown(true)
   .strict(true);
 
-export const JobSeekerCreateField: FieldConfig<CreateJobSeekerDto>[] = [
+export const CreateJobSeekerField: FieldConfig<CreateJobSeekerDto>[] = [
   {
     name: "name",
     label: "Name",
     type: "text",
     placeholder: "Enter your name",
-    rules: JobSeekerCreateSchema.fields.name,
+    rules: CreateJobSeekerSchema.fields.name,
   },
   {
     name: "last_education",
     label: "Last Education",
     type: "select",
     placeholder: "Select your last education",
-    rules: JobSeekerCreateSchema.fields.last_education,
+    rules: CreateJobSeekerSchema.fields.last_education,
   },
   {
     name: "major",
     label: "Major",
     type: "text",
     placeholder: "Enter your major",
-    rules: JobSeekerCreateSchema.fields.major,
+    rules: CreateJobSeekerSchema.fields.major,
   },
   {
     name: "gpa",
     label: "GPA",
     type: "number",
     placeholder: "Enter your GPA",
-    rules: JobSeekerCreateSchema.fields.gpa,
+    rules: CreateJobSeekerSchema.fields.gpa,
   },
 ];
 
-export const JobSeekerUpdateSchema = Yup.object({
+export const UpdateJobSeekerSchema = Yup.object({
   name: Yup.string()
     .required("Name is required")
     .min(3, "Name must be at least 3 characters")
@@ -91,27 +91,27 @@ export const JobSeekerUpdateField: FieldConfig<UpdateJobSeekerDto>[] = [
     label: "Name",
     type: "text",
     placeholder: "Enter your name",
-    rules: JobSeekerUpdateSchema.fields.name,
+    rules: UpdateJobSeekerSchema.fields.name,
   },
   {
     name: "last_education",
     label: "Last Education",
     type: "select",
     placeholder: "Select your last education",
-    rules: JobSeekerUpdateSchema.fields.last_education,
+    rules: UpdateJobSeekerSchema.fields.last_education,
   },
   {
     name: "major",
     label: "Major",
     type: "text",
     placeholder: "Enter your major",
-    rules: JobSeekerUpdateSchema.fields.major,
+    rules: UpdateJobSeekerSchema.fields.major,
   },
   {
     name: "gpa",
     label: "GPA",
     type: "number",
     placeholder: "Enter your GPA",
-    rules: JobSeekerUpdateSchema.fields.gpa,
+    rules: UpdateJobSeekerSchema.fields.gpa,
   },
 ];
