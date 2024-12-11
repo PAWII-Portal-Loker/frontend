@@ -18,12 +18,12 @@ import RoleCardPicker from "../containers/roleCardPicker";
 import { useCompanyStore } from "@/contexts/(company)/store";
 import { useJobSeekerStore } from "@/contexts/(jobSeeker)/store";
 import RoleForm from "./roleForm";
-import { CreateCompanySchema } from "@/contexts/(company)/util";
-import { CreateCompanyDto } from "@/contexts/(company)/type";
 import { CreateJobSeekerDto } from "@/contexts/(jobSeeker)/type";
 import { CreateJobSeekerSchema } from "@/contexts/(jobSeeker)/util";
 import { useCompanyTypeStore } from "@/contexts/enums/stores/companyType";
 import { useLastEducationTypeStore } from "@/contexts/enums/stores/lastEducationType";
+import { CreateCompanyDto } from "@/contexts/(company)/types/create";
+import { CreateCompanySchema } from "@/contexts/(company)/schemas/create";
 
 const RoleDialog = () => {
   const {

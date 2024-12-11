@@ -1,7 +1,7 @@
 import { FilterType, Pagination } from "@/common/types";
-import { CompanyDto } from "../(company)/type";
 import { JobTypeEnums } from "../enums/types/jobTypes";
 import { IncomeTypeEnums } from "../enums/types/incomeTypes";
+import { CompanyDto } from "../(company)/types";
 
 export interface VacancyDto {
   id: string;

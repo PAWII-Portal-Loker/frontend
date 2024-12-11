@@ -1,6 +1,8 @@
 import API from "..";
-import { CompanyDto, CreateCompanyDto, UpdateCompanyDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
+import { CompanyDto } from "./types";
+import { CreateCompanyDto } from "./types/create";
+import { UpdateCompanyDto } from "./types/update";
 
 export default class CompanyService {
   private api: API = new API();
