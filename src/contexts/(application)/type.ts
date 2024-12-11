@@ -31,4 +31,6 @@ export interface ApplicationStoreState {
   getVacancyApplicants: (id: string) => void;
   getApplication: (id: string) => void;
   createApplication: (request: CreateApplicationDto) => void;
+  uploadResume: (file: File) => void;
+  deleteResume: (key: string) => void;
 }

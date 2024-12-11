@@ -4,6 +4,7 @@ import { DefaultVacancyDto } from "../(vacancy)/store";
 import ApplicationService from "./service";
 import { ApplicationDto, ApplicationStoreState } from "./type";
 import { toaster } from "@/components/ui/toaster";
+import FileUploadService from "../fileUpload/service";
 
 const DefaultApplicationDto: ApplicationDto = {
   id: "",
@@ -16,6 +17,7 @@ const DefaultApplicationDto: ApplicationDto = {
 };
 
 const applicationService = new ApplicationService();
+const fileUploadService = new FileUploadService();
 
 export const useApplicationStore = create<ApplicationStoreState>(
   (set, get) => ({
@@ -115,6 +117,46 @@ export const useApplicationStore = create<ApplicationStoreState>(
         },
         onFullfilled() {
           get().setIsApplicationLoading(false);
+        },
+      });
+    },
+
+    uploadResume: (file) => {
+      fileUploadService.uploadFile(file, {
+        onSuccess: (url) => {
+          get().setApplication({
+            ...get().application,
+            document_urls: [...get().application.document_urls, url],
+          });
+        },
+        onError: (message) => {
+          toaster.create({
+            title: "Failed to upload resume",
+            description: message,
+            type: "error",
+            duration: 3000,
+          });
+        },
+      });
+    },
+
+    deleteResume: (key) => {
+      fileUploadService.deleteFile(key, {
+        onSuccess: () => {
+          get().setApplication({
+            ...get().application,
+            document_urls: get().application.document_urls.filter(
+              (url) => url !== key,
+            ),
+          });
+        },
+        onError: (message) => {
+          toaster.create({
+            title: "Failed to delete resume",
+            description: message,
+            type: "error",
+            duration: 3000,
+          });
         },
       });
     },
