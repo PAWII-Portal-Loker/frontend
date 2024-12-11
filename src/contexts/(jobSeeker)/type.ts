@@ -10,14 +10,14 @@ export interface JobSeekerDto {
   created_at: Date;
   updated_at: Date;
 }
-export interface JobSeekerCreateDto {
+export interface CreateJobSeekerDto {
   name: JobSeekerDto["name"];
   last_education: JobSeekerDto["last_education"];
   major: JobSeekerDto["major"];
   gpa: JobSeekerDto["gpa"];
 }
 
-export interface JobSeekerUpdateDto {
+export interface UpdateJobSeekerDto {
   name: JobSeekerDto["name"];
   last_education: JobSeekerDto["last_education"];
   major: JobSeekerDto["major"];
@@ -36,6 +36,6 @@ export interface JobSeekerStoreState {
   setIsJobSeekerLoading: (isJobSeekerLoading: boolean) => void;
   getJobSeekers: () => void;
   getJobSeeker: (id: string) => void;
-  createJobSeeker: (request: JobSeekerCreateDto) => void;
-  updateJobSeeker: (request: JobSeekerUpdateDto) => void;
+  createJobSeeker: (request: CreateJobSeekerDto) => void;
+  updateJobSeeker: (request: UpdateJobSeekerDto) => void;
 }

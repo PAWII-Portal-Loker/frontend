@@ -10,10 +10,10 @@ import { Button } from "../ui/button";
 import { BaseSyntheticEvent } from "react";
 import { CompanyCreateDto } from "@/contexts/(company)/type";
 import { CompanyCreateField } from "@/contexts/(company)/util";
-import { JobSeekerCreateDto } from "@/contexts/(jobSeeker)/type";
+import { CreateJobSeekerDto } from "@/contexts/(jobSeeker)/type";
 import { JobSeekerCreateField } from "@/contexts/(jobSeeker)/util";
 
-type RoleFormProps<T extends CompanyCreateDto | JobSeekerCreateDto> = {
+type RoleFormProps<T extends CompanyCreateDto | CreateJobSeekerDto> = {
   role: "COMPANY" | "JOB_SEEKER";
   onSubmit: (data: BaseSyntheticEvent<object> | undefined) => void;
   formState: {
@@ -26,7 +26,7 @@ type RoleFormProps<T extends CompanyCreateDto | JobSeekerCreateDto> = {
   isSelectDataLoading?: boolean;
 };
 
-const RoleForm = <T extends CompanyCreateDto | JobSeekerCreateDto>({
+const RoleForm = <T extends CompanyCreateDto | CreateJobSeekerDto>({
   role,
   onSubmit,
   formState: { register, control, errors },
@@ -53,10 +53,10 @@ const RoleForm = <T extends CompanyCreateDto | JobSeekerCreateDto>({
                 isLoading={isSelectDataLoading}
                 className="w-full pl-3 pr-8 py-1 rounded-lg border-2 bg-gray-100 border-gray-300 text-lg text-gray-600 appearance-none"
                 {...register(
-                  field.name as keyof (CompanyCreateDto | JobSeekerCreateDto),
+                  field.name as keyof (CompanyCreateDto | CreateJobSeekerDto),
                 )}
                 {...control?.register(
-                  field.name as keyof (CompanyCreateDto | JobSeekerCreateDto),
+                  field.name as keyof (CompanyCreateDto | CreateJobSeekerDto),
                 )}
                 placeholder={field.placeholder}
                 items={selectData}
@@ -66,7 +66,7 @@ const RoleForm = <T extends CompanyCreateDto | JobSeekerCreateDto>({
           ) : (
             <Input
               {...register(
-                field.name as keyof (CompanyCreateDto | JobSeekerCreateDto),
+                field.name as keyof (CompanyCreateDto | CreateJobSeekerDto),
                 {
                   valueAsNumber: field.type === "number",
                 },

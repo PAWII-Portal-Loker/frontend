@@ -1,5 +1,5 @@
 import API from "..";
-import { JobSeekerCreateDto, JobSeekerDto, JobSeekerUpdateDto } from "./type";
+import { CreateJobSeekerDto, JobSeekerDto, UpdateJobSeekerDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class JobSeekerService {
@@ -34,7 +34,7 @@ export default class JobSeekerService {
   }
 
   async createJobSeeker(
-    payload: JobSeekerCreateDto,
+    payload: CreateJobSeekerDto,
     callback: FetchCallback<JobSeekerDto>,
   ) {
     const res: APIResponse<JobSeekerDto> = await this.api.POST(
@@ -52,7 +52,7 @@ export default class JobSeekerService {
   }
 
   async updateJobSeeker(
-    payload: JobSeekerUpdateDto,
+    payload: UpdateJobSeekerDto,
     callback: FetchCallback<JobSeekerDto>,
   ) {
     const res: APIResponse<JobSeekerDto> = await this.api.PUT(

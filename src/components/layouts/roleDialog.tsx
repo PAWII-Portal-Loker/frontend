@@ -20,7 +20,7 @@ import { useJobSeekerStore } from "@/contexts/(jobSeeker)/store";
 import RoleForm from "./roleForm";
 import { CompanyCreateSchema } from "@/contexts/(company)/util";
 import { CompanyCreateDto } from "@/contexts/(company)/type";
-import { JobSeekerCreateDto } from "@/contexts/(jobSeeker)/type";
+import { CreateJobSeekerDto } from "@/contexts/(jobSeeker)/type";
 import { JobSeekerCreateSchema } from "@/contexts/(jobSeeker)/util";
 import { useCompanyTypeStore } from "@/contexts/enums/stores/companyType";
 import { useLastEducationTypeStore } from "@/contexts/enums/stores/lastEducationType";
@@ -65,7 +65,7 @@ const RoleDialog = () => {
     register: registerJobSeeker,
     handleSubmit: handleSubmitJobSeeker,
     formState: { errors: errorsJobSeeker },
-  } = useForm<JobSeekerCreateDto>({
+  } = useForm<CreateJobSeekerDto>({
     resolver: yupResolver(JobSeekerCreateSchema),
   });
 
