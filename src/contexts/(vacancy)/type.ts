@@ -62,4 +62,7 @@ export interface VacancyStoreState {
   setPagination: (pagination: Pagination) => void;
   getVacancies: () => void;
   getVacancy: (id: string) => void;
+  createVacancy: (request: CreateVacancyDto) => void;
+  updateVacancy: (request: UpdateVacancyDto) => void;
+  updateVacancyStatus: (request: updateVacancyStatusDto) => void;
 }

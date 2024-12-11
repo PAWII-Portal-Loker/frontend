@@ -93,6 +93,84 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
       },
     });
   },
+
+  createVacancy: (request) => {
+    get().setIsVacancyLoading(true);
+
+    vacancyService.createVacancy(request, {
+      onSuccess: () => {
+        toaster.create({
+          title: "Success",
+          description: "Vacancy created successfully",
+          type: "success",
+          duration: 3000,
+        });
+      },
+      onError: (message: string) => {
+        toaster.create({
+          title: "Failed to create vacancy",
+          description: message,
+          type: "error",
+          duration: 3000,
+        });
+      },
+      onFullfilled() {
+        get().setIsVacancyLoading(false);
+      },
+    });
+  },
+
+  updateVacancy: (request) => {
+    get().setIsVacancyLoading(true);
+
+    vacancyService.updateVacancy(get().vacancy.id, request, {
+      onSuccess: () => {
+        toaster.create({
+          title: "Success",
+          description: "Vacancy updated successfully",
+          type: "success",
+          duration: 3000,
+        });
+      },
+      onError: (message: string) => {
+        toaster.create({
+          title: "Failed to update vacancy",
+          description: message,
+          type: "error",
+          duration: 3000,
+        });
+      },
+      onFullfilled() {
+        get().setIsVacancyLoading(false);
+      },
+    });
+  },
+
+  updateVacancyStatus: (request) => {
+    get().setIsVacancyLoading(true);
+
+    vacancyService.updateVacancyStatus(get().vacancy.id, request, {
+      onSuccess: () => {
+        toaster.create({
+          title: "Success",
+          description: "Vacancy status updated successfully",
+          type: "success",
+          duration: 3000,
+        });
+      },
+      onError: (message: string) => {
+        toaster.create({
+          title: "Failed to update vacancy status",
+          description: message,
+          type: "error",
+          duration: 3000,
+        });
+      },
+      onFullfilled() {
+        get().setIsVacancyLoading(false);
+      },
+    });
+  },
 }));
 
 export default useVacancyStore;
