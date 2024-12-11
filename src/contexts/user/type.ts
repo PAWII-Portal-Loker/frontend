@@ -15,8 +15,8 @@ export interface UserDto {
 }
 
 export type CreateUserDto = {
-  wa_number: string;
-  email: string;
+  wa_number: UserDto["wa_number"];
+  email: UserDto["email"];
   password: string;
 };
 

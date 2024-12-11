@@ -1,38 +1,13 @@
 import API from "..";
-import { ApplicationDto } from "./type";
+import { ApplicationDto, CreateApplicationDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class ApplicationService {
   private api: API = new API();
 
-  async getDummy(callback: FetchCallback<ApplicationDto[]>) {
-    const response = await fetch("/dummy.json");
-    const data = await response.json();
-    callback.onSuccess(data.application);
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
-  }
-
-  async getOneDummy(id: string, callback: FetchCallback<ApplicationDto>) {
-    const response = await fetch("/dummy.json");
-    const data = await response.json();
-    const application = data.application.find(
-      (v: ApplicationDto) => v.id === id,
-    );
-    if (application) {
-      callback.onSuccess(application);
-    } else {
-      callback.onError("Application not found");
-    }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
-  }
-
-  async getAll(callback: FetchCallback<ApplicationDto[]>) {
+  async getJobSeekerApplications(callback: FetchCallback<ApplicationDto[]>) {
     const res: APIResponse<ApplicationDto[]> = await this.api.GET(
-      "v1/application",
+      "v1/applications",
     );
     if (!res?.success) {
       callback.onError(res.message);
@@ -44,9 +19,46 @@ export default class ApplicationService {
     }
   }
 
-  async getOne(id: string, callback: FetchCallback<ApplicationDto>) {
+  async getVacancyApplicants(
+    id: string,
+    callback: FetchCallback<ApplicationDto[]>,
+  ) {
+    const res: APIResponse<ApplicationDto[]> = await this.api.GET(
+      `v1/applications/vacancy/${id}`,
+    );
+    if (!res?.success) {
+      callback.onError(res.message);
+    } else {
+      callback.onSuccess(res.data);
+    }
+    if (callback.onFullfilled) {
+      callback.onFullfilled();
+    }
+  }
+
+  async getApplication(id: string, callback: FetchCallback<ApplicationDto>) {
     const res: APIResponse<ApplicationDto> = await this.api.GET(
-      `v1/application/${id}`,
+      `v1/vacancies/${id}/applicants`,
+    );
+    if (!res?.success) {
+      callback.onError(res.message);
+    } else {
+      callback.onSuccess(res.data);
+    }
+    if (callback.onFullfilled) {
+      callback.onFullfilled();
+    }
+  }
+
+  async createApplication(
+    payload: CreateApplicationDto,
+    callback: FetchCallback<ApplicationDto>,
+  ) {
+    const res: APIResponse<ApplicationDto> = await this.api.POST(
+      "v1/applications",
+      {
+        ...payload,
+      },
     );
     if (!res?.success) {
       callback.onError(res.message);

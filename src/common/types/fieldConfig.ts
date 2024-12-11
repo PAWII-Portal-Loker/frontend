@@ -8,7 +8,10 @@ interface FieldConfig<T extends FieldValues> {
   placeholder: string | undefined;
   rules:
     | Reference<unknown>
-    | ISchema<string | number | Date | boolean | undefined, AnyObject>;
+    | ISchema<
+        string | string[] | number | Date | boolean | undefined,
+        AnyObject
+      >;
 }
 
 export default FieldConfig;

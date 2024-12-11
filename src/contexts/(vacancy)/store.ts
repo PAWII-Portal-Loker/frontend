@@ -5,7 +5,7 @@ import VacancyService from "./service";
 import { toaster } from "@/components/ui/toaster";
 import { DefaultCompanyDto } from "../(company)/store";
 
-const DefaultVacancyDto: VacancyDto = {
+export const DefaultVacancyDto: VacancyDto = {
   id: "",
   company: DefaultCompanyDto,
   job_type: "",
