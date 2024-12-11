@@ -1,10 +1,11 @@
-import { JobSeekerDto, JobSeekerStoreState } from "./type";
 import { create } from "zustand";
 import JobSeekerService from "./service";
 import { toaster } from "@/components/ui/toaster";
 import useRoleDialogStore from "@/hooks/roleDialog/store";
 import useAuthStore from "../auth/store";
 import { DefaultUserDto } from "../user/store";
+import { JobSeekerDto } from "./types";
+import { JobSeekerStoreState } from "./types/storeState";
 
 export const DefaultJobSeekerDto: JobSeekerDto = {
   id: "",

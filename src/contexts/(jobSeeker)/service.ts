@@ -1,6 +1,8 @@
 import API from "..";
-import { CreateJobSeekerDto, JobSeekerDto, UpdateJobSeekerDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
+import { JobSeekerDto } from "./types";
+import { CreateJobSeekerDto } from "./types/create";
+import { UpdateJobSeekerDto } from "./types/update";
 
 export default class JobSeekerService {
   private api: API = new API();

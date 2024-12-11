@@ -1,28 +1,6 @@
-import { UserDto } from "../user/types";
-
-export interface JobSeekerDto {
-  id: string;
-  user: UserDto;
-  name: string;
-  last_education: string;
-  major: string;
-  gpa: number;
-  created_at: Date;
-  updated_at: Date;
-}
-export interface CreateJobSeekerDto {
-  name: JobSeekerDto["name"];
-  last_education: JobSeekerDto["last_education"];
-  major: JobSeekerDto["major"];
-  gpa: JobSeekerDto["gpa"];
-}
-
-export interface UpdateJobSeekerDto {
-  name: JobSeekerDto["name"];
-  last_education: JobSeekerDto["last_education"];
-  major: JobSeekerDto["major"];
-  gpa: JobSeekerDto["gpa"];
-}
+import { JobSeekerDto } from ".";
+import { CreateJobSeekerDto } from "./create";
+import { UpdateJobSeekerDto } from "./update";
 
 export interface JobSeekerStoreState {
   jobSeekers: JobSeekerDto[];
