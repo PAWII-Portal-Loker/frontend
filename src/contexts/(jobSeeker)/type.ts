@@ -1,4 +1,4 @@
-import { UserDto } from "../user/type";
+import { UserDto } from "../user/types";
 
 export interface JobSeekerDto {
   id: string;

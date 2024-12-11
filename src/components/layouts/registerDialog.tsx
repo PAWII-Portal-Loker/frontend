@@ -15,9 +15,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useAuthStore from "@/contexts/auth/store";
 import clsx from "clsx";
-import { CreateUserDto } from "@/contexts/user/type";
 import useUserStore from "@/contexts/user/store";
-import { CreateUserField, CreateUserSchema } from "@/contexts/user/util";
+import { CreateUserDto } from "@/contexts/user/types/create";
+import { CreateUserSchema } from "@/contexts/user/schemas/create";
+import { CreateUserField } from "@/contexts/user/fields/create";
 
 const RegisterDialog = () => {
   const {

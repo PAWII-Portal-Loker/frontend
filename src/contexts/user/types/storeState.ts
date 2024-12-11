@@ -1,24 +1,5 @@
-export interface UserDto {
-  id: string;
-  role: string;
-  email: string;
-  wa_number: string;
-  image_url: string;
-  bio: string;
-  country: string;
-  province: string;
-  city: string;
-  subdistrict: string;
-  address: string;
-  created_at: Date;
-  updated_at: Date;
-}
-
-export type CreateUserDto = {
-  wa_number: UserDto["wa_number"];
-  email: UserDto["email"];
-  password: string;
-};
+import { UserDto } from ".";
+import { CreateUserDto } from "./create";
 
 export interface UserStoreState {
   users: UserDto[];

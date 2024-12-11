@@ -1,6 +1,7 @@
 import API from "..";
-import { CreateUserDto, UserDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
+import { UserDto } from "./types";
+import { CreateUserDto } from "./types/create";
 
 export default class UserService {
   private api: API = new API();

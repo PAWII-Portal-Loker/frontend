@@ -1,4 +1,4 @@
-import { UserDto } from "@/contexts/user/type";
+import { UserDto } from "@/contexts/user/types";
 
 export interface CompanyDto {
   id: string;
