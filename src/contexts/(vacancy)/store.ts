@@ -1,9 +1,11 @@
-import { VacancyDto, VacancyFilter, VacancyStoreState } from "./type";
 import { defaultPagination } from "@/common/utils/defaultPagination";
 import { create } from "zustand";
 import VacancyService from "./service";
 import { toaster } from "@/components/ui/toaster";
 import { DefaultCompanyDto } from "../(company)/store";
+import { VacancyDto } from "./types";
+import { VacancyFilter } from "./types/filter";
+import { VacancyStoreState } from "./types/storeState";
 
 export const DefaultVacancyDto: VacancyDto = {
   id: "",

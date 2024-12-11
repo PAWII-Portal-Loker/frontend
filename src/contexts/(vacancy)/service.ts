@@ -1,11 +1,9 @@
 import API from "..";
-import {
-  CreateVacancyDto,
-  UpdateVacancyDto,
-  updateVacancyStatusDto,
-  VacancyDto,
-} from "./type";
 import { APIResponse, FetchCallback, FilterParams } from "@/common/types";
+import { VacancyDto } from "./types";
+import { CreateVacancyDto } from "./types/create";
+import { UpdateVacancyDto } from "./types/update";
+import { UpdateVacancyStatusDto } from "./types/updateStatus";
 
 export default class VacancyService {
   private api: API = new API();
@@ -81,7 +79,7 @@ export default class VacancyService {
 
   async updateVacancyStatus(
     id: string,
-    payload: updateVacancyStatusDto,
+    payload: UpdateVacancyStatusDto,
     callback: FetchCallback<VacancyDto>,
   ) {
     const res: APIResponse<VacancyDto> = await this.api.PATCH(
