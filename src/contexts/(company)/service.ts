@@ -1,5 +1,5 @@
 import API from "..";
-import { CompanyDto, CompanyCreateDto, CompanyUpdateDto } from "./type";
+import { CompanyDto, CreateCompanyDto, UpdateCompanyDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class CompanyService {
@@ -32,7 +32,7 @@ export default class CompanyService {
   }
 
   async createCompany(
-    payload: CompanyCreateDto,
+    payload: CreateCompanyDto,
     callback: FetchCallback<CompanyDto>,
   ) {
     const res: APIResponse<CompanyDto> = await this.api.POST("v1/companies", {
@@ -49,7 +49,7 @@ export default class CompanyService {
   }
 
   async updateCompany(
-    payload: CompanyUpdateDto,
+    payload: UpdateCompanyDto,
     callback: FetchCallback<CompanyDto>,
   ) {
     const res: APIResponse<CompanyDto> = await this.api.PUT(

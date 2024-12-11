@@ -17,7 +17,7 @@ import useAuthStore from "@/contexts/auth/store";
 import clsx from "clsx";
 import { CreateUserDto } from "@/contexts/user/type";
 import useUserStore from "@/contexts/user/store";
-import { UserCreateField, UserCreateSchema } from "@/contexts/user/util";
+import { CreateUserField, CreateUserSchema } from "@/contexts/user/util";
 
 const RegisterDialog = () => {
   const {
@@ -33,7 +33,7 @@ const RegisterDialog = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<CreateUserDto & { confirm_password: string }>({
-    resolver: yupResolver(UserCreateSchema),
+    resolver: yupResolver(CreateUserSchema),
   });
 
   const onSubmit = handleSubmit((data) => {
@@ -63,7 +63,7 @@ const RegisterDialog = () => {
         </DialogHeader>
         <DialogBody as="form" onSubmit={onSubmit}>
           <Stack wordSpacing={4}>
-            {UserCreateField.map((field) => (
+            {CreateUserField.map((field) => (
               <Field
                 key={field.name}
                 label={field.label}

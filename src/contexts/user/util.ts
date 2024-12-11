@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { CreateUserDto } from "./type";
 import FieldConfig from "@/common/types/fieldConfig";
 
-export const UserCreateSchema = Yup.object()
+export const CreateUserSchema = Yup.object()
   .shape({
     wa_number: Yup.string()
       .required("WhatsApp number is required")
@@ -26,7 +26,7 @@ export const UserCreateSchema = Yup.object()
   .noUnknown(true)
   .strict(true);
 
-export const UserCreateField: FieldConfig<
+export const CreateUserField: FieldConfig<
   CreateUserDto & { confirm_password: string }
 >[] = [
   {
@@ -34,27 +34,27 @@ export const UserCreateField: FieldConfig<
     label: "WhatsApp Number",
     type: "number",
     placeholder: "Enter your WhatsApp number",
-    rules: UserCreateSchema.fields.wa_number,
+    rules: CreateUserSchema.fields.wa_number,
   },
   {
     name: "email",
     label: "Email",
     type: "email",
     placeholder: "Enter your email",
-    rules: UserCreateSchema.fields.email,
+    rules: CreateUserSchema.fields.email,
   },
   {
     name: "password",
     label: "Password",
     type: "password",
     placeholder: "Enter your password",
-    rules: UserCreateSchema.fields.password,
+    rules: CreateUserSchema.fields.password,
   },
   {
     name: "confirm_password",
     label: "Confirm Password",
     type: "password",
     placeholder: "Confirm your password",
-    rules: UserCreateSchema.fields.confirm_password,
+    rules: CreateUserSchema.fields.confirm_password,
   },
 ];

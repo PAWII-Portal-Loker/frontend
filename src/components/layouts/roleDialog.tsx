@@ -18,8 +18,8 @@ import RoleCardPicker from "../containers/roleCardPicker";
 import { useCompanyStore } from "@/contexts/(company)/store";
 import { useJobSeekerStore } from "@/contexts/(jobSeeker)/store";
 import RoleForm from "./roleForm";
-import { CompanyCreateSchema } from "@/contexts/(company)/util";
-import { CompanyCreateDto } from "@/contexts/(company)/type";
+import { CreateCompanySchema } from "@/contexts/(company)/util";
+import { CreateCompanyDto } from "@/contexts/(company)/type";
 import { CreateJobSeekerDto } from "@/contexts/(jobSeeker)/type";
 import { CreateJobSeekerSchema } from "@/contexts/(jobSeeker)/util";
 import { useCompanyTypeStore } from "@/contexts/enums/stores/companyType";
@@ -57,8 +57,8 @@ const RoleDialog = () => {
     control: controlCompany,
     handleSubmit: handleSubmitCompany,
     formState: { errors: errorsCompany },
-  } = useForm<CompanyCreateDto>({
-    resolver: yupResolver(CompanyCreateSchema),
+  } = useForm<CreateCompanyDto>({
+    resolver: yupResolver(CreateCompanySchema),
   });
 
   const {

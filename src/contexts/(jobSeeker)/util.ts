@@ -85,7 +85,7 @@ export const UpdateJobSeekerSchema = Yup.object({
   .noUnknown(true)
   .strict(true);
 
-export const JobSeekerUpdateField: FieldConfig<UpdateJobSeekerDto>[] = [
+export const UpdateJobSeekerField: FieldConfig<UpdateJobSeekerDto>[] = [
   {
     name: "name",
     label: "Name",

@@ -13,7 +13,7 @@ export interface CompanyDto {
   updated_at: Date;
 }
 
-export interface CompanyCreateDto {
+export interface CreateCompanyDto {
   company_type: CompanyDto["company_type"];
   company_name: CompanyDto["company_name"];
   founding_date: string;
@@ -22,7 +22,7 @@ export interface CompanyCreateDto {
   end_working_hour: CompanyDto["end_working_hour"];
 }
 
-export interface CompanyUpdateDto {
+export interface UpdateCompanyDto {
   company_type: CompanyDto["company_type"];
   company_name: CompanyDto["company_name"];
   founding_date: string;
@@ -43,6 +43,6 @@ export interface CompanyStoreState {
   setIsCompanyLoading: (isCompanyLoading: boolean) => void;
   getCompanies: () => void;
   getCompany: (id: string) => void;
-  createCompany: (request: CompanyCreateDto) => void;
-  updateCompany: (request: CompanyUpdateDto) => void;
+  createCompany: (request: CreateCompanyDto) => void;
+  updateCompany: (request: UpdateCompanyDto) => void;
 }

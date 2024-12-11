@@ -8,12 +8,12 @@ import { NativeSelectField, NativeSelectRoot } from "../ui/native-select";
 import { LuSave } from "react-icons/lu";
 import { Button } from "../ui/button";
 import { BaseSyntheticEvent } from "react";
-import { CompanyCreateDto } from "@/contexts/(company)/type";
-import { CompanyCreateField } from "@/contexts/(company)/util";
+import { CreateCompanyDto } from "@/contexts/(company)/type";
+import { CreateCompanyField } from "@/contexts/(company)/util";
 import { CreateJobSeekerDto } from "@/contexts/(jobSeeker)/type";
 import { CreateJobSeekerField } from "@/contexts/(jobSeeker)/util";
 
-type RoleFormProps<T extends CompanyCreateDto | CreateJobSeekerDto> = {
+type RoleFormProps<T extends CreateCompanyDto | CreateJobSeekerDto> = {
   role: "COMPANY" | "JOB_SEEKER";
   onSubmit: (data: BaseSyntheticEvent<object> | undefined) => void;
   formState: {
@@ -26,7 +26,7 @@ type RoleFormProps<T extends CompanyCreateDto | CreateJobSeekerDto> = {
   isSelectDataLoading?: boolean;
 };
 
-const RoleForm = <T extends CompanyCreateDto | CreateJobSeekerDto>({
+const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>({
   role,
   onSubmit,
   formState: { register, control, errors },
@@ -34,7 +34,7 @@ const RoleForm = <T extends CompanyCreateDto | CreateJobSeekerDto>({
   selectData,
   isSelectDataLoading,
 }: RoleFormProps<T>) => {
-  const fields = role === "COMPANY" ? CompanyCreateField : CreateJobSeekerField;
+  const fields = role === "COMPANY" ? CreateCompanyField : CreateJobSeekerField;
 
   return (
     <Stack as="form" onSubmit={onSubmit}>
@@ -53,10 +53,10 @@ const RoleForm = <T extends CompanyCreateDto | CreateJobSeekerDto>({
                 isLoading={isSelectDataLoading}
                 className="w-full pl-3 pr-8 py-1 rounded-lg border-2 bg-gray-100 border-gray-300 text-lg text-gray-600 appearance-none"
                 {...register(
-                  field.name as keyof (CompanyCreateDto | CreateJobSeekerDto),
+                  field.name as keyof (CreateCompanyDto | CreateJobSeekerDto),
                 )}
                 {...control?.register(
-                  field.name as keyof (CompanyCreateDto | CreateJobSeekerDto),
+                  field.name as keyof (CreateCompanyDto | CreateJobSeekerDto),
                 )}
                 placeholder={field.placeholder}
                 items={selectData}
@@ -66,7 +66,7 @@ const RoleForm = <T extends CompanyCreateDto | CreateJobSeekerDto>({
           ) : (
             <Input
               {...register(
-                field.name as keyof (CompanyCreateDto | CreateJobSeekerDto),
+                field.name as keyof (CreateCompanyDto | CreateJobSeekerDto),
                 {
                   valueAsNumber: field.type === "number",
                 },
