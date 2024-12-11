@@ -15,8 +15,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useAuthStore from "@/contexts/auth/store";
 import clsx from "clsx";
-import { SignInDto } from "@/contexts/auth/type";
-import { SignInField, SignInSchema } from "@/contexts/auth/util";
+import { SignInDto } from "@/contexts/auth/types/signIn";
+import { SignInSchema } from "@/contexts/auth/schemas/signIn";
+import { SignInField } from "@/contexts/auth/fields/signIn";
 
 const LoginDialog = () => {
   const { isLoginDialogOpen, setIsLoginDialogOpen, setIsRegisterDialogOpen } =

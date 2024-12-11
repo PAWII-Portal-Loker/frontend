@@ -1,6 +1,7 @@
 import API from "..";
-import { CheckLoginDto, SignInDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
+import { SignInDto } from "./types/signIn";
+import { CheckLoginDto } from "./types/checkLogin";
 
 export default class AuthService {
   private api: API = new API();

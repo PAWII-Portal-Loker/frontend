@@ -1,12 +1,4 @@
-export type SignInDto = {
-  email: string;
-  password: string;
-};
-
-export type CheckLoginDto = {
-  is_login: boolean;
-  role: "JOB_SEEKER" | "COMPANY";
-};
+import { SignInDto } from "./signIn";
 
 export interface AuthStoreState {
   isLogin: boolean;
