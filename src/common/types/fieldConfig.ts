@@ -6,7 +6,9 @@ interface FieldConfig<T extends FieldValues> {
   label: string;
   type: string;
   placeholder: string | undefined;
-  rules: Reference<unknown> | ISchema<string | number | Date, AnyObject>;
+  rules:
+    | Reference<unknown>
+    | ISchema<string | number | Date | boolean | undefined, AnyObject>;
 }
 
 export default FieldConfig;

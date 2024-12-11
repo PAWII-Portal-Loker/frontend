@@ -1,11 +1,13 @@
 import { FilterType, Pagination } from "@/common/types";
 import { CompanyDto } from "../(company)/type";
+import { JobTypeEnums } from "../enums/types/jobTypes";
+import { IncomeTypeEnums } from "../enums/types/incomeTypes";
 
 export interface VacancyDto {
   id: string;
   company: CompanyDto;
-  job_type: string;
-  income_type: string;
+  job_type: JobTypeEnums;
+  income_type: IncomeTypeEnums;
   position: string;
   thumbnail_url: string;
   description: string;
@@ -15,6 +17,26 @@ export interface VacancyDto {
   updated_at: Date;
 }
 
+export type CreateVacancyDto = {
+  job_type: JobTypeEnums;
+  income_type: IncomeTypeEnums;
+  position: VacancyDto["position"];
+  thumbnail_url: VacancyDto["thumbnail_url"];
+  description: VacancyDto["description"];
+};
+
+export type UpdateVacancyDto = {
+  job_type: JobTypeEnums;
+  income_type: IncomeTypeEnums;
+  position: VacancyDto["position"];
+  thumbnail_url: VacancyDto["thumbnail_url"];
+  description: VacancyDto["description"];
+};
+
+export type updateVacancyStatusDto = {
+  is_closed: VacancyDto["is_closed"];
+};
+
 export interface VacancyFilter extends FilterType {
   ownedByMe: boolean;
   ownedBy: string;
@@ -23,19 +45,6 @@ export interface VacancyFilter extends FilterType {
   incomeType: string;
   isClosed: boolean;
 }
-
-export const defaultVacancyFilter: VacancyFilter = {
-  page: 1,
-  limit: 10,
-  order: "desc",
-  sort: "createdAt",
-  ownedByMe: false,
-  ownedBy: "",
-  position: "",
-  jobType: "",
-  incomeType: "",
-  isClosed: false,
-};
 
 export interface VacancyStoreState {
   vacancies: VacancyDto[];

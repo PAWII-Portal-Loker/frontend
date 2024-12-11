@@ -1,5 +1,5 @@
 import API from "..";
-import { UserCreateDto, UserDto } from "./type";
+import { CreateUserDto, UserDto } from "./type";
 import { APIResponse, FetchCallback } from "@/common/types";
 
 export default class UserService {
@@ -30,10 +30,10 @@ export default class UserService {
   }
 
   async createUser(
-    payload: UserCreateDto,
-    callback: FetchCallback<UserCreateDto>,
+    payload: CreateUserDto,
+    callback: FetchCallback<CreateUserDto>,
   ) {
-    const res: APIResponse<UserCreateDto> = await this.api.POST(
+    const res: APIResponse<CreateUserDto> = await this.api.POST(
       "v1/users",
       payload,
     );

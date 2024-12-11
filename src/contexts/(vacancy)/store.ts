@@ -1,11 +1,9 @@
-import { defaultVacancyFilter, VacancyDto, VacancyStoreState } from "./type";
+import { VacancyDto, VacancyFilter, VacancyStoreState } from "./type";
 import { defaultPagination } from "@/common/utils/defaultPagination";
 import { create } from "zustand";
 import VacancyService from "./service";
 import { toaster } from "@/components/ui/toaster";
 import { DefaultCompanyDto } from "../(company)/store";
-
-const vacancyService = new VacancyService();
 
 const DefaultVacancyDto: VacancyDto = {
   id: "",
@@ -21,12 +19,27 @@ const DefaultVacancyDto: VacancyDto = {
   updated_at: new Date(),
 };
 
+const DefaultVacancyFilter: VacancyFilter = {
+  page: 1,
+  limit: 10,
+  order: "desc",
+  sort: "createdAt",
+  ownedByMe: false,
+  ownedBy: "",
+  position: "",
+  jobType: "",
+  incomeType: "",
+  isClosed: false,
+};
+
+const vacancyService = new VacancyService();
+
 const useVacancyStore = create<VacancyStoreState>((set, get) => ({
   vacancies: [],
   isVacanciesLoading: false,
   vacancy: DefaultVacancyDto,
   isVacancyLoading: false,
-  filters: defaultVacancyFilter,
+  filters: DefaultVacancyFilter,
   pagination: defaultPagination,
 
   setVacancies: (vacancies) => set({ vacancies }),

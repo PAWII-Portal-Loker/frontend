@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { UserCreateDto } from "./type";
+import { CreateUserDto } from "./type";
 import FieldConfig from "@/common/types/fieldConfig";
 
 export const UserCreateSchema = Yup.object()
@@ -27,7 +27,7 @@ export const UserCreateSchema = Yup.object()
   .strict(true);
 
 export const UserCreateField: FieldConfig<
-  UserCreateDto & { confirm_password: string }
+  CreateUserDto & { confirm_password: string }
 >[] = [
   {
     name: "wa_number",

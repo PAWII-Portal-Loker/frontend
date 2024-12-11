@@ -14,7 +14,7 @@ export interface UserDto {
   updated_at: Date;
 }
 
-export type UserCreateDto = {
+export type CreateUserDto = {
   wa_number: string;
   email: string;
   password: string;
@@ -32,5 +32,5 @@ export interface UserStoreState {
   setIsUserLoading: (isUserLoading: boolean) => void;
   getUsers: () => void;
   getUser: (id: string) => void;
-  createUser: (request: UserCreateDto) => void;
+  createUser: (request: CreateUserDto) => void;
 }

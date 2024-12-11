@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useAuthStore from "@/contexts/auth/store";
 import clsx from "clsx";
-import { UserCreateDto } from "@/contexts/user/type";
+import { CreateUserDto } from "@/contexts/user/type";
 import useUserStore from "@/contexts/user/store";
 import { UserCreateField, UserCreateSchema } from "@/contexts/user/util";
 
@@ -32,7 +32,7 @@ const RegisterDialog = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserCreateDto & { confirm_password: string }>({
+  } = useForm<CreateUserDto & { confirm_password: string }>({
     resolver: yupResolver(UserCreateSchema),
   });
 
