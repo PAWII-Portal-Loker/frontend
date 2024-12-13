@@ -103,7 +103,7 @@ const RoleDialog = () => {
             >
               {selectedRole == "COMPANY" && (
                 <RoleForm
-                  role="COMPANY"
+                  selectedRole="COMPANY"
                   onSubmit={onCompanySubmit}
                   isLoading={isLoading}
                   selectData={companyTypes}
@@ -117,7 +117,7 @@ const RoleDialog = () => {
               )}
               {selectedRole == "JOB_SEEKER" && (
                 <RoleForm
-                  role="JOB_SEEKER"
+                  selectedRole="JOB_SEEKER"
                   onSubmit={onJobSeekerSubmit}
                   isLoading={isLoading}
                   selectData={lastEducationTypes}

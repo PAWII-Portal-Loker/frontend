@@ -64,7 +64,7 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
 );
 
 const Navbar = () => {
-  const { isLogin, role, signOut } = useAuthStore();
+  const { isLogin, auth, signOut } = useAuthStore();
   const { isNavigationOpen, setIsNavigationOpen, setIsLoginDialogOpen } =
     useMainStore();
   const { setIsRoleDialogOpen } = useRoleDialogStore();
@@ -108,13 +108,25 @@ const Navbar = () => {
           </ul>
           {isLogin ? (
             <MenuRoot>
+              {auth.role && (
+                <span
+                  className={clsx(
+                    "mr-2 px-2 py-1 rounded-full",
+                    auth.role === "Company"
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-500 text-white",
+                  )}
+                >
+                  {auth.role}
+                </span>
+              )}
               <MenuTrigger asChild>
                 <Button className="rounded-full cursor-pointer bg-blue-500 hover:bg-blue-700 transition-all duration-200">
                   <BsPerson size={24} />
                 </Button>
               </MenuTrigger>
               <MenuContent>
-                {role ? (
+                {auth.role ? (
                   <MenuItem value="profile" valueText="profile">
                     <BsPerson size={24} />
                     <Box flex="1">Profile</Box>

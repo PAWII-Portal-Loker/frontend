@@ -1,12 +1,13 @@
+import { AuthDto } from ".";
 import { SignInDto } from "./signIn";
 
 export interface AuthStoreState {
   isLogin: boolean;
-  role: "JOB_SEEKER" | "COMPANY" | null;
+  auth: AuthDto;
   isLoading: boolean;
 
   setIsLogin: (isLogin: boolean) => void;
-  setRole: (role: "JOB_SEEKER" | "COMPANY" | null) => void;
+  setAuth: (auth: AuthDto) => void;
   setIsLoading: (isLoading: boolean) => void;
 
   signIn: (request: SignInDto) => void;

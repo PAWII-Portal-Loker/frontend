@@ -4,19 +4,25 @@ import useMainStore from "@/hooks/main/store";
 import { toaster } from "@/components/ui/toaster";
 import useRoleDialogStore from "@/hooks/roleDialog/store";
 import { AuthStoreState } from "./types/storeState";
+import { AuthDto } from "./types";
+
+const DefaultAuthDto: AuthDto = {
+  id: null,
+  role: null,
+};
 
 const authService = new AuthService();
 
 const { setIsLoginDialogOpen } = useMainStore.getState();
-const { setSelectedRole, setIsRoleDialogOpen } = useRoleDialogStore.getState();
+const { setIsRoleDialogOpen } = useRoleDialogStore.getState();
 
 const useAuthStore = create<AuthStoreState>((set, get) => ({
   isLogin: false,
-  role: null,
+  auth: DefaultAuthDto,
   isLoading: false,
 
   setIsLogin: (isLogin) => set({ isLogin }),
-  setRole: (role) => set({ role }),
+  setAuth: (auth) => set({ auth }),
   setIsLoading: (isLoading) => set({ isLoading }),
 
   signIn: (request) => {
@@ -54,21 +60,24 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
     authService.checkLogin({
       onSuccess: (data) => {
         get().setIsLogin(data.is_login);
-        get().setRole(data.role);
-        setSelectedRole(data.role);
+        get().setAuth({
+          id: localStorage.getItem("user_id"),
+          role: data.role,
+        });
 
-        if (get().isLogin && !get().role) {
+        if (get().isLogin && !get().auth.role) {
           setIsRoleDialogOpen(true);
         }
 
         if (!useAuthStore.getState().isLogin) {
           setIsRoleDialogOpen(false);
           setIsLoginDialogOpen(true);
+          get().setAuth(DefaultAuthDto);
         }
       },
       onError: () => {
         get().setIsLogin(false);
-        get().setRole(null);
+        get().setAuth(DefaultAuthDto);
       },
     });
   },
@@ -82,7 +91,7 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
           duration: 3000,
         });
         get().setIsLogin(false);
-        get().setRole(null);
+        get().setAuth(DefaultAuthDto);
       },
       onError: () => {
         toaster.create({

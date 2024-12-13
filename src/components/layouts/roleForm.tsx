@@ -14,7 +14,7 @@ import { CreateJobSeekerDto } from "@/contexts/(jobSeeker)/types/create";
 import { CreateJobSeekerField } from "@/contexts/(jobSeeker)/fields/create";
 
 type RoleFormProps<T extends CreateCompanyDto | CreateJobSeekerDto> = {
-  role: "COMPANY" | "JOB_SEEKER";
+  selectedRole: "COMPANY" | "JOB_SEEKER";
   onSubmit: (data: BaseSyntheticEvent<object> | undefined) => void;
   formState: {
     register: UseFormRegister<T>;
@@ -27,14 +27,15 @@ type RoleFormProps<T extends CreateCompanyDto | CreateJobSeekerDto> = {
 };
 
 const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>({
-  role,
+  selectedRole,
   onSubmit,
   formState: { register, control, errors },
   isLoading,
   selectData,
   isSelectDataLoading,
 }: RoleFormProps<T>) => {
-  const fields = role === "COMPANY" ? CreateCompanyField : CreateJobSeekerField;
+  const fields =
+    selectedRole === "COMPANY" ? CreateCompanyField : CreateJobSeekerField;
 
   return (
     <Stack as="form" onSubmit={onSubmit}>
