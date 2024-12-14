@@ -1,7 +1,12 @@
 "use client";
 
 import { Stack, Input } from "@chakra-ui/react";
-import { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  FieldError,
+  FieldErrors,
+  UseFormRegister,
+} from "react-hook-form";
 import { Field } from "../ui/field";
 import clsx from "clsx";
 import { NativeSelectField, NativeSelectRoot } from "../ui/native-select";
@@ -12,6 +17,7 @@ import { CreateCompanyDto } from "@company/types/create";
 import { CreateJobSeekerDto } from "@jobSeeker/types/create";
 import { CreateCompanyField } from "@company/fields/create";
 import { CreateJobSeekerField } from "@jobSeeker/fields/create";
+import { getFocusRingColorClass, getSubmitButtonClass } from "@utils/form";
 
 type RoleFormProps<T extends CreateCompanyDto | CreateJobSeekerDto> = {
   selectedRole: "COMPANY" | "JOB_SEEKER";
@@ -26,14 +32,18 @@ type RoleFormProps<T extends CreateCompanyDto | CreateJobSeekerDto> = {
   isSelectDataLoading?: boolean;
 };
 
-const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>({
-  selectedRole,
-  onSubmit,
-  formState: { register, control, errors },
-  isLoading,
-  selectData,
-  isSelectDataLoading,
-}: RoleFormProps<T>) => {
+const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
+  props: RoleFormProps<T>,
+) => {
+  const {
+    selectedRole,
+    onSubmit,
+    formState: { register, control, errors },
+    isLoading,
+    selectData,
+    isSelectDataLoading,
+  } = props;
+
   const fields =
     selectedRole === "COMPANY" ? CreateCompanyField : CreateJobSeekerField;
 
@@ -43,9 +53,9 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>({
         <Field
           key={field.name}
           label={field.label}
-          invalid={!!errors[field.name as keyof typeof errors]}
+          invalid={!!errors[field.name as keyof FieldErrors<T>]}
           errorText={String(
-            errors[field.name as keyof typeof errors]?.message || "",
+            errors[field.name as keyof FieldErrors<T>]?.message || "",
           )}
         >
           {field.type === "select" ? (
@@ -76,21 +86,16 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>({
               placeholder={field.placeholder}
               className={clsx(
                 "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400",
-                !errors[field.name as keyof typeof errors]
-                  ? "focus:ring-blue-500"
-                  : "focus:ring-red-500",
+                getFocusRingColorClass(
+                  errors[field.name as keyof FieldErrors<T>] as FieldError,
+                ),
               )}
             />
           )}
         </Field>
       ))}
       <Button
-        className={clsx(
-          "mt-4 bg-blue-300 text-white font-bold py-2 px-4 rounded",
-          isLoading || Object.keys(errors).length > 0
-            ? "cursor-not-allowed"
-            : "hover:bg-blue-400 transition-all duration-200",
-        )}
+        className={getSubmitButtonClass(isLoading, errors)}
         disabled={isLoading || Object.keys(errors).length > 0}
         type="submit"
         width="full"

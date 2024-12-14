@@ -18,6 +18,7 @@ import useAuthStore from "@auth/store";
 import { SignInDto } from "@auth/types/signIn";
 import { SignInSchema } from "@auth/schemas/signIn";
 import { SignInField } from "@auth/fields/signIn";
+import { getFocusRingColorClass, getSubmitButtonClass } from "@utils/form";
 
 const LoginDialog = () => {
   const { isLoginDialogOpen, setLoginDialogOpen, setRegisterDialogOpen } =
@@ -71,20 +72,13 @@ const LoginDialog = () => {
                   placeholder={field.placeholder}
                   className={clsx(
                     "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
-                    !errors[field.name]
-                      ? "focus:ring-blue-500"
-                      : "focus:ring-red-500",
+                    getFocusRingColorClass(errors[field.name]),
                   )}
                 />
               </Field>
             ))}
             <Button
-              className={clsx(
-                "mt-4 bg-blue-300 text-white font-bold py-2 px-4 rounded",
-                isAuthLoading || Object.keys(errors).length > 0
-                  ? "cursor-not-allowed"
-                  : "hover:bg-blue-400 transition-all duration-200",
-              )}
+              className={getSubmitButtonClass(isAuthLoading, errors)}
               disabled={isAuthLoading || Object.keys(errors).length > 0}
               type="submit"
               width="full"
