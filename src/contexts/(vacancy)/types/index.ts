@@ -1,6 +1,6 @@
-import { CompanyDto } from "@/contexts/(company)/types";
-import { IncomeTypeEnums } from "@/contexts/enums/types/incomeTypes";
-import { JobTypeEnums } from "@/contexts/enums/types/jobTypes";
+import { CompanyDto } from "@company/types";
+import { IncomeTypeEnums } from "@enums/types/incomeTypes";
+import { JobTypeEnums } from "@enums/types/jobTypes";
 
 export interface VacancyDto {
   id: string;

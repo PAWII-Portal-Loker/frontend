@@ -1,11 +1,11 @@
 import API from "..";
-import { APIResponse, FetchCallback } from "@/common/types";
 import { ConstDto } from "./types/conts";
 import { CompanyTypeDto } from "./types/companyTypes";
 import { IncomeTypeDto } from "./types/incomeTypes";
 import { JobTypeDto } from "./types/jobTypes";
 import { RoleDto } from "./types/roles";
 import { LastEducationTypeDto } from "./types/lastEducationTypes";
+import { APIResponse, FetchCallback } from "@types";
 
 export default class ConstService {
   private api: API = new API();

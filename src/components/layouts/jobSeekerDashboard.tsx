@@ -1,13 +1,13 @@
-import { scaleVariants, slideVariants } from "@/common/types/animationVariants";
 import { Input } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { FaKey } from "react-icons/fa";
-import Dropdown from "../containers/dropdown";
-import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import useDashboardStore from "@/hooks/dashboard/store";
-import { useJobTypestore } from "@/contexts/enums/stores/jobType";
-import { useIncomeTypestore } from "@/contexts/enums/stores/incomeType";
+import Dropdown from "@components/containers/dropdown";
+import { Button } from "@components/ui/button";
+import useDashboardStore from "@hooks/dashboard/store";
+import { useJobTypestore } from "@enums/stores/jobType";
+import { useIncomeTypestore } from "@enums/stores/incomeType";
+import { scaleVariants, slideVariants } from "@consts/animationVariants";
 
 const JobSeekerDashboard = () => {
   const { isSearchFocused } = useDashboardStore();

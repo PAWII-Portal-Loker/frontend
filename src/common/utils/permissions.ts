@@ -1,4 +1,4 @@
-import { AuthDto } from "@/contexts/auth/types";
+import { AuthDto } from "@auth/types";
 
 const rolePermissions = {
   Company: [

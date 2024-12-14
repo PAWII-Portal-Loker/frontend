@@ -1,5 +1,5 @@
 import API from "..";
-import { APIResponse, FetchCallback } from "@/common/types";
+import { APIResponse, FetchCallback } from "@types";
 
 export default class FileUploadService {
   private api: API = new API();

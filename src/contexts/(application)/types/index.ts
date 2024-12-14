@@ -1,5 +1,5 @@
-import { JobSeekerDto } from "@/contexts/(jobSeeker)/types";
-import { VacancyDto } from "@/contexts/(vacancy)/types";
+import { JobSeekerDto } from "@jobSeeker/types";
+import { VacancyDto } from "@vacancy/types";
 
 export interface ApplicationDto {
   id: string;

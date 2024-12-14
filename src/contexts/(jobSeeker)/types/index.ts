@@ -1,4 +1,4 @@
-import { UserDto } from "@/contexts/user/types";
+import { UserDto } from "@user/types";
 
 export interface JobSeekerDto {
   id: string;

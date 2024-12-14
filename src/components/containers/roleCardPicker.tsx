@@ -1,5 +1,5 @@
-import { scaleVariants } from "@/common/types/animationVariants";
 import { Card, Stack } from "@chakra-ui/react";
+import { scaleVariants } from "@consts/animationVariants";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import Image from "next/image";

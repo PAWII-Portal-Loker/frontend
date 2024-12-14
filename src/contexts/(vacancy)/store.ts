@@ -1,11 +1,11 @@
-import { defaultPagination } from "@/common/utils/defaultPagination";
 import { create } from "zustand";
-import VacancyService from "./service";
-import { toaster } from "@/components/ui/toaster";
-import { DefaultCompanyDto } from "../(company)/store";
 import { VacancyDto } from "./types";
+import { DefaultCompanyDto } from "@company/store";
 import { VacancyFilter } from "./types/filter";
+import VacancyService from "./service";
 import { VacancyStoreState } from "./types/storeState";
+import { toaster } from "@components/ui/toaster";
+import { DefaultPagination } from "@utils/defaultPagination";
 
 export const DefaultVacancyDto: VacancyDto = {
   id: "",
@@ -42,7 +42,7 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
   vacancy: DefaultVacancyDto,
   isVacancyLoading: false,
   filters: DefaultVacancyFilter,
-  pagination: defaultPagination,
+  pagination: DefaultPagination,
 
   setVacancies: (vacancies) => set({ vacancies }),
   setIsVacanciesLoading: (isVacanciesLoading) => set({ isVacanciesLoading }),

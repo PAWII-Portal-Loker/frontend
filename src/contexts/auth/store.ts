@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import AuthService from "./service";
-import useMainStore from "@/hooks/main/store";
-import { toaster } from "@/components/ui/toaster";
-import useRoleDialogStore from "@/hooks/roleDialog/store";
 import { AuthStoreState } from "./types/storeState";
 import { AuthDto } from "./types";
+import useMainStore from "@hooks/main/store";
+import useRoleDialogStore from "@hooks/roleDialog/store";
+import { toaster } from "@components/ui/toaster";
 
 const DefaultAuthDto: AuthDto = {
   id: null,

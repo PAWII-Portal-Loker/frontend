@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import ConstService from "../service";
-import { toaster } from "@/components/ui/toaster";
+import { toaster } from "@components/ui/toaster";
 import { ConstDto, ConstStoreState } from "../types/conts";
 
 const constService = new ConstService();

@@ -1,38 +1,27 @@
 "use client";
 
-import useDashboardStore from "@/hooks/dashboard/store";
 import { useEffect } from "react";
-import { useJobTypestore } from "@/contexts/enums/stores/jobType";
-import { useIncomeTypestore } from "@/contexts/enums/stores/incomeType";
 import { motion } from "framer-motion";
-import { fadeVariants } from "@/common/types/animationVariants";
-import useAuthStore from "@/contexts/auth/store";
-import { hasPermission } from "@/common/utils/permissions";
-import JobSeekerDashboard from "@/components/layouts/jobSeekerDashboard";
-import CompanyDashboard from "@/components/layouts/companyDashboard";
+import useAuthStore from "src/contexts/auth/store";
+import { useJobTypestore } from "@enums/stores/jobType";
+import { useIncomeTypestore } from "@enums/stores/incomeType";
+import { useCtrlF } from "@hooks/command/useCtrlF";
+import { fadeVariants } from "@consts/animationVariants";
+import { hasPermission } from "@utils/permissions";
+import CompanyDashboard from "@components/layouts/companyDashboard";
+import JobSeekerDashboard from "@components/layouts/jobSeekerDashboard";
 
 const Home = () => {
   const { auth } = useAuthStore();
-  const { setIsSearchFocused } = useDashboardStore();
   const { getJobTypes } = useJobTypestore();
   const { getIncomeTypes } = useIncomeTypestore();
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.key === "f") {
-        event.preventDefault();
-        setIsSearchFocused(true);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [setIsSearchFocused]);
+  useCtrlF();
 
   useEffect(() => {
     getJobTypes();
     getIncomeTypes();
-  }, [getJobTypes, getIncomeTypes]);
+  }, []);
 
   return (
     <motion.div

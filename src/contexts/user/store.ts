@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import UserService from "./service";
-import useMainStore from "@/hooks/main/store";
-import { toaster } from "@/components/ui/toaster";
 import { UserDto } from "./types";
 import { UserStoreState } from "./types/storeState";
+import useMainStore from "@hooks/main/store";
+import { toaster } from "@components/ui/toaster";
 
 export const DefaultUserDto: UserDto = {
   id: "",

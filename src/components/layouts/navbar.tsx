@@ -4,21 +4,18 @@ import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosClose } from "react-icons/io";
 import Image from "next/image";
-import useMainStore from "@/hooks/main/store";
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, IconButton } from "@chakra-ui/react";
 import clsx from "clsx";
-import useAuthStore from "@/contexts/auth/store";
 import { Button } from "../ui/button";
 import { BsPerson } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";
-import useRoleDialogStore from "@/hooks/roleDialog/store";
-import {
-  useHideNavbarOnScroll,
-  useIsNavbarActive,
-} from "@/common/utils/navbar";
-import { slideVariants } from "@/common/types/animationVariants";
+import { useHideNavbarOnScroll, useIsNavbarActive } from "@utils/navbar";
+import useAuthStore from "@auth/store";
+import useMainStore from "@hooks/main/store";
+import useRoleDialogStore from "@hooks/roleDialog/store";
+import { slideVariants } from "@consts/animationVariants";
 
 const navLinks = [
   { href: "/vacancy", label: "Vacancy" },

@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import { DefaultJobSeekerDto } from "../(jobSeeker)/store";
-import { DefaultVacancyDto } from "../(vacancy)/store";
-import ApplicationService from "./service";
-import { toaster } from "@/components/ui/toaster";
-import FileUploadService from "../fileUpload/service";
+import { toaster } from "@components/ui/toaster";
 import { ApplicationDto } from "./types";
+import { DefaultJobSeekerDto } from "@jobSeeker/store";
+import { DefaultVacancyDto } from "@vacancy/store";
+import ApplicationService from "./service";
+import FileUploadService from "@fileUpload/service";
 import { ApplicationStoreState } from "./types/storeState";
 
 const DefaultApplicationDto: ApplicationDto = {

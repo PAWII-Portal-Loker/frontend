@@ -1,9 +1,9 @@
-import { Pagination } from "@/common/types";
 import { VacancyDto } from ".";
 import { VacancyFilter } from "./filter";
 import { CreateVacancyDto } from "./create";
 import { UpdateVacancyDto } from "./update";
 import { UpdateVacancyStatusDto } from "./updateStatus";
+import { Pagination } from "@types";
 
 export interface VacancyStoreState {
   vacancies: VacancyDto[];

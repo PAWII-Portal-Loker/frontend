@@ -2,18 +2,18 @@
 
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Provider } from "@/components/ui/provider";
-import { Toaster } from "@/components/ui/toaster";
-import Navbar from "@/components/layouts/navbar";
-import Footer from "@/components/layouts/footer";
-import LoginDialog from "@/components/layouts/loginDialog";
-import RegisterDialog from "@/components/layouts/registerDialog";
-import useAuthStore from "@/contexts/auth/store";
 import { useEffect } from "react";
-import RoleDialog from "@/components/layouts/roleDialog";
 import Head from "next/head";
-import { useIsNotHomePage } from "@/common/utils/checkPathName";
 import clsx from "clsx";
+import { Provider } from "@components/ui/provider";
+import { Toaster } from "@components/ui/toaster";
+import Navbar from "@components/layouts/navbar";
+import LoginDialog from "@components/layouts/loginDialog";
+import RegisterDialog from "@components/layouts/registerDialog";
+import Footer from "@components/layouts/footer";
+import RoleDialog from "@components/layouts/roleDialog";
+import useAuthStore from "src/contexts/auth/store";
+import { useIsNotHomePage } from "@utils/checkPathName";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +33,7 @@ const RootLayout = ({
     }, 60000);
 
     return () => clearInterval(intervalId);
-  }, [checkLogin]);
+  }, []);
 
   return (
     <html lang="en" suppressHydrationWarning>

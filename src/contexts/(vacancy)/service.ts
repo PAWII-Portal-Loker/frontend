@@ -1,5 +1,5 @@
 import API from "..";
-import { APIResponse, FetchCallback, FilterParams } from "@/common/types";
+import { APIResponse, FetchCallback, FilterParams } from "@types";
 import { VacancyDto } from "./types";
 import { CreateVacancyDto } from "./types/create";
 import { UpdateVacancyDto } from "./types/update";

@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import CompanyService from "./service";
-import { toaster } from "@/components/ui/toaster";
-import useRoleDialogStore from "@/hooks/roleDialog/store";
-import useAuthStore from "../auth/store";
-import { DefaultUserDto } from "../user/store";
 import { CompanyDto } from "./types";
+import { DefaultUserDto } from "@user/store";
+import CompanyService from "./service";
+import useRoleDialogStore from "@hooks/roleDialog/store";
+import useAuthStore from "@auth/store";
 import { CompanyStoreState } from "./types/storeState";
+import { toaster } from "@components/ui/toaster";
 
 export const DefaultCompanyDto: CompanyDto = {
   id: "",

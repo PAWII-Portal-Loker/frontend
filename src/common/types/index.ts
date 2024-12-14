@@ -1,3 +1,6 @@
+import { FieldValues } from "react-hook-form";
+import { AnyObject, ISchema, Reference } from "yup";
+
 export type APIFieldError = {
   field: string;
   message: string;
@@ -55,3 +58,16 @@ export type FilterParams = {
     [key: string]: string | number;
   };
 };
+
+export interface FieldConfig<T extends FieldValues> {
+  name: keyof T;
+  label: string;
+  type: string;
+  placeholder: string | undefined;
+  rules:
+    | Reference<unknown>
+    | ISchema<
+        string | string[] | number | Date | boolean | undefined,
+        AnyObject
+      >;
+}

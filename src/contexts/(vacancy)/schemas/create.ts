@@ -1,5 +1,5 @@
-import { INCOME_TYPES } from "@/contexts/enums/types/incomeTypes";
-import { JOB_TYPES } from "@/contexts/enums/types/jobTypes";
+import { INCOME_TYPES } from "@enums/types/incomeTypes";
+import { JOB_TYPES } from "@enums/types/jobTypes";
 import * as Yup from "yup";
 
 export const CreateVacancySchema = Yup.object({

@@ -1,4 +1,4 @@
-import { FilterType } from "@/common/types";
+import { FilterType } from "@types";
 
 export interface VacancyFilter extends FilterType {
   ownedByMe: boolean;

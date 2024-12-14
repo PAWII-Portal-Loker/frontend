@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { JobTypeStoreState } from "../types/jobTypes";
 import ConstService from "../service";
-import { toaster } from "@/components/ui/toaster";
+import { toaster } from "@components/ui/toaster";
 
 const constService = new ConstService();
 

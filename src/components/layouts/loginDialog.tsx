@@ -1,23 +1,23 @@
-import { Field } from "@/components/ui/field";
+import { Stack, Input, Text } from "@chakra-ui/react";
+import { LuLogIn } from "react-icons/lu";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import clsx from "clsx";
 import {
   DialogBody,
   DialogCloseTrigger,
   DialogContent,
-  DialogTitle,
-  DialogRoot,
   DialogHeader,
-} from "@/components/ui/dialog";
-import { Stack, Input, Text } from "@chakra-ui/react";
-import { LuLogIn } from "react-icons/lu";
-import { Button } from "@/components/ui/button";
-import useMainStore from "@/hooks/main/store";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import useAuthStore from "@/contexts/auth/store";
-import clsx from "clsx";
-import { SignInDto } from "@/contexts/auth/types/signIn";
-import { SignInSchema } from "@/contexts/auth/schemas/signIn";
-import { SignInField } from "@/contexts/auth/fields/signIn";
+  DialogRoot,
+  DialogTitle,
+} from "@components/ui/dialog";
+import { Field } from "@components/ui/field";
+import { Button } from "@components/ui/button";
+import useMainStore from "@hooks/main/store";
+import useAuthStore from "@auth/store";
+import { SignInDto } from "@auth/types/signIn";
+import { SignInSchema } from "@auth/schemas/signIn";
+import { SignInField } from "@auth/fields/signIn";
 
 const LoginDialog = () => {
   const { isLoginDialogOpen, setIsLoginDialogOpen, setIsRegisterDialogOpen } =

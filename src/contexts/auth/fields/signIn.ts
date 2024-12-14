@@ -1,4 +1,4 @@
-import FieldConfig from "@/common/types/fieldConfig";
+import { FieldConfig } from "@types";
 import { SignInSchema } from "../schemas/signIn";
 import { SignInDto } from "../types/signIn";
 

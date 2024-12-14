@@ -1,6 +1,6 @@
-import FieldConfig from "@/common/types/fieldConfig";
 import { CreateCompanyDto } from "../types/create";
 import { CreateCompanySchema } from "../schemas/create";
+import { FieldConfig } from "@types";
 
 export const CreateCompanyField: FieldConfig<CreateCompanyDto>[] = [
   {

@@ -1,6 +1,6 @@
-import { IncomeTypeEnums } from "@/contexts/enums/types/incomeTypes";
-import { JobTypeEnums } from "@/contexts/enums/types/jobTypes";
+import { JobTypeEnums } from "@enums/types/jobTypes";
 import { VacancyDto } from ".";
+import { IncomeTypeEnums } from "@enums/types/incomeTypes";
 
 export type CreateVacancyDto = {
   job_type: JobTypeEnums;

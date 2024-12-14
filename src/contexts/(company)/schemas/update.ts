@@ -1,4 +1,4 @@
-import { COMPANY_TYPES } from "@/contexts/enums/types/companyTypes";
+import { COMPANY_TYPES } from "@enums/types/companyTypes";
 import * as Yup from "yup";
 
 export const UpdateCompanySchema = Yup.object({

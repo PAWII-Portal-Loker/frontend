@@ -1,5 +1,5 @@
+import { APIResponse, FetchCallback } from "@types";
 import API from "..";
-import { APIResponse, FetchCallback } from "@/common/types";
 import { UserDto } from "./types";
 import { CreateUserDto } from "./types/create";
 

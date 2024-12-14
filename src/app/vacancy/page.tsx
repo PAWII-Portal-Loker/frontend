@@ -1,16 +1,16 @@
 "use client";
 
-import useVacancyStore from "@/contexts/(vacancy)/store";
+import VacancyCard from "@components/layouts/vacancyCard";
+import { Skeleton } from "@components/ui/skeleton";
+import useVacancyStore from "@vacancy/store";
 import { useEffect } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import VacancyCard from "@/components/layouts/vacancyCard";
 
 const VacancyPage = () => {
   const { vacancies, isVacanciesLoading, getVacancies } = useVacancyStore();
 
   useEffect(() => {
     getVacancies();
-  }, [getVacancies]);
+  }, []);
 
   if (isVacanciesLoading) {
     return (

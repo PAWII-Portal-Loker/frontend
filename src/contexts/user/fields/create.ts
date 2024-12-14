@@ -1,6 +1,6 @@
-import FieldConfig from "@/common/types/fieldConfig";
-import { CreateUserDto } from "../types/create";
-import { CreateUserSchema } from "../schemas/create";
+import { CreateUserDto } from "@user/types/create";
+import { FieldConfig } from "@types";
+import { CreateUserSchema } from "@user/schemas/create";
 
 export const CreateUserField: FieldConfig<
   CreateUserDto & { confirm_password: string }

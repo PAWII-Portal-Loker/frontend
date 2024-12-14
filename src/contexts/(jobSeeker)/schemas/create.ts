@@ -1,4 +1,4 @@
-import { LAST_EDUCATION_TYPE } from "@/contexts/enums/types/lastEducationTypes";
+import { LAST_EDUCATION_TYPE } from "@enums/types/lastEducationTypes";
 import * as Yup from "yup";
 
 export const CreateJobSeekerSchema = Yup.object({

@@ -1,6 +1,6 @@
-import FieldConfig from "@/common/types/fieldConfig";
 import { UpdateJobSeekerDto } from "../types/update";
 import { UpdateJobSeekerSchema } from "../schemas/update";
+import { FieldConfig } from "@types";
 
 export const UpdateJobSeekerField: FieldConfig<UpdateJobSeekerDto>[] = [
   {

@@ -1,4 +1,4 @@
-import { VacancyDto } from "@/contexts/(vacancy)/types";
+import { VacancyDto } from "@vacancy/types";
 import { ApplicationDto } from ".";
 
 export interface CreateApplicationDto {

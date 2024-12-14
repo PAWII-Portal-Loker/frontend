@@ -1,5 +1,5 @@
-import { APIResponse, FilterParams } from "@/common/types";
-import { applyInterceptors } from "@/common/utils/interceptors";
+import { APIResponse, FilterParams } from "@types";
+import { applyInterceptors } from "@utils/interceptors";
 import axios, { AxiosInstance, AxiosRequestConfig, isAxiosError } from "axios";
 
 type Headers = {

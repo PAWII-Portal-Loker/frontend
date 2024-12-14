@@ -1,6 +1,6 @@
-import FieldConfig from "@/common/types/fieldConfig";
-import { CreateApplicationDto } from "../types/create";
-import { CreateApplicationSchema } from "../schemas/create";
+import { CreateApplicationSchema } from "@application/schemas/create";
+import { CreateApplicationDto } from "@application/types/create";
+import { FieldConfig } from "@types";
 
 export const CreateApplicationField: FieldConfig<CreateApplicationDto>[] = [
   {

@@ -1,10 +1,10 @@
-import { isValidImageUrl } from "@/common/utils/validImageUrl";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { slideVariants } from "@/common/types/animationVariants";
-import { VacancyDto } from "@/contexts/(vacancy)/types";
+import { VacancyDto } from "@vacancy/types";
+import { slideVariants } from "@consts/animationVariants";
+import { isValidImageUrl } from "@utils/validImageUrl";
 
 interface VacancyCardProps {
   vacancy: VacancyDto;

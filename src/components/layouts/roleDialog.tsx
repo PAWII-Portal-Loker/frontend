@@ -7,23 +7,23 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@components/ui/dialog";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import useRoleDialogStore from "@/hooks/roleDialog/store";
-import { slideVariants } from "@/common/types/animationVariants";
+import useRoleDialogStore from "@hooks/roleDialog/store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RoleCardPicker from "../containers/roleCardPicker";
-import { useCompanyStore } from "@/contexts/(company)/store";
-import { useJobSeekerStore } from "@/contexts/(jobSeeker)/store";
 import RoleForm from "./roleForm";
-import { useCompanyTypeStore } from "@/contexts/enums/stores/companyType";
-import { useLastEducationTypeStore } from "@/contexts/enums/stores/lastEducationType";
-import { CreateCompanyDto } from "@/contexts/(company)/types/create";
-import { CreateCompanySchema } from "@/contexts/(company)/schemas/create";
-import { CreateJobSeekerDto } from "@/contexts/(jobSeeker)/types/create";
-import { CreateJobSeekerSchema } from "@/contexts/(jobSeeker)/schemas/create";
+import { useCompanyStore } from "@company/store";
+import { useJobSeekerStore } from "@jobSeeker/store";
+import { useCompanyTypeStore } from "@enums/stores/companyType";
+import { useLastEducationTypeStore } from "@enums/stores/lastEducationType";
+import { CreateCompanyDto } from "@company/types/create";
+import { CreateCompanySchema } from "@company/schemas/create";
+import { CreateJobSeekerDto } from "@jobSeeker/types/create";
+import { CreateJobSeekerSchema } from "@jobSeeker/schemas/create";
+import { slideVariants } from "@consts/animationVariants";
 
 const RoleDialog = () => {
   const {
@@ -35,7 +35,6 @@ const RoleDialog = () => {
   } = useRoleDialogStore();
   const { createCompany } = useCompanyStore();
   const { createJobSeeker } = useJobSeekerStore();
-
   const { companyTypes, getCompanyTypes, isCompanyTypesLoading } =
     useCompanyTypeStore();
   const {
@@ -46,11 +45,11 @@ const RoleDialog = () => {
 
   useEffect(() => {
     getCompanyTypes();
-  }, [getCompanyTypes]);
+  }, []);
 
   useEffect(() => {
     getLastEducationTypes();
-  }, [getLastEducationTypes]);
+  }, []);
 
   const {
     register: registerCompany,

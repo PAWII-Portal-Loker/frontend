@@ -1,24 +1,24 @@
-import { Field } from "@/components/ui/field";
+import { Stack, Input, Text } from "@chakra-ui/react";
+import { LuUserPlus } from "react-icons/lu";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import clsx from "clsx";
 import {
   DialogBody,
   DialogCloseTrigger,
   DialogContent,
-  DialogTitle,
-  DialogRoot,
   DialogHeader,
-} from "@/components/ui/dialog";
-import { Stack, Input, Text } from "@chakra-ui/react";
-import { LuUserPlus } from "react-icons/lu";
-import { Button } from "@/components/ui/button";
-import useMainStore from "@/hooks/main/store";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import useAuthStore from "@/contexts/auth/store";
-import clsx from "clsx";
-import useUserStore from "@/contexts/user/store";
-import { CreateUserDto } from "@/contexts/user/types/create";
-import { CreateUserSchema } from "@/contexts/user/schemas/create";
-import { CreateUserField } from "@/contexts/user/fields/create";
+  DialogRoot,
+  DialogTitle,
+} from "@components/ui/dialog";
+import { Field } from "@components/ui/field";
+import { Button } from "@components/ui/button";
+import useMainStore from "@hooks/main/store";
+import useAuthStore from "@auth/store";
+import useUserStore from "@user/store";
+import { CreateUserDto } from "@user/types/create";
+import { CreateUserSchema } from "@user/schemas/create";
+import { CreateUserField } from "@user/fields/create";
 
 const RegisterDialog = () => {
   const {
