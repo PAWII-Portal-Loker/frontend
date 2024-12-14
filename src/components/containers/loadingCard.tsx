@@ -3,7 +3,7 @@ import { Skeleton } from "@components/ui/skeleton";
 const LoadingCard = () => {
   return (
     <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden relative animate-pulse p-4">
-      <div className="w-full h-[200px] bg-gray-200 mb-3 rounded-lg"></div>
+      <div className="w-full h-[200px] bg-gray-200 mb-3 rounded-lg" />
       <Skeleton width="60%" height="20px" mb="2" />
       <Skeleton width="30%" height="16px" mb="2" />
       <div className="flex justify-between">

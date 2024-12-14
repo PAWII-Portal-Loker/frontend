@@ -4,11 +4,11 @@ import { SignInDto } from "./signIn";
 export interface AuthStoreState {
   isLogin: boolean;
   auth: AuthDto;
-  isLoading: boolean;
+  isAuthLoading: boolean;
 
   setIsLogin: (isLogin: boolean) => void;
   setAuth: (auth: AuthDto) => void;
-  setIsLoading: (isLoading: boolean) => void;
+  setAuthLoading: (isAuthLoading: boolean) => void;
 
   signIn: (request: SignInDto) => void;
   checkLogin: () => void;

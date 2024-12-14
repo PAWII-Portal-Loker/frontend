@@ -21,12 +21,9 @@ import { CreateUserSchema } from "@user/schemas/create";
 import { CreateUserField } from "@user/fields/create";
 
 const RegisterDialog = () => {
-  const {
-    setIsLoginDialogOpen,
-    isRegisterDialogOpen,
-    setIsRegisterDialogOpen,
-  } = useMainStore();
-  const { isLoading } = useAuthStore();
+  const { setLoginDialogOpen, isRegisterDialogOpen, setRegisterDialogOpen } =
+    useMainStore();
+  const { isAuthLoading } = useAuthStore();
   const { createUser } = useUserStore();
 
   const {
@@ -49,7 +46,7 @@ const RegisterDialog = () => {
     <DialogRoot
       lazyMount
       open={isRegisterDialogOpen}
-      onOpenChange={() => setIsRegisterDialogOpen(false)}
+      onOpenChange={() => setRegisterDialogOpen(false)}
     >
       <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>
@@ -87,14 +84,14 @@ const RegisterDialog = () => {
             <Button
               className={clsx(
                 "mt-4 bg-blue-300 text-white font-bold py-2 px-4 rounded",
-                isLoading || Object.keys(errors).length > 0
+                isAuthLoading || Object.keys(errors).length > 0
                   ? "cursor-not-allowed"
                   : "hover:bg-blue-400 transition-all duration-200",
               )}
-              disabled={isLoading || Object.keys(errors).length > 0}
+              disabled={isAuthLoading || Object.keys(errors).length > 0}
               type="submit"
               width="full"
-              loading={isLoading}
+              loading={isAuthLoading}
               loadingText="Registering..."
               size="lg"
             >
@@ -109,8 +106,8 @@ const RegisterDialog = () => {
               color="blue.500"
               cursor="pointer"
               onClick={() => {
-                setIsRegisterDialogOpen(false);
-                setIsLoginDialogOpen(true);
+                setRegisterDialogOpen(false);
+                setLoginDialogOpen(true);
               }}
               _hover={{ textDecoration: "underline" }}
             >

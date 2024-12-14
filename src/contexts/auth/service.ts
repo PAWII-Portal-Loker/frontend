@@ -16,9 +16,7 @@ export default class AuthService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async checkLogin(callback: FetchCallback<CheckLoginDto>) {
@@ -30,9 +28,7 @@ export default class AuthService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async signOut(callback: FetchCallback<void>) {
@@ -42,8 +38,6 @@ export default class AuthService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 }

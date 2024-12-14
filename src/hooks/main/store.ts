@@ -6,9 +6,9 @@ const useMainStore = create<MainStoreState>((set) => ({
   isLoginDialogOpen: false,
   isRegisterDialogOpen: false,
 
-  setIsNavigationOpen: (isOpen) => set({ isNavigationOpen: isOpen }),
-  setIsLoginDialogOpen: (isOpen) => set({ isLoginDialogOpen: isOpen }),
-  setIsRegisterDialogOpen: (isOpen) => set({ isRegisterDialogOpen: isOpen }),
+  setNavigationOpen: (isOpen) => set({ isNavigationOpen: isOpen }),
+  setLoginDialogOpen: (isOpen) => set({ isLoginDialogOpen: isOpen }),
+  setRegisterDialogOpen: (isOpen) => set({ isRegisterDialogOpen: isOpen }),
 }));
 
 export default useMainStore;

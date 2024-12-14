@@ -10,10 +10,10 @@ export const useRolestore = create<RoleStoreState>((set, get) => ({
   isRolesLoading: false,
 
   setRoles: (roles) => set({ roles }),
-  setIsRolesLoading: (isRolesLoading) => set({ isRolesLoading }),
+  setRolesLoading: (isRolesLoading) => set({ isRolesLoading }),
 
   getRoles: () => {
-    get().setIsRolesLoading(true);
+    get().setRolesLoading(true);
 
     constService.getRoles({
       onSuccess: (roles) => {
@@ -28,7 +28,7 @@ export const useRolestore = create<RoleStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsRolesLoading(false);
+        get().setRolesLoading(false);
       },
     });
   },

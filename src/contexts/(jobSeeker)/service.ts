@@ -16,9 +16,7 @@ export default class JobSeekerService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getJobSeeker(id: string, callback: FetchCallback<JobSeekerDto>) {
@@ -30,9 +28,7 @@ export default class JobSeekerService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async createJobSeeker(
@@ -48,9 +44,7 @@ export default class JobSeekerService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async updateJobSeeker(
@@ -66,8 +60,6 @@ export default class JobSeekerService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 }

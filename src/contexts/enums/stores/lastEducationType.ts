@@ -11,11 +11,11 @@ export const useLastEducationTypeStore = create<LastEducationTypeStoreState>(
     isLastEducationTypesLoading: false,
 
     setLastEducationTypes: (lastEducationTypes) => set({ lastEducationTypes }),
-    setIsLastEducationTypesLoading: (isLastEducationTypesLoading) =>
+    setLastEducationTypesLoading: (isLastEducationTypesLoading) =>
       set({ isLastEducationTypesLoading }),
 
     getLastEducationTypes: () => {
-      get().setIsLastEducationTypesLoading(true);
+      get().setLastEducationTypesLoading(true);
 
       constService.getLastEducationTypes({
         onSuccess: (lastEducationTypes) => {
@@ -30,7 +30,7 @@ export const useLastEducationTypeStore = create<LastEducationTypeStoreState>(
           });
         },
         onFullfilled() {
-          get().setIsLastEducationTypesLoading(false);
+          get().setLastEducationTypesLoading(false);
         },
       });
     },

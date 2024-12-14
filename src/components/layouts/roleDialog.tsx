@@ -28,7 +28,7 @@ import { slideVariants } from "@consts/animationVariants";
 const RoleDialog = () => {
   const {
     isRoleDialogOpen,
-    setIsRoleDialogOpen,
+    setRoleDialogOpen,
     selectedRole,
     setSelectedRole,
     isLoading,
@@ -80,7 +80,7 @@ const RoleDialog = () => {
     <DialogRoot
       lazyMount
       open={isRoleDialogOpen}
-      onOpenChange={() => setIsRoleDialogOpen(false)}
+      onOpenChange={() => setRoleDialogOpen(false)}
     >
       <DialogContent className="bg-slate-700 text-gray-100">
         <DialogHeader>

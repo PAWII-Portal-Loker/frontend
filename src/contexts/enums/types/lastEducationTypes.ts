@@ -27,8 +27,6 @@ export type LastEducationTypeStoreState = {
   isLastEducationTypesLoading: boolean;
 
   setLastEducationTypes: (lastEducationTypes: LastEducationTypeDto[]) => void;
-  setIsLastEducationTypesLoading: (
-    isLastEducationTypesLoading: boolean,
-  ) => void;
+  setLastEducationTypesLoading: (isLastEducationTypesLoading: boolean) => void;
   getLastEducationTypes: () => void;
 };

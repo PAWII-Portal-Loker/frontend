@@ -65,9 +65,9 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
 
 const Navbar = () => {
   const { isLogin, auth, signOut } = useAuthStore();
-  const { isNavigationOpen, setIsNavigationOpen, setIsLoginDialogOpen } =
+  const { isNavigationOpen, setNavigationOpen, setLoginDialogOpen } =
     useMainStore();
-  const { setIsRoleDialogOpen } = useRoleDialogStore();
+  const { setRoleDialogOpen } = useRoleDialogStore();
   const isNavbarHidden = useHideNavbarOnScroll();
 
   return (
@@ -82,7 +82,7 @@ const Navbar = () => {
           size={"md"}
           aria-label={"Open Menu"}
           display={{ md: "none" }}
-          onClick={() => setIsNavigationOpen(!isNavigationOpen)}
+          onClick={() => setNavigationOpen(!isNavigationOpen)}
         >
           {isNavigationOpen ? <IoIosClose /> : <RxHamburgerMenu />}
         </IconButton>
@@ -133,7 +133,7 @@ const Navbar = () => {
                   </MenuItem>
                 ) : (
                   <MenuItem
-                    onClick={() => setIsRoleDialogOpen(true)}
+                    onClick={() => setRoleDialogOpen(true)}
                     value="role"
                     valueText="role"
                     color="fg.info"
@@ -158,7 +158,7 @@ const Navbar = () => {
           ) : (
             <Button
               className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded text-sm transition-all duration-200"
-              onClick={() => setIsLoginDialogOpen(true)}
+              onClick={() => setLoginDialogOpen(true)}
             >
               Login
             </Button>

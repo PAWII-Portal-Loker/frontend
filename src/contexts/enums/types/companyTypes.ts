@@ -21,6 +21,6 @@ export type CompanyTypeStoreState = {
   isCompanyTypesLoading: boolean;
 
   setCompanyTypes: (companyTypes: CompanyTypeDto[]) => void;
-  setIsCompanyTypesLoading: (isCompanyTypesLoading: boolean) => void;
+  setCompanyTypesLoading: (isCompanyTypesLoading: boolean) => void;
   getCompanyTypes: () => void;
 };

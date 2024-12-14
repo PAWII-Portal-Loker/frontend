@@ -22,7 +22,7 @@ export const DefaultCompanyDto: CompanyDto = {
 
 const companyService = new CompanyService();
 
-const { setIsRoleDialogOpen } = useRoleDialogStore.getState();
+const { setRoleDialogOpen } = useRoleDialogStore.getState();
 const { checkLogin } = useAuthStore.getState();
 
 export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
@@ -32,12 +32,12 @@ export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
   isCompanyLoading: false,
 
   setCompanies: (companies) => set({ companies }),
-  setIsCompaniesLoading: (isCompaniesLoading) => set({ isCompaniesLoading }),
+  setCompaniesLoading: (isCompaniesLoading) => set({ isCompaniesLoading }),
   setCompany: (company) => set({ company }),
-  setIsCompanyLoading: (isCompanyLoading) => set({ isCompanyLoading }),
+  setCompanyLoading: (isCompanyLoading) => set({ isCompanyLoading }),
 
   getCompanies: () => {
-    get().setIsCompaniesLoading(true);
+    get().setCompaniesLoading(true);
 
     companyService.getCompanies({
       onSuccess: (companies) => {
@@ -52,13 +52,13 @@ export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsCompaniesLoading(false);
+        get().setCompaniesLoading(false);
       },
     });
   },
 
   getCompany: (id) => {
-    get().setIsCompanyLoading(true);
+    get().setCompanyLoading(true);
 
     companyService.getCompany(id, {
       onSuccess: (company) => {
@@ -73,13 +73,13 @@ export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsCompanyLoading(false);
+        get().setCompanyLoading(false);
       },
     });
   },
 
   createCompany: (request) => {
-    get().setIsCompanyLoading(true);
+    get().setCompanyLoading(true);
 
     companyService.createCompany(request, {
       onSuccess: () => {
@@ -88,7 +88,7 @@ export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
           type: "success",
           duration: 3000,
         });
-        setIsRoleDialogOpen(false);
+        setRoleDialogOpen(false);
         checkLogin();
       },
       onError: (message: string) => {
@@ -100,13 +100,13 @@ export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsCompanyLoading(false);
+        get().setCompanyLoading(false);
       },
     });
   },
 
   updateCompany: (request) => {
-    get().setIsCompanyLoading(true);
+    get().setCompanyLoading(true);
 
     companyService.updateCompany(request, {
       onSuccess: () => {
@@ -125,7 +125,7 @@ export const useCompanyStore = create<CompanyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsCompanyLoading(false);
+        get().setCompanyLoading(false);
       },
     });
   },

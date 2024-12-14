@@ -1,5 +1,5 @@
 export interface DashboardStoreState {
   isSearchFocused: boolean;
 
-  setIsSearchFocused: (isFocused: boolean) => void;
+  setSearchFocused: (isFocused: boolean) => void;
 }

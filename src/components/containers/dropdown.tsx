@@ -9,12 +9,8 @@ interface DropdownProps {
   isAlwaysFullWidth?: boolean;
 }
 
-const Dropdown = ({
-  items,
-  name = "Item",
-  isLoading = false,
-  isAlwaysFullWidth = false,
-}: DropdownProps) => {
+const Dropdown = (props: DropdownProps) => {
+  const { items, name, isLoading, isAlwaysFullWidth } = props;
   return (
     <div className={clsx(isAlwaysFullWidth && "w-full")}>
       {isLoading ? (

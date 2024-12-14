@@ -13,17 +13,17 @@ const DefaultAuthDto: AuthDto = {
 
 const authService = new AuthService();
 
-const { setIsLoginDialogOpen } = useMainStore.getState();
-const { setIsRoleDialogOpen } = useRoleDialogStore.getState();
+const { setLoginDialogOpen } = useMainStore.getState();
+const { setRoleDialogOpen } = useRoleDialogStore.getState();
 
 const useAuthStore = create<AuthStoreState>((set, get) => ({
   isLogin: false,
   auth: DefaultAuthDto,
-  isLoading: false,
+  isAuthLoading: false,
 
   setIsLogin: (isLogin) => set({ isLogin }),
   setAuth: (auth) => set({ auth }),
-  setIsLoading: (isLoading) => set({ isLoading }),
+  setAuthLoading: (isAuthLoading) => set({ isAuthLoading }),
 
   signIn: (request) => {
     const { email, password } = request;
@@ -38,7 +38,7 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
             duration: 3000,
           });
           get().setIsLogin(true);
-          setIsLoginDialogOpen(false);
+          setLoginDialogOpen(false);
           get().checkLogin();
         },
         onError: (message: string) => {
@@ -50,7 +50,7 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
           });
         },
         onFullfilled() {
-          get().setIsLoading(false);
+          get().setAuthLoading(false);
         },
       },
     );
@@ -66,12 +66,12 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
         });
 
         if (get().isLogin && !get().auth.role) {
-          setIsRoleDialogOpen(true);
+          setRoleDialogOpen(true);
         }
 
         if (!useAuthStore.getState().isLogin) {
-          setIsRoleDialogOpen(false);
-          setIsLoginDialogOpen(true);
+          setRoleDialogOpen(false);
+          setLoginDialogOpen(true);
           get().setAuth(DefaultAuthDto);
         }
       },

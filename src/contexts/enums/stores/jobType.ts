@@ -10,10 +10,10 @@ export const useJobTypestore = create<JobTypeStoreState>((set, get) => ({
   isJobTypesLoading: false,
 
   setJobTypes: (jobTypes) => set({ jobTypes }),
-  setIsJobTypesLoading: (isJobTypesLoading) => set({ isJobTypesLoading }),
+  setJobTypesLoading: (isJobTypesLoading) => set({ isJobTypesLoading }),
 
   getJobTypes: () => {
-    get().setIsJobTypesLoading(true);
+    get().setJobTypesLoading(true);
 
     constService.getJobTypes({
       onSuccess: (jobTypes) => {
@@ -28,7 +28,7 @@ export const useJobTypestore = create<JobTypeStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsJobTypesLoading(false);
+        get().setJobTypesLoading(false);
       },
     });
   },

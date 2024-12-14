@@ -8,9 +8,9 @@ export interface ApplicationStoreState {
   isApplicationLoading: boolean;
 
   setApplications: (applications: ApplicationDto[]) => void;
-  setIsApplicationsLoading: (isApplicationsLoading: boolean) => void;
+  setApplicationsLoading: (isApplicationsLoading: boolean) => void;
   setApplication: (application: ApplicationDto) => void;
-  setIsApplicationLoading: (isApplicationLoading: boolean) => void;
+  setApplicationLoading: (isApplicationLoading: boolean) => void;
   getJobSeekerApplications: () => void;
   getVacancyApplicants: (id: string) => void;
   getApplication: (id: string) => void;

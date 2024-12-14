@@ -11,9 +11,7 @@ export default class FileUploadService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async uploadFile(file: File, callback: FetchCallback<string>) {
@@ -25,9 +23,7 @@ export default class FileUploadService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async deleteFile(key: string, callback: FetchCallback<string>) {
@@ -37,8 +33,6 @@ export default class FileUploadService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 }

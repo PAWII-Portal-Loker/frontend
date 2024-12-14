@@ -23,8 +23,7 @@ export const DefaultUserDto: UserDto = {
 
 const userService = new UserService();
 
-const { setIsLoginDialogOpen, setIsRegisterDialogOpen } =
-  useMainStore.getState();
+const { setLoginDialogOpen, setRegisterDialogOpen } = useMainStore.getState();
 
 const useUserStore = create<UserStoreState>((set, get) => ({
   users: [],
@@ -33,12 +32,12 @@ const useUserStore = create<UserStoreState>((set, get) => ({
   isUserLoading: false,
 
   setUsers: (users) => set({ users }),
-  setIsUsersLoading: (isUsersLoading) => set({ isUsersLoading }),
+  setUsersLoading: (isUsersLoading) => set({ isUsersLoading }),
   setUser: (user) => set({ user }),
-  setIsUserLoading: (isUserLoading) => set({ isUserLoading }),
+  setUserLoading: (isUserLoading) => set({ isUserLoading }),
 
   getUsers: () => {
-    get().setIsUsersLoading(true);
+    get().setUsersLoading(true);
 
     userService.getUsers({
       onSuccess: (data) => {
@@ -52,13 +51,13 @@ const useUserStore = create<UserStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsUsersLoading(false);
+        get().setUsersLoading(false);
       },
     });
   },
 
   getUser: (id) => {
-    get().setIsUserLoading(true);
+    get().setUserLoading(true);
 
     userService.getUser(id, {
       onSuccess: (data) => {
@@ -72,14 +71,14 @@ const useUserStore = create<UserStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsUserLoading(false);
+        get().setUserLoading(false);
       },
     });
   },
 
   createUser: (request) => {
     const { email, wa_number, password } = request;
-    get().setIsUserLoading(true);
+    get().setUserLoading(true);
 
     userService.createUser(
       { email, password, wa_number },
@@ -90,8 +89,8 @@ const useUserStore = create<UserStoreState>((set, get) => ({
             type: "success",
             duration: 3000,
           });
-          setIsRegisterDialogOpen(false);
-          setIsLoginDialogOpen(true);
+          setRegisterDialogOpen(false);
+          setLoginDialogOpen(true);
         },
         onError: (message: string) => {
           toaster.create({
@@ -102,7 +101,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
           });
         },
         onFullfilled() {
-          get().setIsUserLoading(false);
+          get().setUserLoading(false);
         },
       },
     );

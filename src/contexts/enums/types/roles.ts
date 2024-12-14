@@ -12,6 +12,6 @@ export type RoleStoreState = {
   isRolesLoading: boolean;
 
   setRoles: (roles: RoleDto[]) => void;
-  setIsRolesLoading: (isRolesLoading: boolean) => void;
+  setRolesLoading: (isRolesLoading: boolean) => void;
   getRoles: () => void;
 };

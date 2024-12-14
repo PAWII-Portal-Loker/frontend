@@ -10,11 +10,11 @@ export const useIncomeTypestore = create<IncomeTypeStoreState>((set, get) => ({
   isIncomeTypesLoading: false,
 
   setIncomeTypes: (incomeTypes) => set({ incomeTypes }),
-  setIsIncomeTypesLoading: (isIncomeTypesLoading) =>
+  setIncomeTypesLoading: (isIncomeTypesLoading) =>
     set({ isIncomeTypesLoading }),
 
   getIncomeTypes: () => {
-    get().setIsIncomeTypesLoading(true);
+    get().setIncomeTypesLoading(true);
 
     constService.getIncomeTypes({
       onSuccess: (incomeTypes) => {
@@ -29,7 +29,7 @@ export const useIncomeTypestore = create<IncomeTypeStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsIncomeTypesLoading(false);
+        get().setIncomeTypesLoading(false);
       },
     });
   },

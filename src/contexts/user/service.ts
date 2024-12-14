@@ -13,9 +13,7 @@ export default class UserService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getUser(id: string, callback: FetchCallback<UserDto>) {
@@ -25,9 +23,7 @@ export default class UserService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async createUser(
@@ -43,8 +39,6 @@ export default class UserService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 }

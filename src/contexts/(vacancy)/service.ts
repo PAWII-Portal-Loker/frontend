@@ -21,9 +21,7 @@ export default class VacancyService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getVacancy(id: string, callback: FetchCallback<VacancyDto>) {
@@ -35,9 +33,7 @@ export default class VacancyService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async createVacancy(
@@ -53,9 +49,7 @@ export default class VacancyService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async updateVacancy(
@@ -72,9 +66,7 @@ export default class VacancyService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async updateVacancyStatus(
@@ -91,8 +83,6 @@ export default class VacancyService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 }

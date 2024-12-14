@@ -28,14 +28,14 @@ export const useApplicationStore = create<ApplicationStoreState>(
     isApplicationLoading: false,
 
     setApplications: (applications) => set({ applications }),
-    setIsApplicationsLoading: (isApplicationsLoading) =>
+    setApplicationsLoading: (isApplicationsLoading) =>
       set({ isApplicationsLoading }),
     setApplication: (application) => set({ application }),
-    setIsApplicationLoading: (isApplicationLoading) =>
+    setApplicationLoading: (isApplicationLoading) =>
       set({ isApplicationLoading }),
 
     getJobSeekerApplications: () => {
-      get().setIsApplicationsLoading(true);
+      get().setApplicationsLoading(true);
 
       applicationService.getJobSeekerApplications({
         onSuccess: (applications) => {
@@ -50,13 +50,13 @@ export const useApplicationStore = create<ApplicationStoreState>(
           });
         },
         onFullfilled() {
-          get().setIsApplicationsLoading(false);
+          get().setApplicationsLoading(false);
         },
       });
     },
 
     getVacancyApplicants: (id) => {
-      get().setIsApplicationsLoading(true);
+      get().setApplicationsLoading(true);
 
       applicationService.getVacancyApplicants(id, {
         onSuccess: (applications) => {
@@ -71,13 +71,13 @@ export const useApplicationStore = create<ApplicationStoreState>(
           });
         },
         onFullfilled() {
-          get().setIsApplicationsLoading(false);
+          get().setApplicationsLoading(false);
         },
       });
     },
 
     getApplication: (id) => {
-      get().setIsApplicationLoading(true);
+      get().setApplicationLoading(true);
 
       applicationService.getApplication(id, {
         onSuccess: (application) => {
@@ -92,13 +92,13 @@ export const useApplicationStore = create<ApplicationStoreState>(
           });
         },
         onFullfilled() {
-          get().setIsApplicationLoading(false);
+          get().setApplicationLoading(false);
         },
       });
     },
 
     createApplication: (request) => {
-      get().setIsApplicationLoading(true);
+      get().setApplicationLoading(true);
       applicationService.createApplication(request, {
         onSuccess: () => {
           toaster.create({
@@ -117,7 +117,7 @@ export const useApplicationStore = create<ApplicationStoreState>(
           });
         },
         onFullfilled() {
-          get().setIsApplicationLoading(false);
+          get().setApplicationLoading(false);
         },
       });
     },

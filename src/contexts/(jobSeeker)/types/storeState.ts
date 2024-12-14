@@ -9,9 +9,9 @@ export interface JobSeekerStoreState {
   isJobSeekerLoading: boolean;
 
   setJobSeekers: (jobSeekers: JobSeekerDto[]) => void;
-  setIsJobSeekersLoading: (isJobSeekersLoading: boolean) => void;
+  setJobSeekersLoading: (isJobSeekersLoading: boolean) => void;
   setJobSeeker: (jobSeeker: JobSeekerDto) => void;
-  setIsJobSeekerLoading: (isJobSeekerLoading: boolean) => void;
+  setJobSeekerLoading: (isJobSeekerLoading: boolean) => void;
   getJobSeekers: () => void;
   getJobSeeker: (id: string) => void;
   createJobSeeker: (request: CreateJobSeekerDto) => void;

@@ -8,7 +8,7 @@ export const useIsNavbarActive = (href: string) => {
 };
 
 export const useHideNavbarOnScroll = () => {
-  const [isNavbarHidden, setIsNavbarHidden] = useState(false);
+  const [isNavbarHidden, setNavbarHidden] = useState(false);
   const { isNavigationOpen } = useMainStore();
 
   useEffect(() => {
@@ -19,14 +19,14 @@ export const useHideNavbarOnScroll = () => {
       const isScrollingDown = prevScrollPos < currentScrollPos;
 
       if (isNavigationOpen) {
-        setIsNavbarHidden(false);
+        setNavbarHidden(false);
         return;
       }
 
       if (isScrollingDown && !isNavbarHidden) {
-        setIsNavbarHidden(true);
+        setNavbarHidden(true);
       } else if (!isScrollingDown && isNavbarHidden) {
-        setIsNavbarHidden(false);
+        setNavbarHidden(false);
       }
 
       prevScrollPos = currentScrollPos;

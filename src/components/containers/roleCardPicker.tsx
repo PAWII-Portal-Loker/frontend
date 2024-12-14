@@ -8,10 +8,8 @@ interface RoleCardPickerProps {
   selectedRole: string | null;
   setSelectedRole: (role: "COMPANY" | "JOB_SEEKER") => void;
 }
-const RoleCardPicker = ({
-  selectedRole,
-  setSelectedRole,
-}: RoleCardPickerProps) => {
+const RoleCardPicker = (props: RoleCardPickerProps) => {
+  const { selectedRole, setSelectedRole } = props;
   return (
     <motion.div
       variants={scaleVariants}

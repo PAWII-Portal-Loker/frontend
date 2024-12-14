@@ -45,14 +45,14 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
   pagination: DefaultPagination,
 
   setVacancies: (vacancies) => set({ vacancies }),
-  setIsVacanciesLoading: (isVacanciesLoading) => set({ isVacanciesLoading }),
+  setVacanciesLoading: (isVacanciesLoading) => set({ isVacanciesLoading }),
   setVacancy: (vacancy) => set({ vacancy }),
-  setIsVacancyLoading: (isVacancyLoading) => set({ isVacancyLoading }),
+  setVacancyLoading: (isVacancyLoading) => set({ isVacancyLoading }),
   setFilters: (filters) => set({ filters }),
   setPagination: (pagination) => set({ pagination }),
 
   getVacancies: () => {
-    get().setIsVacanciesLoading(true);
+    get().setVacanciesLoading(true);
 
     vacancyService.getVacancies(
       {
@@ -68,7 +68,7 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
           });
         },
         onFullfilled() {
-          get().setIsVacanciesLoading(false);
+          get().setVacanciesLoading(false);
         },
       },
       Object.assign(useVacancyStore.getState().filters),
@@ -76,7 +76,7 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
   },
 
   getVacancy: (id) => {
-    get().setIsVacancyLoading(true);
+    get().setVacancyLoading(true);
 
     vacancyService.getVacancy(id, {
       onSuccess: (vacancy) => {
@@ -91,13 +91,13 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsVacancyLoading(false);
+        get().setVacancyLoading(false);
       },
     });
   },
 
   createVacancy: (request) => {
-    get().setIsVacancyLoading(true);
+    get().setVacancyLoading(true);
 
     vacancyService.createVacancy(request, {
       onSuccess: () => {
@@ -117,13 +117,13 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsVacancyLoading(false);
+        get().setVacancyLoading(false);
       },
     });
   },
 
   updateVacancy: (request) => {
-    get().setIsVacancyLoading(true);
+    get().setVacancyLoading(true);
 
     vacancyService.updateVacancy(get().vacancy.id, request, {
       onSuccess: () => {
@@ -143,13 +143,13 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsVacancyLoading(false);
+        get().setVacancyLoading(false);
       },
     });
   },
 
   updateVacancyStatus: (request) => {
-    get().setIsVacancyLoading(true);
+    get().setVacancyLoading(true);
 
     vacancyService.updateVacancyStatus(get().vacancy.id, request, {
       onSuccess: () => {
@@ -169,7 +169,7 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsVacancyLoading(false);
+        get().setVacancyLoading(false);
       },
     });
   },

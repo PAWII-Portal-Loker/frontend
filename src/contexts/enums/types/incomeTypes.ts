@@ -19,6 +19,6 @@ export type IncomeTypeStoreState = {
   isIncomeTypesLoading: boolean;
 
   setIncomeTypes: (incomeTypes: IncomeTypeDto[]) => void;
-  setIsIncomeTypesLoading: (isIncomeTypesLoading: boolean) => void;
+  setIncomeTypesLoading: (isIncomeTypesLoading: boolean) => void;
   getIncomeTypes: () => void;
 };

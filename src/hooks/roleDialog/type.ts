@@ -3,7 +3,7 @@ export interface RoleDialogStoreState {
   selectedRole: "JOB_SEEKER" | "COMPANY" | null;
   isLoading: boolean;
 
-  setIsRoleDialogOpen: (isOpen: boolean) => void;
+  setRoleDialogOpen: (isOpen: boolean) => void;
   setSelectedRole: (role: "JOB_SEEKER" | "COMPANY") => void;
-  setIsLoading: (loading: boolean) => void;
+  setLoading: (loading: boolean) => void;
 }

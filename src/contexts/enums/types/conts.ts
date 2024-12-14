@@ -10,6 +10,6 @@ export type ConstStoreState = {
   isConstsLoading: boolean;
 
   setConsts: (consts: ConstDto) => void;
-  setIsConstsLoading: (isConstsLoading: boolean) => void;
+  setConstsLoading: (isConstsLoading: boolean) => void;
   getConsts: () => void;
 };

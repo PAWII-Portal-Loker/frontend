@@ -21,6 +21,6 @@ export type JobTypeStoreState = {
   isJobTypesLoading: boolean;
 
   setJobTypes: (jobTypes: JobTypeDto[]) => void;
-  setIsJobTypesLoading: (isJobTypesLoading: boolean) => void;
+  setJobTypesLoading: (isJobTypesLoading: boolean) => void;
   getJobTypes: () => void;
 };

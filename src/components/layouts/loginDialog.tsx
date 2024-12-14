@@ -20,9 +20,9 @@ import { SignInSchema } from "@auth/schemas/signIn";
 import { SignInField } from "@auth/fields/signIn";
 
 const LoginDialog = () => {
-  const { isLoginDialogOpen, setIsLoginDialogOpen, setIsRegisterDialogOpen } =
+  const { isLoginDialogOpen, setLoginDialogOpen, setRegisterDialogOpen } =
     useMainStore();
-  const { isLoading, signIn } = useAuthStore();
+  const { isAuthLoading, signIn } = useAuthStore();
 
   const {
     register,
@@ -43,7 +43,7 @@ const LoginDialog = () => {
     <DialogRoot
       lazyMount
       open={isLoginDialogOpen}
-      onOpenChange={() => setIsLoginDialogOpen(false)}
+      onOpenChange={() => setLoginDialogOpen(false)}
     >
       <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>
@@ -81,14 +81,14 @@ const LoginDialog = () => {
             <Button
               className={clsx(
                 "mt-4 bg-blue-300 text-white font-bold py-2 px-4 rounded",
-                isLoading || Object.keys(errors).length > 0
+                isAuthLoading || Object.keys(errors).length > 0
                   ? "cursor-not-allowed"
                   : "hover:bg-blue-400 transition-all duration-200",
               )}
-              disabled={isLoading || Object.keys(errors).length > 0}
+              disabled={isAuthLoading || Object.keys(errors).length > 0}
               type="submit"
               width="full"
-              loading={isLoading}
+              loading={isAuthLoading}
               loadingText="Logging in..."
               size="lg"
             >
@@ -97,14 +97,14 @@ const LoginDialog = () => {
             </Button>
           </Stack>
           <Text mt={4} textAlign="center">
-            Don&apos;t have an account?{" "}
+            Don't have an account?{" "}
             <Text
               as="span"
               color="blue.500"
               cursor="pointer"
               onClick={() => {
-                setIsLoginDialogOpen(false);
-                setIsRegisterDialogOpen(true);
+                setLoginDialogOpen(false);
+                setRegisterDialogOpen(true);
               }}
               _hover={{ textDecoration: "underline" }}
             >

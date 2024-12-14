@@ -14,9 +14,9 @@ export interface VacancyStoreState {
   pagination: Pagination;
 
   setVacancies: (vacancies: VacancyDto[]) => void;
-  setIsVacanciesLoading: (isVacanciesLoading: boolean) => void;
+  setVacanciesLoading: (isVacanciesLoading: boolean) => void;
   setVacancy: (vacancy: VacancyDto) => void;
-  setIsVacancyLoading: (isVacancyLoading: boolean) => void;
+  setVacancyLoading: (isVacancyLoading: boolean) => void;
   setFilters: (filters: VacancyFilter) => void;
   setPagination: (pagination: Pagination) => void;
   getVacancies: () => void;

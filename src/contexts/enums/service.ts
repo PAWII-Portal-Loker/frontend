@@ -17,9 +17,7 @@ export default class ConstService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getCompanyTypes(callback: FetchCallback<CompanyTypeDto[]>) {
@@ -31,9 +29,7 @@ export default class ConstService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getIncomeTypes(callback: FetchCallback<IncomeTypeDto[]>) {
@@ -45,9 +41,7 @@ export default class ConstService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getJobTypes(callback: FetchCallback<JobTypeDto[]>) {
@@ -59,9 +53,7 @@ export default class ConstService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getRoles(callback: FetchCallback<RoleDto[]>) {
@@ -71,9 +63,7 @@ export default class ConstService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getLastEducationTypes(callback: FetchCallback<LastEducationTypeDto[]>) {
@@ -85,8 +75,6 @@ export default class ConstService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 }

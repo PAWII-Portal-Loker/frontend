@@ -13,7 +13,7 @@ const NotFoundPage = () => {
           className="rounded-md mx-auto"
         />
         <p className="text-3xl text-gray-700 mb-8 text-center">
-          Oops! The page you&apos;re looking for seems to have wandered off.
+          Oops! The page you're looking for seems to have wandered off.
         </p>
         <Link
           href="/"

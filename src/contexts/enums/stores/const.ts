@@ -17,9 +17,9 @@ export const useConstStore = create<ConstStoreState>((set, get) => ({
   isConstsLoading: false,
 
   setConsts: (consts) => set({ consts }),
-  setIsConstsLoading: (isConstsLoading) => set({ isConstsLoading }),
+  setConstsLoading: (isConstsLoading) => set({ isConstsLoading }),
   getConsts: () => {
-    get().setIsConstsLoading(true);
+    get().setConstsLoading(true);
 
     constService.getConsts({
       onSuccess: (consts) => {
@@ -34,7 +34,7 @@ export const useConstStore = create<ConstStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsConstsLoading(false);
+        get().setConstsLoading(false);
       },
     });
   },

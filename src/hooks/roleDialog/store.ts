@@ -6,9 +6,9 @@ const useRoleDialogStore = create<RoleDialogStoreState>((set) => ({
   isRoleDialogOpen: false,
   isLoading: false,
 
-  setIsRoleDialogOpen: (isOpen) => set({ isRoleDialogOpen: isOpen }),
+  setRoleDialogOpen: (isOpen) => set({ isRoleDialogOpen: isOpen }),
   setSelectedRole: (role) => set({ selectedRole: role }),
-  setIsLoading: (loading) => set({ isLoading: loading }),
+  setLoading: (loading) => set({ isLoading: loading }),
 }));
 
 export default useRoleDialogStore;

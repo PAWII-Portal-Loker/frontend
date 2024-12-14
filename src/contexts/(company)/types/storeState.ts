@@ -9,9 +9,9 @@ export interface CompanyStoreState {
   isCompanyLoading: boolean;
 
   setCompanies: (companies: CompanyDto[]) => void;
-  setIsCompaniesLoading: (isCompaniesLoading: boolean) => void;
+  setCompaniesLoading: (isCompaniesLoading: boolean) => void;
   setCompany: (company: CompanyDto) => void;
-  setIsCompanyLoading: (isCompanyLoading: boolean) => void;
+  setCompanyLoading: (isCompanyLoading: boolean) => void;
   getCompanies: () => void;
   getCompany: (id: string) => void;
   createCompany: (request: CreateCompanyDto) => void;

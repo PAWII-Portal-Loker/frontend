@@ -19,7 +19,7 @@ export const DefaultJobSeekerDto: JobSeekerDto = {
 };
 const jobSeekerService = new JobSeekerService();
 
-const { setIsRoleDialogOpen } = useRoleDialogStore.getState();
+const { setRoleDialogOpen } = useRoleDialogStore.getState();
 const { checkLogin } = useAuthStore.getState();
 
 export const useJobSeekerStore = create<JobSeekerStoreState>((set, get) => ({
@@ -29,12 +29,12 @@ export const useJobSeekerStore = create<JobSeekerStoreState>((set, get) => ({
   isJobSeekerLoading: false,
 
   setJobSeekers: (jobSeekers) => set({ jobSeekers }),
-  setIsJobSeekersLoading: (isJobSeekersLoading) => set({ isJobSeekersLoading }),
+  setJobSeekersLoading: (isJobSeekersLoading) => set({ isJobSeekersLoading }),
   setJobSeeker: (jobSeeker) => set({ jobSeeker }),
-  setIsJobSeekerLoading: (isJobSeekerLoading) => set({ isJobSeekerLoading }),
+  setJobSeekerLoading: (isJobSeekerLoading) => set({ isJobSeekerLoading }),
 
   getJobSeekers: () => {
-    get().setIsJobSeekersLoading(true);
+    get().setJobSeekersLoading(true);
 
     jobSeekerService.getJobSeekers({
       onSuccess: (jobSeekers) => {
@@ -49,13 +49,13 @@ export const useJobSeekerStore = create<JobSeekerStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsJobSeekersLoading(false);
+        get().setJobSeekersLoading(false);
       },
     });
   },
 
   getJobSeeker: (id) => {
-    get().setIsJobSeekerLoading(true);
+    get().setJobSeekerLoading(true);
 
     jobSeekerService.getJobSeeker(id, {
       onSuccess: (jobSeeker) => {
@@ -70,13 +70,13 @@ export const useJobSeekerStore = create<JobSeekerStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsJobSeekerLoading(false);
+        get().setJobSeekerLoading(false);
       },
     });
   },
 
   createJobSeeker: (request) => {
-    get().setIsJobSeekerLoading(true);
+    get().setJobSeekerLoading(true);
 
     jobSeekerService.createJobSeeker(request, {
       onSuccess: () => {
@@ -85,7 +85,7 @@ export const useJobSeekerStore = create<JobSeekerStoreState>((set, get) => ({
           type: "success",
           duration: 3000,
         });
-        setIsRoleDialogOpen(false);
+        setRoleDialogOpen(false);
         checkLogin();
       },
       onError: (message: string) => {
@@ -97,13 +97,13 @@ export const useJobSeekerStore = create<JobSeekerStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsJobSeekerLoading(false);
+        get().setJobSeekerLoading(false);
       },
     });
   },
 
   updateJobSeeker: (request) => {
-    get().setIsJobSeekerLoading(true);
+    get().setJobSeekerLoading(true);
 
     jobSeekerService.updateJobSeeker(request, {
       onSuccess: () => {
@@ -122,7 +122,7 @@ export const useJobSeekerStore = create<JobSeekerStoreState>((set, get) => ({
         });
       },
       onFullfilled() {
-        get().setIsJobSeekerLoading(false);
+        get().setJobSeekerLoading(false);
       },
     });
   },

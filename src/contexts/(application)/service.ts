@@ -15,9 +15,7 @@ export default class ApplicationService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getVacancyApplicants(
@@ -32,9 +30,7 @@ export default class ApplicationService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async getApplication(id: string, callback: FetchCallback<ApplicationDto>) {
@@ -46,9 +42,7 @@ export default class ApplicationService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 
   async createApplication(
@@ -66,8 +60,6 @@ export default class ApplicationService {
     } else {
       callback.onSuccess(res.data);
     }
-    if (callback.onFullfilled) {
-      callback.onFullfilled();
-    }
+    callback.onFullfilled?.();
   }
 }

@@ -11,11 +11,11 @@ export const useCompanyTypeStore = create<CompanyTypeStoreState>(
     isCompanyTypesLoading: false,
 
     setCompanyTypes: (companyTypes) => set({ companyTypes }),
-    setIsCompanyTypesLoading: (isCompanyTypesLoading) =>
+    setCompanyTypesLoading: (isCompanyTypesLoading) =>
       set({ isCompanyTypesLoading }),
 
     getCompanyTypes: () => {
-      get().setIsCompanyTypesLoading(true);
+      get().setCompanyTypesLoading(true);
 
       constService.getCompanyTypes({
         onSuccess: (companyTypes) => {
@@ -30,7 +30,7 @@ export const useCompanyTypeStore = create<CompanyTypeStoreState>(
           });
         },
         onFullfilled() {
-          get().setIsCompanyTypesLoading(false);
+          get().setCompanyTypesLoading(false);
         },
       });
     },
