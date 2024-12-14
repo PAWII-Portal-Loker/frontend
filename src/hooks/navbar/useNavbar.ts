@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import useMainStore from "@hooks/main/store";
 
 export const useIsNavbarActive = (href: string) => {
   const pathname = usePathname();
@@ -8,6 +9,7 @@ export const useIsNavbarActive = (href: string) => {
 
 export const useHideNavbarOnScroll = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
+  const { isNavigationOpen } = useMainStore();
 
   useEffect(() => {
     let prevScrollPos = window.scrollY;
@@ -15,6 +17,11 @@ export const useHideNavbarOnScroll = () => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
       const isScrollingDown = prevScrollPos < currentScrollPos;
+
+      if (isNavigationOpen) {
+        setIsNavbarHidden(false);
+        return;
+      }
 
       if (isScrollingDown && !isNavbarHidden) {
         setIsNavbarHidden(true);
@@ -27,7 +34,7 @@ export const useHideNavbarOnScroll = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isNavbarHidden]);
+  }, [isNavbarHidden, isNavigationOpen]);
 
   return isNavbarHidden;
 };

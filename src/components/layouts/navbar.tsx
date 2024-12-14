@@ -8,14 +8,17 @@ import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, IconButton } from "@chakra-ui/react";
 import clsx from "clsx";
-import { Button } from "../ui/button";
 import { BsPerson } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";
-import { useHideNavbarOnScroll, useIsNavbarActive } from "@utils/navbar";
 import useAuthStore from "@auth/store";
 import useMainStore from "@hooks/main/store";
 import useRoleDialogStore from "@hooks/roleDialog/store";
 import { slideVariants } from "@consts/animationVariants";
+import { Button } from "@components/ui/button";
+import {
+  useHideNavbarOnScroll,
+  useIsNavbarActive,
+} from "@hooks/navbar/useNavbar";
 
 const navLinks = [
   { href: "/vacancy", label: "Vacancy" },
