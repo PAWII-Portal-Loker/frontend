@@ -5,7 +5,7 @@ import JobSeekerService from "./service";
 import useRoleDialogStore from "@hooks/roleDialog/store";
 import useAuthStore from "@auth/store";
 import { JobSeekerStoreState } from "./types/storeState";
-import { toaster } from "@components/ui/toaster";
+import { toaster } from "src/common/ui/toaster";
 
 export const DefaultJobSeekerDto: JobSeekerDto = {
   id: "",

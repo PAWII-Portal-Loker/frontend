@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { toaster } from "@components/ui/toaster";
+import { toaster } from "src/common/ui/toaster";
 import { ApplicationDto } from "./types";
 import { DefaultJobSeekerDto } from "@jobSeeker/store";
 import { DefaultVacancyDto } from "@vacancy/store";
@@ -147,7 +147,7 @@ export const useApplicationStore = create<ApplicationStoreState>(
           get().setApplication({
             ...get().application,
             document_urls: get().application.document_urls.filter(
-              (url) => url !== key,
+              (url) => url !== key
             ),
           });
         },
@@ -161,5 +161,5 @@ export const useApplicationStore = create<ApplicationStoreState>(
         },
       });
     },
-  }),
+  })
 );

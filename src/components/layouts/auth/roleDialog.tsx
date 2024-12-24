@@ -7,14 +7,13 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-} from "@components/ui/dialog";
+} from "src/common/ui/dialog";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import useRoleDialogStore from "@hooks/roleDialog/store";
 import { yupResolver } from "@hookform/resolvers/yup";
-import RoleCardPicker from "../containers/roleCardPicker";
-import RoleForm from "./roleForm";
+import RoleCardPicker from "../../containers/roleCardPicker";
 import { useCompanyStore } from "@company/store";
 import { useJobSeekerStore } from "@jobSeeker/store";
 import { useCompanyTypeStore } from "@enums/stores/companyType";
@@ -24,6 +23,7 @@ import { CreateCompanySchema } from "@company/schemas/create";
 import { CreateJobSeekerDto } from "@jobSeeker/types/create";
 import { CreateJobSeekerSchema } from "@jobSeeker/schemas/create";
 import { slideVariants } from "@consts/animationVariants";
+import RoleForm from "./roleForm";
 
 const RoleDialog = () => {
   const {

@@ -7,11 +7,14 @@ import {
   FieldErrors,
   UseFormRegister,
 } from "react-hook-form";
-import { Field } from "../ui/field";
+import { Field } from "../../../common/ui/field";
 import clsx from "clsx";
-import { NativeSelectField, NativeSelectRoot } from "../ui/native-select";
+import {
+  NativeSelectField,
+  NativeSelectRoot,
+} from "../../../common/ui/native-select";
 import { LuSave } from "react-icons/lu";
-import { Button } from "../ui/button";
+import { Button } from "../../../common/ui/button";
 import { BaseSyntheticEvent } from "react";
 import { CreateCompanyDto } from "@company/types/create";
 import { CreateJobSeekerDto } from "@jobSeeker/types/create";
@@ -33,7 +36,7 @@ type RoleFormProps<T extends CreateCompanyDto | CreateJobSeekerDto> = {
 };
 
 const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
-  props: RoleFormProps<T>,
+  props: RoleFormProps<T>
 ) => {
   const {
     selectedRole,
@@ -55,7 +58,7 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
           label={field.label}
           invalid={!!errors[field.name as keyof FieldErrors<T>]}
           errorText={String(
-            errors[field.name as keyof FieldErrors<T>]?.message || "",
+            errors[field.name as keyof FieldErrors<T>]?.message || ""
           )}
         >
           {field.type === "select" ? (
@@ -64,10 +67,10 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
                 isLoading={isSelectDataLoading}
                 className="w-full pl-3 pr-8 py-1 rounded-lg border-2 bg-gray-100 border-gray-300 text-lg text-gray-600 appearance-none"
                 {...register(
-                  field.name as keyof (CreateCompanyDto | CreateJobSeekerDto),
+                  field.name as keyof (CreateCompanyDto | CreateJobSeekerDto)
                 )}
                 {...control?.register(
-                  field.name as keyof (CreateCompanyDto | CreateJobSeekerDto),
+                  field.name as keyof (CreateCompanyDto | CreateJobSeekerDto)
                 )}
                 placeholder={field.placeholder}
                 items={selectData}
@@ -80,15 +83,15 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
                 field.name as keyof (CreateCompanyDto | CreateJobSeekerDto),
                 {
                   valueAsNumber: field.type === "number",
-                },
+                }
               )}
               type={field.type}
               placeholder={field.placeholder}
               className={clsx(
                 "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400",
                 getFocusRingColorClass(
-                  errors[field.name as keyof FieldErrors<T>] as FieldError,
-                ),
+                  errors[field.name as keyof FieldErrors<T>] as FieldError
+                )
               )}
             />
           )}

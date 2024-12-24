@@ -4,7 +4,7 @@ import { AuthStoreState } from "./types/storeState";
 import { AuthDto } from "./types";
 import useMainStore from "@hooks/main/store";
 import useRoleDialogStore from "@hooks/roleDialog/store";
-import { toaster } from "@components/ui/toaster";
+import { toaster } from "src/common/ui/toaster";
 
 const DefaultAuthDto: AuthDto = {
   id: null,
@@ -52,7 +52,7 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
         onFullfilled() {
           get().setAuthLoading(false);
         },
-      },
+      }
     );
   },
 

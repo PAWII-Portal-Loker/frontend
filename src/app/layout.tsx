@@ -5,13 +5,13 @@ import "./globals.css";
 import { useEffect } from "react";
 import Head from "next/head";
 import clsx from "clsx";
-import { Provider } from "@components/ui/provider";
-import { Toaster } from "@components/ui/toaster";
+import { Provider } from "src/common/ui/provider";
+import { Toaster } from "src/common/ui/toaster";
 import Navbar from "@components/layouts/navbar";
-import LoginDialog from "@components/layouts/loginDialog";
-import RegisterDialog from "@components/layouts/registerDialog";
+import LoginDialog from "@components/layouts/auth/loginDialog";
+import RegisterDialog from "@components/layouts/auth/registerDialog";
 import Footer from "@components/layouts/footer";
-import RoleDialog from "@components/layouts/roleDialog";
+import RoleDialog from "@components/layouts/auth/roleDialog";
 import useAuthStore from "src/contexts/auth/store";
 import { useIsNotHomePage } from "@utils/checkPathName";
 
