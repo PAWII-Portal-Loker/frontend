@@ -41,12 +41,15 @@ const RootLayout = ({
         <link rel="icon" href="/logo.ico" />
       </Head>
       <body
-        className={`${inter.className} bg-gradient-to-r from-slate-200 to-slate-400 text-gray-800`}
+        className={clsx(
+          inter.className,
+          "flex flex-col min-h-screen bg-gradient-to-r from-slate-200 to-slate-400 text-gray-800"
+        )}
       >
         <Provider>
           {isNotHomePage && <Navbar />}
           <Toaster />
-          <main className={clsx(isNotHomePage && "pt-16")}>
+          <main className={clsx(isNotHomePage && "pt-16 h-full flex-grow")}>
             <LoginDialog />
             <RegisterDialog />
             <RoleDialog />

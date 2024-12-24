@@ -21,7 +21,7 @@ const SocialLink = ({ href, icon }: SocialLinkProps) => (
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-600 text-gray-100 text-center">
+    <footer className="bg-slate-600 text-gray-100 text-center mt-auto">
       <div className="px-4 py-3 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <p>© {moment().format("YYYY")} PortalLoker. All rights reserved</p>
         <ul className="flex gap-8 justify-center">
