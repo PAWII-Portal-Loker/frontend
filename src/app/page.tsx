@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import useAuthStore from "src/contexts/auth/store";
 import { useJobTypestore } from "@enums/stores/jobType";
 import { useIncomeTypestore } from "@enums/stores/incomeType";
 import { useCtrlF } from "@hooks/command/useCtrlF";
@@ -10,6 +9,7 @@ import { fadeVariants } from "@consts/animationVariants";
 import { hasPermission } from "@utils/permissions";
 import CompanyDashboard from "@components/layouts/companyDashboard";
 import JobSeekerDashboard from "@components/layouts/jobSeekerDashboard";
+import useAuthStore from "@auth/store";
 
 const Home = () => {
   const { auth } = useAuthStore();

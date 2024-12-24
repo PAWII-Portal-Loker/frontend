@@ -19,7 +19,7 @@ import useAuthStore from "@auth/store";
 import useMainStore from "@hooks/main/store";
 import useRoleDialogStore from "@hooks/roleDialog/store";
 import { slideVariants } from "@consts/animationVariants";
-import { Button } from "src/common/ui/button";
+import { Button } from "@ui/button";
 import {
   useHideNavbarOnScroll,
   useIsNavbarActive,

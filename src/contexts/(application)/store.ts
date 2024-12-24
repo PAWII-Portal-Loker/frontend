@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { toaster } from "src/common/ui/toaster";
+import { toaster } from "@ui/toaster";
 import { ApplicationDto } from "./types";
 import { DefaultJobSeekerDto } from "@jobSeeker/store";
 import { DefaultVacancyDto } from "@vacancy/store";

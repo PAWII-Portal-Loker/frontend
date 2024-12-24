@@ -4,7 +4,7 @@ import { AuthStoreState } from "./types/storeState";
 import { AuthDto } from "./types";
 import useMainStore from "@hooks/main/store";
 import useRoleDialogStore from "@hooks/roleDialog/store";
-import { toaster } from "src/common/ui/toaster";
+import { toaster } from "@ui/toaster";
 
 const DefaultAuthDto: AuthDto = {
   id: null,

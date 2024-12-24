@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-} from "src/common/ui/dialog";
+} from "@ui/dialog";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";

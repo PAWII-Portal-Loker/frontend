@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { LastEducationTypeStoreState } from "../types/lastEducationTypes";
 import ConstService from "../service";
-import { toaster } from "src/common/ui/toaster";
+import { toaster } from "@ui/toaster";
 
 const constService = new ConstService();
 

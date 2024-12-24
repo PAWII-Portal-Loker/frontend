@@ -1,4 +1,4 @@
-import { Skeleton } from "src/common/ui/skeleton";
+import { Skeleton } from "@ui/skeleton";
 
 const LoadingCard = () => {
   return (

@@ -3,7 +3,7 @@ import UserService from "./service";
 import { UserDto } from "./types";
 import { UserStoreState } from "./types/storeState";
 import useMainStore from "@hooks/main/store";
-import { toaster } from "src/common/ui/toaster";
+import { toaster } from "@ui/toaster";
 
 export const DefaultUserDto: UserDto = {
   id: "",

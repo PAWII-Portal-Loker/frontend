@@ -4,7 +4,7 @@ import { DefaultCompanyDto } from "@company/store";
 import { VacancyFilter } from "./types/filter";
 import VacancyService from "./service";
 import { VacancyStoreState } from "./types/storeState";
-import { toaster } from "src/common/ui/toaster";
+import { toaster } from "@ui/toaster";
 import { DefaultPagination } from "@utils/defaultPagination";
 
 export const DefaultVacancyDto: VacancyDto = {
