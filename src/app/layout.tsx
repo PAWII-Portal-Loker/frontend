@@ -12,8 +12,8 @@ import LoginDialog from "@components/layouts/auth/loginDialog";
 import RegisterDialog from "@components/layouts/auth/registerDialog";
 import Footer from "@components/layouts/footer";
 import RoleDialog from "@components/layouts/auth/roleDialog";
-import useAuthStore from "src/contexts/auth/store";
 import { useIsNotHomePage } from "@utils/checkPathName";
+import useAuthStore from "@auth/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
