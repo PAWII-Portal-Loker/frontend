@@ -21,6 +21,7 @@
     "baseUrl": "./",
     "paths": {
       "@consts/*": ["src/common/consts/*"],
+      "@commoncomponents/*": ["src/common/components/*"],
       "@types": ["src/common/types/index.ts"],
       "@utils/*": ["src/common/utils/*"],
       "@components/*": ["src/components/*"],

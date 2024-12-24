@@ -30,7 +30,7 @@ export const DialogContent = React.forwardRef<
           asChild={false}
           style={{ marginTop: "auto", marginBottom: "auto" }}
         >
-          <div className="mt-32">{children}</div>
+          <div>{children}</div>
         </ChakraDialog.Content>
       </ChakraDialog.Positioner>
     </Portal>

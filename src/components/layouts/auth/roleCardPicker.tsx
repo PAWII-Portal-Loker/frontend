@@ -20,14 +20,15 @@ const RoleCardPicker = (props: RoleCardPickerProps) => {
       <Stack direction={["column", "row"]} justifyContent={"space-evenly"}>
         <Card.Root
           onClick={() => setSelectedRole("COMPANY")}
+          height={"13rem"}
           className={clsx(
             "text-center cursor-pointer",
             selectedRole === "COMPANY"
-              ? "bg-green-100 outline-none border-2 border-green-500 rounded-lg"
-              : "hover:bg-green-100 hover:scale-105 transition-all duration-200",
+              ? "bg-white outline-none rounded-lg"
+              : "hover:bg-gray-100/90 bg-gray-300/85 hover:scale-105 transition-all duration-200"
           )}
         >
-          <Card.Body className="fex flex-col justify-between">
+          <Card.Body className="flex flex-col justify-between">
             <Image
               src="/company.png"
               alt="Company"
@@ -35,11 +36,11 @@ const RoleCardPicker = (props: RoleCardPickerProps) => {
               height={120}
               className="mx-auto"
             />
-            <div>
-              <Card.Title className="font-semibold" mt={4}>
+            <div className="my-auto">
+              <Card.Title className="font-bold text-slate-700" fontSize={"2xl"}>
                 Company
               </Card.Title>
-              <Card.Description mt={2} fontSize="sm">
+              <Card.Description fontSize="sm" color={"gray.500"}>
                 Register as a company
               </Card.Description>
             </div>
@@ -47,26 +48,27 @@ const RoleCardPicker = (props: RoleCardPickerProps) => {
         </Card.Root>
         <Card.Root
           onClick={() => setSelectedRole("JOB_SEEKER")}
+          height={"13rem"}
           className={clsx(
             "text-center cursor-pointer",
             selectedRole === "JOB_SEEKER"
-              ? "bg-green-100 outline-none border-2 border-green-500 rounded-lg"
-              : "hover:bg-green-100 hover:scale-105 transition-all duration-200",
+              ? "bg-white outline-none rounded-lg"
+              : "hover:bg-gray-100/90 bg-gray-300/85 hover:scale-105 transition-all duration-200"
           )}
         >
           <Card.Body className="fex flex-col justify-between">
             <Image
               src="/job-seeker.png"
               alt="Job Seeker"
-              width={100}
+              width={110}
               height={120}
               className="mx-auto"
             />
             <div>
-              <Card.Title className="font-semibold" mt={4}>
+              <Card.Title className="font-bold text-slate-700" fontSize={"xl"}>
                 Job Seeker
               </Card.Title>
-              <Card.Description mt={2} fontSize="sm">
+              <Card.Description fontSize="sm" color={"gray.500"}>
                 Register as a job seeker
               </Card.Description>
             </div>

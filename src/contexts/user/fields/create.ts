@@ -8,7 +8,7 @@ export const CreateUserField: FieldConfig<
   {
     name: "wa_number",
     label: "WhatsApp Number",
-    type: "number",
+    type: "text",
     placeholder: "Enter your WhatsApp number",
     rules: CreateUserSchema.fields.wa_number,
   },

@@ -7,12 +7,12 @@ export const getFocusRingColorClass = (error: FieldError | undefined) => {
 
 export const getSubmitButtonClass = (
   isLoading: boolean,
-  errors: FieldErrors,
+  errors: FieldErrors
 ) => {
   return clsx(
-    "mt-4 bg-blue-300 text-white font-bold py-2 px-4 rounded transition-all duration-200",
+    "bg-blue-300 text-white font-bold rounded transition-all duration-200",
     isLoading || Object.keys(errors).length > 0
       ? "cursor-not-allowed"
-      : "hover:bg-blue-400",
+      : "hover:bg-blue-400"
   );
 };
