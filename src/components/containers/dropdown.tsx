@@ -1,6 +1,6 @@
 import { FaChevronDown } from "react-icons/fa";
 import clsx from "clsx";
-import { Skeleton } from "@components/ui/skeleton";
+import { Skeleton } from "src/common/ui/skeleton";
 
 interface DropdownProps {
   items: string[];
@@ -17,7 +17,7 @@ const Dropdown = (props: DropdownProps) => {
         <Skeleton
           className={clsx(
             "w-full h-[44px]",
-            !isAlwaysFullWidth && "lg:w-[160px]",
+            !isAlwaysFullWidth && "lg:w-[160px]"
           )}
         />
       ) : (

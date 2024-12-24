@@ -4,7 +4,12 @@ import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosClose } from "react-icons/io";
 import Image from "next/image";
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
+import {
+  MenuContent,
+  MenuItem,
+  MenuRoot,
+  MenuTrigger,
+} from "../../common/ui/menu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, IconButton } from "@chakra-ui/react";
 import clsx from "clsx";
@@ -14,7 +19,7 @@ import useAuthStore from "@auth/store";
 import useMainStore from "@hooks/main/store";
 import useRoleDialogStore from "@hooks/roleDialog/store";
 import { slideVariants } from "@consts/animationVariants";
-import { Button } from "@components/ui/button";
+import { Button } from "src/common/ui/button";
 import {
   useHideNavbarOnScroll,
   useIsNavbarActive,
@@ -38,7 +43,7 @@ const NavLink = ({ href, label }: NavLinkProps) => (
         "px-3 py-2 rounded-md",
         useIsNavbarActive(href)
           ? "bg-gray-500 text-blue-300 font-semibold"
-          : "hover:text-blue-400 hover:bg-gray-500 transition-all duration-200",
+          : "hover:text-blue-400 hover:bg-gray-500 transition-all duration-200"
       )}
       disabled={useIsNavbarActive(href)}
     >
@@ -54,7 +59,7 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
         "w-full px-3 py-2 rounded-md",
         useIsNavbarActive(href)
           ? "bg-gray-500 text-blue-300 font-semibold"
-          : "hover:text-blue-400 hover:bg-gray-500 transition-all duration-200",
+          : "hover:text-blue-400 hover:bg-gray-500 transition-all duration-200"
       )}
       disabled={useIsNavbarActive(href)}
     >
@@ -114,7 +119,7 @@ const Navbar = () => {
                     "mr-2 px-2 py-1 rounded-full",
                     auth.role === "Company"
                       ? "bg-green-500 text-white"
-                      : "bg-gray-500 text-white",
+                      : "bg-gray-500 text-white"
                   )}
                 >
                   {auth.role}

@@ -3,7 +3,7 @@ import UserService from "./service";
 import { UserDto } from "./types";
 import { UserStoreState } from "./types/storeState";
 import useMainStore from "@hooks/main/store";
-import { toaster } from "@components/ui/toaster";
+import { toaster } from "src/common/ui/toaster";
 
 export const DefaultUserDto: UserDto = {
   id: "",
@@ -103,7 +103,7 @@ const useUserStore = create<UserStoreState>((set, get) => ({
         onFullfilled() {
           get().setUserLoading(false);
         },
-      },
+      }
     );
   },
 }));

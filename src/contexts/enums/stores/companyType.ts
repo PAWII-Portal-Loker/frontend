@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { CompanyTypeStoreState } from "../types/companyTypes";
 import ConstService from "../service";
-import { toaster } from "@components/ui/toaster";
+import { toaster } from "src/common/ui/toaster";
 
 const constService = new ConstService();
 
@@ -34,5 +34,5 @@ export const useCompanyTypeStore = create<CompanyTypeStoreState>(
         },
       });
     },
-  }),
+  })
 );

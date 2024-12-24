@@ -4,7 +4,7 @@ import { DefaultCompanyDto } from "@company/store";
 import { VacancyFilter } from "./types/filter";
 import VacancyService from "./service";
 import { VacancyStoreState } from "./types/storeState";
-import { toaster } from "@components/ui/toaster";
+import { toaster } from "src/common/ui/toaster";
 import { DefaultPagination } from "@utils/defaultPagination";
 
 export const DefaultVacancyDto: VacancyDto = {
@@ -71,7 +71,7 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
           get().setVacanciesLoading(false);
         },
       },
-      Object.assign(useVacancyStore.getState().filters),
+      Object.assign(useVacancyStore.getState().filters)
     );
   },
 

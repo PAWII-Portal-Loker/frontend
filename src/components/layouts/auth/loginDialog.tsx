@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-} from "@components/ui/dialog";
-import { Field } from "@components/ui/field";
-import { Button } from "@components/ui/button";
+} from "src/common/ui/dialog";
+import { Field } from "src/common/ui/field";
+import { Button } from "src/common/ui/button";
 import useMainStore from "@hooks/main/store";
 import useAuthStore from "@auth/store";
 import { SignInDto } from "@auth/types/signIn";
@@ -72,7 +72,7 @@ const LoginDialog = () => {
                   placeholder={field.placeholder}
                   className={clsx(
                     "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
-                    getFocusRingColorClass(errors[field.name]),
+                    getFocusRingColorClass(errors[field.name])
                   )}
                 />
               </Field>

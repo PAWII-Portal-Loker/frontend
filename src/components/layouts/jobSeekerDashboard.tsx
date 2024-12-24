@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FaKey } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Dropdown from "@components/containers/dropdown";
-import { Button } from "@components/ui/button";
+import { Button } from "src/common/ui/button";
 import useDashboardStore from "@hooks/dashboard/store";
 import { useJobTypestore } from "@enums/stores/jobType";
 import { useIncomeTypestore } from "@enums/stores/incomeType";
