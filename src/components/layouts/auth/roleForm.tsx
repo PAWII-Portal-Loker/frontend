@@ -105,6 +105,7 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
         loading={isLoading}
         loadingText="Saving..."
         size="lg"
+        mt={4}
       >
         <LuSave />
         Save

@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-} from "src/common/ui/dialog";
-import { Field } from "src/common/ui/field";
-import { Button } from "src/common/ui/button";
+} from "@ui/dialog";
+import { Field } from "@ui/field";
+import { Button } from "@ui/button";
 import useMainStore from "@hooks/main/store";
 import useAuthStore from "@auth/store";
 import { SignInDto } from "@auth/types/signIn";
@@ -48,12 +48,7 @@ const LoginDialog = () => {
     >
       <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>
-          <DialogTitle
-            textAlign="center"
-            fontSize="2xl"
-            fontWeight="bold"
-            mb={4}
-          >
+          <DialogTitle textAlign="center" fontSize="2xl" fontWeight="bold">
             Login
           </DialogTitle>
         </DialogHeader>
@@ -85,6 +80,7 @@ const LoginDialog = () => {
               loading={isAuthLoading}
               loadingText="Logging in..."
               size="lg"
+              mt={2}
             >
               <LuLogIn />
               Login

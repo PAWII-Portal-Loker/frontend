@@ -1,6 +1,6 @@
 import { FaChevronDown } from "react-icons/fa";
 import clsx from "clsx";
-import { Skeleton } from "src/common/ui/skeleton";
+import { Skeleton } from "@ui/skeleton";
 
 interface DropdownProps {
   items: string[];

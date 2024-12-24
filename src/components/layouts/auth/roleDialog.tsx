@@ -7,13 +7,13 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-} from "src/common/ui/dialog";
+} from "@ui/dialog";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import useRoleDialogStore from "@hooks/roleDialog/store";
 import { yupResolver } from "@hookform/resolvers/yup";
-import RoleCardPicker from "../../containers/roleCardPicker";
+import RoleCardPicker from "./roleCardPicker";
 import { useCompanyStore } from "@company/store";
 import { useJobSeekerStore } from "@jobSeeker/store";
 import { useCompanyTypeStore } from "@enums/stores/companyType";
@@ -24,6 +24,7 @@ import { CreateJobSeekerDto } from "@jobSeeker/types/create";
 import { CreateJobSeekerSchema } from "@jobSeeker/schemas/create";
 import { slideVariants } from "@consts/animationVariants";
 import RoleForm from "./roleForm";
+import AnimatedHeight from "@commoncomponents/animated/AnimatedHeight";
 
 const RoleDialog = () => {
   const {
@@ -93,42 +94,49 @@ const RoleDialog = () => {
             selectedRole={selectedRole}
             setSelectedRole={setSelectedRole}
           />
-          {selectedRole && (
-            <motion.div
-              variants={slideVariants}
-              animate="animate"
-              initial="initial"
-              exit="exit"
-            >
-              {selectedRole == "COMPANY" && (
-                <RoleForm
-                  selectedRole="COMPANY"
-                  onSubmit={onCompanySubmit}
-                  isLoading={isLoading}
-                  selectData={companyTypes}
-                  isSelectDataLoading={isCompanyTypesLoading}
-                  formState={{
-                    register: registerCompany,
-                    control: controlCompany,
-                    errors: errorsCompany,
-                  }}
-                />
-              )}
-              {selectedRole == "JOB_SEEKER" && (
-                <RoleForm
-                  selectedRole="JOB_SEEKER"
-                  onSubmit={onJobSeekerSubmit}
-                  isLoading={isLoading}
-                  selectData={lastEducationTypes}
-                  isSelectDataLoading={isLastEducationTypesLoading}
-                  formState={{
-                    register: registerJobSeeker,
-                    errors: errorsJobSeeker,
-                  }}
-                />
-              )}
-            </motion.div>
-          )}
+          <AnimatedHeight isOpen={!!selectedRole}>
+            {selectedRole && (
+              <motion.div
+                variants={slideVariants}
+                animate="animate"
+                initial="initial"
+                exit="exit"
+              >
+                <AnimatedHeight isOpen={selectedRole == "COMPANY"}>
+                  {selectedRole == "COMPANY" && (
+                    <RoleForm
+                      selectedRole="COMPANY"
+                      onSubmit={onCompanySubmit}
+                      isLoading={isLoading}
+                      selectData={companyTypes}
+                      isSelectDataLoading={isCompanyTypesLoading}
+                      formState={{
+                        register: registerCompany,
+                        control: controlCompany,
+                        errors: errorsCompany,
+                      }}
+                    />
+                  )}
+                </AnimatedHeight>
+
+                <AnimatedHeight isOpen={selectedRole == "JOB_SEEKER"}>
+                  {selectedRole == "JOB_SEEKER" && (
+                    <RoleForm
+                      selectedRole="JOB_SEEKER"
+                      onSubmit={onJobSeekerSubmit}
+                      isLoading={isLoading}
+                      selectData={lastEducationTypes}
+                      isSelectDataLoading={isLastEducationTypesLoading}
+                      formState={{
+                        register: registerJobSeeker,
+                        errors: errorsJobSeeker,
+                      }}
+                    />
+                  )}
+                </AnimatedHeight>
+              </motion.div>
+            )}
+          </AnimatedHeight>
         </DialogBody>
         <DialogCloseTrigger />
       </DialogContent>

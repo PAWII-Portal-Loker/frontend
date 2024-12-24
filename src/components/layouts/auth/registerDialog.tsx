@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-} from "src/common/ui/dialog";
-import { Field } from "src/common/ui/field";
-import { Button } from "src/common/ui/button";
+} from "@ui/dialog";
+import { Field } from "@ui/field";
+import { Button } from "@ui/button";
 import useMainStore from "@hooks/main/store";
 import useAuthStore from "@auth/store";
 import useUserStore from "@user/store";
@@ -51,12 +51,7 @@ const RegisterDialog = () => {
     >
       <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>
-          <DialogTitle
-            textAlign="center"
-            fontSize="2xl"
-            fontWeight="bold"
-            mb={4}
-          >
+          <DialogTitle textAlign="center" fontSize="2xl" fontWeight="bold">
             Register
           </DialogTitle>
         </DialogHeader>
@@ -88,12 +83,13 @@ const RegisterDialog = () => {
               loading={isAuthLoading}
               loadingText="Registering..."
               size="lg"
+              mt={2}
             >
               <LuUserPlus />
               Register
             </Button>
           </Stack>
-          <Text mt={2} textAlign="center">
+          <Text mt={4} textAlign="center">
             Already have an account?{" "}
             <Text
               as="span"

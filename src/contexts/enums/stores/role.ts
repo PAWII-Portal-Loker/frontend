@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { RoleStoreState } from "../types/roles";
 import ConstService from "../service";
-import { toaster } from "src/common/ui/toaster";
+import { toaster } from "@ui/toaster";
 
 const constService = new ConstService();
 
