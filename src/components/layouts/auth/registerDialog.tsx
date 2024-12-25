@@ -47,7 +47,7 @@ const RegisterDialog = () => {
     <DialogRoot
       lazyMount
       open={isRegisterDialogOpen}
-      onOpenChange={() => setRegisterDialogOpen(false)}
+      onOpenChange={() => setRegisterDialogOpen(isRegisterDialogOpen)}
     >
       <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>

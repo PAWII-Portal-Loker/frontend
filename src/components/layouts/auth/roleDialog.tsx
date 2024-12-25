@@ -81,7 +81,7 @@ const RoleDialog = () => {
     <DialogRoot
       lazyMount
       open={isRoleDialogOpen}
-      onOpenChange={() => setRoleDialogOpen(false)}
+      onOpenChange={() => setRoleDialogOpen(isRoleDialogOpen)}
     >
       <DialogContent className="bg-slate-700 text-gray-100">
         <DialogHeader>

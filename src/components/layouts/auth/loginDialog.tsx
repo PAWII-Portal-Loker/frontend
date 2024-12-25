@@ -44,7 +44,7 @@ const LoginDialog = () => {
     <DialogRoot
       lazyMount
       open={isLoginDialogOpen}
-      onOpenChange={() => setLoginDialogOpen(false)}
+      onOpenChange={() => setLoginDialogOpen(isLoginDialogOpen)}
     >
       <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>
