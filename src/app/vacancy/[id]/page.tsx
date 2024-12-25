@@ -2,11 +2,10 @@
 
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import Image from "next/image";
 import clsx from "clsx";
 import useVacancyStore from "@vacancy/store";
 import LoadingCard from "@components/containers/loadingCard";
-import { isValidImageUrl } from "@utils/validImageUrl";
+import AsyncImage from "@commoncomponents/async/AsyncImage";
 
 const VacancyDetailPage = () => {
   const { id } = useParams();
@@ -26,20 +25,12 @@ const VacancyDetailPage = () => {
   return (
     <div className="flex flex-col lg:flex-row gap-8 p-8">
       <div className="lg:w-1/2">
-        <Image
-          src={
-            isValidImageUrl(vacancy.thumbnail_url)
-              ? vacancy.thumbnail_url
-              : "/no-image.jpg"
-          }
+        <AsyncImage
+          imgId={vacancy.thumbnail_url}
           alt={vacancy.position}
           width={800}
           height={400}
-          priority
           className="w-full rounded-lg shadow-md"
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = "/no-image.jpg";
-          }}
         />
       </div>
       <div className="lg:w-1/2 p-4 bg-white text-gray-800 rounded-lg shadow-md">
@@ -50,7 +41,7 @@ const VacancyDetailPage = () => {
           <span
             className={clsx(
               "px-2 py-1 rounded-md text-xs font-bold text-white",
-              vacancy.is_closed ? "bg-red-500 " : "bg-green-500 ",
+              vacancy.is_closed ? "bg-red-500 " : "bg-green-500 "
             )}
           >
             {vacancy.is_closed ? "Closed" : "Open"}
