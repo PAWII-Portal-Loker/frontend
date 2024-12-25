@@ -10,14 +10,14 @@ export interface VacancyStoreState {
   isVacanciesLoading: boolean;
   vacancy: VacancyDto;
   isVacancyLoading: boolean;
-  filters: VacancyFilter;
+  filters: Partial<VacancyFilter>;
   pagination: Pagination;
 
   setVacancies: (vacancies: VacancyDto[]) => void;
   setVacanciesLoading: (isVacanciesLoading: boolean) => void;
   setVacancy: (vacancy: VacancyDto) => void;
   setVacancyLoading: (isVacancyLoading: boolean) => void;
-  setFilters: (filters: VacancyFilter) => void;
+  setFilters: (filters: Partial<VacancyFilter>) => void;
   setPagination: (pagination: Pagination) => void;
   getVacancies: () => void;
   getVacancy: (id: string) => void;

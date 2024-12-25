@@ -17,8 +17,6 @@ const MyApplicationsPage = () => {
     return <VacanciesSkeleton />;
   }
 
-  console.log(applications);
-
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">My Applications</h1>
