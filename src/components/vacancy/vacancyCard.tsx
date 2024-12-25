@@ -7,11 +7,12 @@ import { slideVariants } from "@consts/animationVariants";
 import { isValidImageUrl } from "@utils/validImageUrl";
 
 interface VacancyCardProps {
-  vacancy: VacancyDto;
+  vacancy?: VacancyDto;
   delay?: number;
 }
 
 const VacancyCard = ({ vacancy, delay }: VacancyCardProps) => {
+  if (!vacancy) return null;
   return (
     <Link href={`/vacancy/${vacancy.id}`} className="block">
       <motion.div
@@ -43,7 +44,7 @@ const VacancyCard = ({ vacancy, delay }: VacancyCardProps) => {
             "absolute top-2 right-2 px-2 py-1 rounded-md text-xs font-bold",
             vacancy.is_closed
               ? "bg-red-500 text-white"
-              : "bg-green-500 text-white",
+              : "bg-green-500 text-white"
           )}
         >
           {vacancy.is_closed ? "Closed" : "Open"}
