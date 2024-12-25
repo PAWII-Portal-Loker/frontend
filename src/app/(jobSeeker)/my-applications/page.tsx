@@ -2,7 +2,7 @@
 
 import { useApplicationStore } from "@application/store";
 import VacanciesSkeleton from "@components/skeletons/VacanciesSkeleton";
-import VacancyCard from "@components/vacancy/vacancyCard";
+import VacancyCard from "@components/vacancy/VacancyCard";
 import { useEffect } from "react";
 
 const MyApplicationsPage = () => {

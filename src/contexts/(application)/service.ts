@@ -8,7 +8,7 @@ export default class ApplicationService {
 
   async getJobSeekerApplications(callback: FetchCallback<ApplicationDto[]>) {
     const res: APIResponse<ApplicationDto[]> = await this.api.GET(
-      "v1/applications",
+      "v1/applications"
     );
     if (!res?.success) {
       callback.onError(res.message);
@@ -18,24 +18,12 @@ export default class ApplicationService {
     callback.onFullfilled?.();
   }
 
-  async getVacancyApplicants(
+  async getApplicationByVacancyId(
     id: string,
-    callback: FetchCallback<ApplicationDto[]>,
+    callback: FetchCallback<ApplicationDto[]>
   ) {
     const res: APIResponse<ApplicationDto[]> = await this.api.GET(
-      `v1/applications/vacancy/${id}`,
-    );
-    if (!res?.success) {
-      callback.onError(res.message);
-    } else {
-      callback.onSuccess(res.data);
-    }
-    callback.onFullfilled?.();
-  }
-
-  async getApplication(id: string, callback: FetchCallback<ApplicationDto>) {
-    const res: APIResponse<ApplicationDto> = await this.api.GET(
-      `v1/vacancies/${id}/applicants`,
+      `v1/vacancies/${id}/applicants`
     );
     if (!res?.success) {
       callback.onError(res.message);
@@ -47,13 +35,13 @@ export default class ApplicationService {
 
   async createApplication(
     payload: CreateApplicationDto,
-    callback: FetchCallback<ApplicationDto>,
+    callback: FetchCallback<ApplicationDto>
   ) {
     const res: APIResponse<ApplicationDto> = await this.api.POST(
       "v1/applications",
       {
         ...payload,
-      },
+      }
     );
     if (!res?.success) {
       callback.onError(res.message);

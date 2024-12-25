@@ -22,11 +22,18 @@ const fileUploadService = new FileUploadService();
 
 export const useApplicationStore = create<ApplicationStoreState>(
   (set, get) => ({
+    // job seeker - my applications
     applications: [],
     isApplicationsLoading: false,
+    // job seeker - create application
     application: DefaultApplicationDto,
     isApplicationLoading: false,
 
+    // company
+    applicants: [],
+    isApplicantsLoading: false,
+
+    // job seeker
     setApplications: (applications) => set({ applications }),
     setApplicationsLoading: (isApplicationsLoading) =>
       set({ isApplicationsLoading }),
@@ -34,6 +41,11 @@ export const useApplicationStore = create<ApplicationStoreState>(
     setApplicationLoading: (isApplicationLoading) =>
       set({ isApplicationLoading }),
 
+    // company
+    setApplicants: (applicants) => set({ applicants }),
+    setApplicantsLoading: (isApplicantsLoading) => set({ isApplicantsLoading }),
+
+    // job seeker
     getJobSeekerApplications: () => {
       get().setApplicationsLoading(true);
 
@@ -55,12 +67,13 @@ export const useApplicationStore = create<ApplicationStoreState>(
       });
     },
 
-    getVacancyApplicants: (id) => {
-      get().setApplicationsLoading(true);
+    // company
+    getApplicantsByVacancyId: (id) => {
+      get().setApplicantsLoading(true);
 
-      applicationService.getVacancyApplicants(id, {
+      applicationService.getApplicationByVacancyId(id, {
         onSuccess: (applications) => {
-          get().setApplications(applications);
+          get().setApplicants(applications);
         },
         onError: (message: string) => {
           toaster.create({
@@ -71,32 +84,12 @@ export const useApplicationStore = create<ApplicationStoreState>(
           });
         },
         onFullfilled() {
-          get().setApplicationsLoading(false);
+          get().setApplicantsLoading(false);
         },
       });
     },
 
-    getApplication: (id) => {
-      get().setApplicationLoading(true);
-
-      applicationService.getApplication(id, {
-        onSuccess: (application) => {
-          get().setApplication(application);
-        },
-        onError: (message: string) => {
-          toaster.create({
-            title: "Failed to get application",
-            description: message,
-            type: "error",
-            duration: 3000,
-          });
-        },
-        onFullfilled() {
-          get().setApplicationLoading(false);
-        },
-      });
-    },
-
+    // job seeker
     createApplication: (request) => {
       get().setApplicationLoading(true);
       applicationService.createApplication(request, {

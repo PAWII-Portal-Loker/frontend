@@ -1,7 +1,7 @@
 "use client";
 
 import VacanciesSkeleton from "@components/skeletons/VacanciesSkeleton";
-import VacancyCard from "@components/vacancy/vacancyCard";
+import VacancyCard from "@components/vacancy/VacancyCard";
 import useVacancyStore from "@vacancy/store";
 import { useEffect } from "react";
 
