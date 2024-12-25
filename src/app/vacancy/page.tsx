@@ -3,7 +3,7 @@
 import VacancyCard from "@components/vacancy/vacancyCard";
 import useVacancyStore from "@vacancy/store";
 import { useEffect } from "react";
-import VacanciesSkeleton from "./(partial)/VacanciesSkeleton";
+import VacanciesSkeleton from "../../components/skeletons/VacanciesSkeleton";
 
 const VacancyPage = () => {
   const { vacancies, isVacanciesLoading, getVacancies } = useVacancyStore();

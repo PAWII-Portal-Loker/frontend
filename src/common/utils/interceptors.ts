@@ -3,7 +3,6 @@ import {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { DeviceUUID } from "device-uuid";
 
 const authReqInterceptors = (config: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("access_token");
@@ -42,7 +41,8 @@ const authResInterceptors = (response: AxiosResponse) => {
 };
 
 const deviceIdInterceptors = (config: InternalAxiosRequestConfig) => {
-  const deviceId = new DeviceUUID().get();
+  // TODO: implement device id logic
+  const deviceId = "qwerty";
 
   if (deviceId) {
     config.headers["x-device-id"] = deviceId;
@@ -60,7 +60,7 @@ export const applyInterceptors = (api: AxiosInstance) => {
     },
     (error) => {
       return Promise.reject(error);
-    },
+    }
   );
 
   api.interceptors.response.use((response) => {

@@ -24,12 +24,7 @@ import {
   useHideNavbarOnScroll,
   useIsNavbarActive,
 } from "@hooks/navbar/useNavbar";
-
-const navLinks = [
-  { href: "/vacancy", label: "Vacancy" },
-  { href: "/history", label: "History" },
-  { href: "/notification", label: "Notification" },
-];
+import { ROLE_COMPANY, ROLE_JOB_SEEKER } from "@enums/types/roles";
 
 type NavLinkProps = {
   href: string;
@@ -74,6 +69,18 @@ const Navbar = () => {
     useMainStore();
   const { setRoleDialogOpen } = useRoleDialogStore();
   const isNavbarHidden = useHideNavbarOnScroll();
+
+  const navLinks = [
+    { href: "/vacancy", label: "Vacancy" },
+    { href: "/history", label: "History" },
+    { href: "/notification", label: "Notification" },
+  ];
+
+  if (auth?.role === ROLE_JOB_SEEKER) {
+    navLinks.push({ href: "/my-applications", label: "My Applications" });
+  } else if (auth?.role === ROLE_COMPANY) {
+    navLinks.push({ href: "/my-vacancies", label: "My Vacancies" });
+  }
 
   return (
     <motion.header
