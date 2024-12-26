@@ -28,33 +28,43 @@ const ApplicantCard = (props: Props) => {
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-md border border-gray-200/60"
+      className="bg-white rounded-lg shadow-md border border-gray-200/60 flex items-center justify-between"
       variants={slideVariants}
       initial="initial"
       animate="animate"
       exit="exit"
       transition={{ delay: delay }}
     >
-      <div className="flex border-b px-3 py-2 items-center gap-3">
+      <div className="flex px-3 py-2 items-center gap-3">
         <div className="rounded-full">
           <AsyncImage
             imgId={jobSeeker?.user.image_url}
             alt={jobSeeker?.user.id}
             width={200}
             height={200}
-            imageClassName="rounded-full w-12 h-12 object-cover"
+            imageClassName="rounded-full w-10 h-10 object-cover"
           />
         </div>
-        <span className="font-semibold">{jobSeeker?.name}</span>
+        <span className="font-semibold truncate">{jobSeeker?.name}</span>
       </div>
-      <div className="ps-3">
-        <Tooltip content="User Detail" openDelay={300}>
-          <Button onClick={onOpen}>
+      <div className="me-2 w-[5.1rem]">
+        <Tooltip content="User Detail" openDelay={500} closeDelay={50}>
+          <Button
+            onClick={onOpen}
+            className="hover:bg-blue-400/30 rounded-full"
+          >
             <BiSolidUserDetail className="w-6 h-6" />
           </Button>
         </Tooltip>
-        <Tooltip content="Download User Attachment" openDelay={300}>
-          <Button onClick={() => handleClickDownload(applicant.document_urls)}>
+        <Tooltip
+          content="Download User Attachment"
+          openDelay={500}
+          closeDelay={50}
+        >
+          <Button
+            onClick={() => handleClickDownload(applicant.document_urls)}
+            className="hover:bg-blue-400/30 rounded-full"
+          >
             <IoDocumentAttachOutline className="w-5 h-5" />
           </Button>
         </Tooltip>
@@ -66,14 +76,6 @@ const ApplicantCard = (props: Props) => {
           applicant={applicant}
         />
       ) : null}
-      {/* <div className="flex flex-col gap-1 ps-4">
-        {informations.map((info, index) => (
-          <div className="flex flex-col" key={index}>
-            <span className="text-xs text-gray-500/90">{info.label}</span>
-            <span className="text-sm -mt-0.5">{info.value || "-"}</span>
-          </div>
-        ))}
-      </div> */}
     </motion.div>
   );
 };

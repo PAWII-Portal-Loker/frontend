@@ -14,7 +14,6 @@ const ApplicantsSkeleton = () => {
             <Skeleton width="60%" height="20px" />
           </div>
           <Skeleton width="60%" height="16px" mb="2" />
-          <Skeleton width="70%" height="16px" mb="2" />
           <Skeleton width="55%" height="16px" mb="2" />
           <Skeleton width="30%" height="24px" ms="auto" />
         </div>
