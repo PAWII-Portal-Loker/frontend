@@ -5,10 +5,12 @@ import VacancyCard from "@components/vacancy/VacancyCard";
 import useVacancyStore from "@vacancy/store";
 import { useEffect } from "react";
 
-const VacancyPage = () => {
-  const { vacancies, isVacanciesLoading, getVacancies } = useVacancyStore();
+const MyVacanciesPage = () => {
+  const { vacancies, isVacanciesLoading, getVacancies, setFilters } =
+    useVacancyStore();
 
   useEffect(() => {
+    setFilters({ ownedByMe: true });
     getVacancies();
   }, []);
 
@@ -18,7 +20,7 @@ const VacancyPage = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Vacancies</h1>
+      <h1 className="text-2xl font-bold mb-4">My Vacancies</h1>
       {vacancies.length === 0 ? (
         <div className="text-center text-yellow-500">No vacancies found</div>
       ) : (
@@ -36,4 +38,4 @@ const VacancyPage = () => {
   );
 };
 
-export default VacancyPage;
+export default MyVacanciesPage;

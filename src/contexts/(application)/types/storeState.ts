@@ -7,13 +7,19 @@ export interface ApplicationStoreState {
   application: ApplicationDto;
   isApplicationLoading: boolean;
 
+  applicants: ApplicationDto[];
+  isApplicantsLoading: boolean;
+
   setApplications: (applications: ApplicationDto[]) => void;
   setApplicationsLoading: (isApplicationsLoading: boolean) => void;
   setApplication: (application: ApplicationDto) => void;
   setApplicationLoading: (isApplicationLoading: boolean) => void;
+
+  setApplicants: (applicants: ApplicationDto[]) => void;
+  setApplicantsLoading: (isApplicantsLoading: boolean) => void;
+
   getJobSeekerApplications: () => void;
-  getVacancyApplicants: (id: string) => void;
-  getApplication: (id: string) => void;
+  getApplicantsByVacancyId: (id: string) => void;
   createApplication: (request: CreateApplicationDto) => void;
   uploadResume: (file: File) => void;
   deleteResume: (key: string) => void;

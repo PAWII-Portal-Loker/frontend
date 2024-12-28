@@ -1,10 +1,9 @@
 import clsx from "clsx";
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { VacancyDto } from "@vacancy/types";
 import { slideVariants } from "@consts/animationVariants";
-import { isValidImageUrl } from "@utils/validImageUrl";
+import AsyncImage from "@commoncomponents/async/AsyncImage";
 
 interface VacancyCardProps {
   vacancy?: VacancyDto;
@@ -13,6 +12,7 @@ interface VacancyCardProps {
 
 const VacancyCard = ({ vacancy, delay }: VacancyCardProps) => {
   if (!vacancy) return null;
+
   return (
     <Link href={`/vacancy/${vacancy.id}`} className="block">
       <motion.div
@@ -24,20 +24,12 @@ const VacancyCard = ({ vacancy, delay }: VacancyCardProps) => {
         transition={{ delay: delay }}
         whileHover={{ scale: 1.01 }}
       >
-        <Image
-          src={
-            isValidImageUrl(vacancy.thumbnail_url)
-              ? vacancy.thumbnail_url
-              : "/no-image.jpg"
-          }
+        <AsyncImage
+          imgId={vacancy.thumbnail_url}
           alt={vacancy.position}
           width={500}
           height={200}
-          priority
-          className="w-full transition-transform duration-200 transform hover:scale-105"
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = "/no-image.jpg";
-          }}
+          className="w-full object-cover transition-transform duration-200 transform hover:scale-105"
         />
         <span
           className={clsx(

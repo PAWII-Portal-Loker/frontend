@@ -1,15 +1,22 @@
 import API from "..";
 import { APIResponse, FetchCallback } from "@types";
 
+type GetFileRes = {
+  url: string;
+};
+
 export default class FileUploadService {
   private api: API = new API();
 
-  async getFile(key: string, callback: FetchCallback<string>) {
-    const res: APIResponse<string> = await this.api.GET(`v1/files/${key}`);
-    if (!res?.success) {
-      callback.onError(res.message);
+  async getFile(key: string, callback: FetchCallback<GetFileRes>) {
+    const res = (await this.api.GET(
+      `v1/files/${key}`
+    )) as unknown as GetFileRes;
+
+    if (!res?.url) {
+      callback.onError("File not found");
     } else {
-      callback.onSuccess(res.data);
+      callback.onSuccess(res);
     }
     callback.onFullfilled?.();
   }
