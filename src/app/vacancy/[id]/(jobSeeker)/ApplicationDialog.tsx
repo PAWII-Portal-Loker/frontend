@@ -71,7 +71,10 @@ const ApplicationDialog = () => {
                   type={field.type}
                   placeholder={field.placeholder}
                   className={clsx(
-                    "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
+                    "rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
+                    field.type == "file"
+                      ? "file:rounded-lg file:border-0 file:bg-blue-500 file:text-white file:px-4 file:py-2 file:cursor-pointer file:hover:bg-blue-600 leading-none"
+                      : "p-4",
                     getFocusRingColorClass(errors[field.name] as FieldError),
                   )}
                 />

@@ -6,7 +6,7 @@ export const CreateApplicationField: FieldConfig<CreateApplicationDto>[] = [
   {
     name: "document_urls",
     label: "Document URLs",
-    type: "text",
+    type: "file",
     placeholder: "Enter document URLs",
     rules: CreateApplicationSchema.fields.document_urls,
   },
