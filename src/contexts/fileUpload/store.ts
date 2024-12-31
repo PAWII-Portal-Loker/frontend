@@ -6,7 +6,7 @@ import { toaster } from "@ui/toaster";
 const fileUploadService = new FileUploadService();
 
 export const useFileUploadStore = create<FileUploadStoreState>((set, get) => ({
-  fileUpload: [],
+  uploadedFileUrls: [],
   isFileUploading: false,
   isFileDeleting: false,
   isFileLoading: false,
@@ -14,13 +14,16 @@ export const useFileUploadStore = create<FileUploadStoreState>((set, get) => ({
   setFileUploading: (isFileUploading) => set({ isFileUploading }),
   setFileDeleting: (isFileDeleting) => set({ isFileDeleting }),
   setFileLoading: (isFileLoading) => set({ isFileLoading }),
-  setFileUpload: (fileUpload) => set({ fileUpload }),
+  setUploadedFileUrls: (uploadedFileUrls) => set({ uploadedFileUrls }),
 
   getFile: async (key: string) => {
     get().setFileLoading(true);
     fileUploadService.getFile(key, {
       onSuccess: (data) => {
-        get().setFileUpload([...(get().fileUpload || []), data.url]);
+        get().setUploadedFileUrls([
+          ...(get().uploadedFileUrls || []),
+          data.url,
+        ]);
       },
       onError: () => {
         toaster.create({
@@ -42,7 +45,7 @@ export const useFileUploadStore = create<FileUploadStoreState>((set, get) => ({
           type: "success",
           duration: 3000,
         });
-        get().setFileUpload([...(get().fileUpload || []), url]);
+        get().setUploadedFileUrls([...(get().uploadedFileUrls || []), url]);
       },
       onError: () => {
         toaster.create({
@@ -64,7 +67,9 @@ export const useFileUploadStore = create<FileUploadStoreState>((set, get) => ({
           type: "success",
           duration: 3000,
         });
-        get().setFileUpload(get().fileUpload?.filter((file) => file !== url));
+        get().setUploadedFileUrls(
+          get().uploadedFileUrls?.filter((file) => file !== url),
+        );
       },
       onError: () => {
         toaster.create({
