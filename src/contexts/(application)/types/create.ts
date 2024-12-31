@@ -11,4 +11,3 @@ export interface CreateApplicationFormDto {
   document_urls: FileList;
   message: ApplicationDto["message"];
 }
-

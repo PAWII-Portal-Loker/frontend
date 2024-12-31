@@ -79,11 +79,15 @@ const ApplicationDialog = () => {
                 errorText={errors[field.name]?.message}
               >
                 <Input
-                  {...register(field.name, { 
-                    onChange: field.type === "file" ? handleFileChange(setDocuments) : undefined 
+                  {...register(field.name, {
+                    onChange:
+                      field.type === "file"
+                        ? handleFileChange(setDocuments)
+                        : undefined,
                   })}
                   disabled={
-                    field.type === "file" && (isDocumentUploading || isDocumentDeleting)
+                    field.type === "file" &&
+                    (isDocumentUploading || isDocumentDeleting)
                   }
                   type={field.type}
                   multiple={field.type === "file"}

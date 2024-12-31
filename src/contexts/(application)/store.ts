@@ -96,8 +96,11 @@ export const useApplicationStore = create<ApplicationStoreState>(
 
     createApplication: (request) => {
       get().setApplicationLoading(true);
-      
-      request.document_urls = request.document_urls!.map(filename => `${process.env.NEXT_PUBLIC_BASE_URL}/v1/files/${filename}`);
+
+      request.document_urls = request.document_urls!.map(
+        (filename) =>
+          `${process.env.NEXT_PUBLIC_BASE_URL}/v1/files/${filename}`,
+      );
       applicationService.createApplication(request, {
         onSuccess: () => {
           toaster.create({
