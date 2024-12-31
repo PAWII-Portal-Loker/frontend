@@ -7,12 +7,21 @@ export const getFocusRingColorClass = (error: FieldError | undefined) => {
 
 export const getSubmitButtonClass = (
   isLoading: boolean,
-  errors: FieldErrors
+  errors: FieldErrors,
 ) => {
   return clsx(
     "bg-blue-300 text-white font-bold rounded transition-all duration-200",
     isLoading || Object.keys(errors).length > 0
       ? "cursor-not-allowed"
-      : "hover:bg-blue-400"
+      : "hover:bg-blue-400",
   );
 };
+
+export const handleFileUpload =
+  (uploadFile: (files: FileList) => void) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (files) {
+        uploadFile(files);
+      }
+    };

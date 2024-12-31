@@ -13,7 +13,11 @@ import {
 } from "@ui/dialog";
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
-import { getFocusRingColorClass, getSubmitButtonClass } from "@utils/form";
+import {
+  getFocusRingColorClass,
+  getSubmitButtonClass,
+  handleFileUpload,
+} from "@utils/form";
 import { useApplicationStore } from "@application/store";
 import { CreateApplicationDto } from "@application/types/create";
 import { CreateApplicationSchema } from "@application/schemas/create";
@@ -23,10 +27,15 @@ import useVacancyStore from "@vacancy/store";
 const ApplicationDialog = () => {
   const { vacancy } = useVacancyStore();
   const {
+    application: { document_urls },
     isApplicationLoading,
     isApplicationDialogOpen,
     setApplicationDialogOpen,
     createApplication,
+    isDocumentUploading,
+    isDocumentDeleting,
+    uploadDocuments,
+    deleteDocument,
   } = useApplicationStore();
 
   const {
@@ -40,7 +49,7 @@ const ApplicationDialog = () => {
   const onSubmit = handleSubmit((data) => {
     createApplication({
       vacancy_id: vacancy.id,
-      document_urls: data.document_urls,
+      document_urls: document_urls,
       message: data.message,
     });
   });
@@ -68,7 +77,12 @@ const ApplicationDialog = () => {
               >
                 <Input
                   {...register(field.name)}
+                  disabled={
+                    field.type === "file" && (isDocumentUploading || isDocumentDeleting)
+                  }
+                  onChange={handleFileUpload(uploadDocuments)}
                   type={field.type}
+                  {...(field.type === "file" && { multiple: true })}
                   placeholder={field.placeholder}
                   className={clsx(
                     "rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
@@ -80,6 +94,20 @@ const ApplicationDialog = () => {
                 />
               </Field>
             ))}
+            <ul className="mt-2">
+              {document_urls?.map((url, index) => (
+                <li key={index} className="flex items-center justify-between">
+                  <span className="text-gray-200">{url}</span>
+                  <button
+                    onClick={() => deleteDocument(url)}
+                    className="text-red-500 hover:text-red-600"
+                    disabled={isDocumentUploading || isDocumentDeleting}
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
             <Button
               className={getSubmitButtonClass(isApplicationLoading, errors)}
               disabled={isApplicationLoading || Object.keys(errors).length > 0}

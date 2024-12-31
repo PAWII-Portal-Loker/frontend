@@ -18,14 +18,19 @@ export default class FileUploadService {
     callback.onFullfilled?.();
   }
 
-  async uploadFile(file: File, callback: FetchCallback<string>) {
+  async uploadFile(files: FileList, callback: FetchCallback<string[]>) {
     const formData = new FormData();
-    formData.append("file", file);
-    const res: APIResponse<string> = await this.api.POST("v1/files", formData);
+    Array.from(files).forEach((file) => {
+      formData.append("files", file);
+    });
+
+    const res: APIResponse<{ success: string[]; failed: string[] }> =
+      await this.api.POSTFile("v1/files", formData);
+
     if (!res?.success) {
       callback.onError(res.message);
     } else {
-      callback.onSuccess(res.data);
+      callback.onSuccess(res.data.success);
     }
     callback.onFullfilled?.();
   }

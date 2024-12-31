@@ -119,42 +119,82 @@ export const useApplicationStore = create<ApplicationStoreState>(
       });
     },
 
-    uploadResume: (file) => {
-      fileUploadService.uploadFile(file, {
-        onSuccess: (url) => {
+    // document
+    isDocumentLoading: false,
+    isDocumentUploading: false,
+    isDocumentDeleting: false,
+
+    setDocumentLoading: (isDocumentLoading) => set({ isDocumentLoading }),
+    setDocumentUploading: (isDocumentUploading) => set({ isDocumentUploading }),
+    setDocumentDeleting: (isDocumentDeleting) => set({ isDocumentDeleting }),
+
+    getDocument: (key) => {
+      get().setDocumentLoading(true);
+      fileUploadService.getFile(key, {
+        onSuccess: (data) => {
           get().setApplication({
             ...get().application,
-            document_urls: [...get().application.document_urls, url],
+            document_urls: [...get().application.document_urls, data.url],
           });
         },
         onError: (message) => {
           toaster.create({
-            title: "Failed to upload resume",
+            title: "Failed to get document",
             description: message,
             type: "error",
             duration: 3000,
           });
         },
+        onFullfilled() {
+          get().setDocumentLoading(false);
+        },
       });
     },
 
-    deleteResume: (key) => {
-      fileUploadService.deleteFile(key, {
+    uploadDocuments: (files) => {
+      get().setDocumentUploading(true);
+      fileUploadService.uploadFile(files, {
+        onSuccess: (urls) => {
+          get().setApplication({
+            ...get().application,
+            document_urls: [...get().application.document_urls, ...urls],
+          });
+        },
+        onError: (message) => {
+          toaster.create({
+            title: "Failed to upload documents",
+            description: message,
+            type: "error",
+            duration: 3000,
+          });
+        },
+        onFullfilled() {
+          get().setDocumentUploading(false);
+        },
+      });
+    },
+
+    deleteDocument: (url) => {
+      get().setDocumentDeleting(true);
+      fileUploadService.deleteFile(url, {
         onSuccess: () => {
           get().setApplication({
             ...get().application,
             document_urls: get().application.document_urls.filter(
-              (url) => url !== key,
+              (document) => document !== url,
             ),
           });
         },
         onError: (message) => {
           toaster.create({
-            title: "Failed to delete resume",
+            title: "Failed to delete document",
             description: message,
             type: "error",
             duration: 3000,
           });
+        },
+        onFullfilled() {
+          get().setDocumentDeleting(false);
         },
       });
     },
