@@ -14,7 +14,6 @@ import {
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
 import useMainStore from "@hooks/main/store";
-import useAuthStore from "@auth/store";
 import useUserStore from "@user/store";
 import { CreateUserDto } from "@user/types/create";
 import { CreateUserSchema } from "@user/schemas/create";
@@ -24,8 +23,7 @@ import { getFocusRingColorClass, getSubmitButtonClass } from "@utils/form";
 const RegisterDialog = () => {
   const { setLoginDialogOpen, isRegisterDialogOpen, setRegisterDialogOpen } =
     useMainStore();
-  const { isAuthLoading } = useAuthStore();
-  const { createUser } = useUserStore();
+  const { isUserLoading, createUser } = useUserStore();
 
   const {
     register,
@@ -47,7 +45,7 @@ const RegisterDialog = () => {
     <DialogRoot
       lazyMount
       open={isRegisterDialogOpen}
-      onOpenChange={() => setRegisterDialogOpen(isRegisterDialogOpen)}
+      onOpenChange={() => setRegisterDialogOpen(false)}
     >
       <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>
@@ -70,17 +68,17 @@ const RegisterDialog = () => {
                   placeholder={field.placeholder}
                   className={clsx(
                     "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
-                    getFocusRingColorClass(errors[field.name])
+                    getFocusRingColorClass(errors[field.name]),
                   )}
                 />
               </Field>
             ))}
             <Button
-              className={getSubmitButtonClass(isAuthLoading, errors)}
-              disabled={isAuthLoading || Object.keys(errors).length > 0}
+              className={getSubmitButtonClass(isUserLoading, errors)}
+              disabled={isUserLoading || Object.keys(errors).length > 0}
               type="submit"
               width="full"
-              loading={isAuthLoading}
+              loading={isUserLoading}
               loadingText="Registering..."
               size="lg"
               mt={2}
@@ -93,7 +91,8 @@ const RegisterDialog = () => {
             Already have an account?{" "}
             <Text
               as="span"
-              color="blue.500"
+              color="blue.400"
+              fontWeight="bold"
               cursor="pointer"
               onClick={() => {
                 setRegisterDialogOpen(false);

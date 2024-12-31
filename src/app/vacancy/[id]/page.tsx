@@ -9,10 +9,12 @@ import AsyncImage from "@commoncomponents/async/AsyncImage";
 import ApplicantsList from "./(company)/ApplicantsList";
 import { hasPermission } from "@utils/permissions";
 import useAuthStore from "@auth/store";
+import { useApplicationStore } from "@application/store";
 
 const VacancyDetailPage = () => {
   const { id } = useParams();
   const { vacancy, isVacancyLoading, getVacancy } = useVacancyStore();
+  const { setApplicationDialogOpen } = useApplicationStore();
   const { auth } = useAuthStore();
 
   useEffect(() => {
@@ -69,7 +71,7 @@ const VacancyDetailPage = () => {
           {hasPermission(auth, "application:create") && (
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full transition-colors duration-200"
-              onClick={() => console.log("Apply")}
+              onClick={() => setApplicationDialogOpen(true)}
             >
               Apply
             </button>
