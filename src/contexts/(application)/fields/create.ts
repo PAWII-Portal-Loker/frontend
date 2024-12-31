@@ -1,13 +1,13 @@
 import { CreateApplicationSchema } from "@application/schemas/create";
-import { CreateApplicationDto } from "@application/types/create";
+import { CreateApplicationFormDto } from "@application/types/create";
 import { FieldConfig } from "@types";
 
-export const CreateApplicationField: FieldConfig<CreateApplicationDto>[] = [
+export const CreateApplicationField: FieldConfig<CreateApplicationFormDto>[] = [
   {
     name: "document_urls",
-    label: "Document URLs",
+    label: "Documents",
     type: "file",
-    placeholder: "Enter document URLs",
+    placeholder: "Select documents",
     rules: CreateApplicationSchema.fields.document_urls,
   },
   {

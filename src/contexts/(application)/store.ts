@@ -96,6 +96,8 @@ export const useApplicationStore = create<ApplicationStoreState>(
 
     createApplication: (request) => {
       get().setApplicationLoading(true);
+      
+      request.document_urls = request.document_urls!.map(filename => `${process.env.NEXT_PUBLIC_BASE_URL}/v1/files/${filename}`);
       applicationService.createApplication(request, {
         onSuccess: () => {
           toaster.create({
@@ -120,10 +122,12 @@ export const useApplicationStore = create<ApplicationStoreState>(
     },
 
     // document
+    documents: null,
     isDocumentLoading: false,
     isDocumentUploading: false,
     isDocumentDeleting: false,
 
+    setDocuments: (documents) => set({ documents }),
     setDocumentLoading: (isDocumentLoading) => set({ isDocumentLoading }),
     setDocumentUploading: (isDocumentUploading) => set({ isDocumentUploading }),
     setDocumentDeleting: (isDocumentDeleting) => set({ isDocumentDeleting }),
@@ -131,12 +135,7 @@ export const useApplicationStore = create<ApplicationStoreState>(
     getDocument: (key) => {
       get().setDocumentLoading(true);
       fileUploadService.getFile(key, {
-        onSuccess: (data) => {
-          get().setApplication({
-            ...get().application,
-            document_urls: [...get().application.document_urls, data.url],
-          });
-        },
+        onSuccess: () => {},
         onError: (message) => {
           toaster.create({
             title: "Failed to get document",
@@ -153,38 +152,31 @@ export const useApplicationStore = create<ApplicationStoreState>(
 
     uploadDocuments: (files) => {
       get().setDocumentUploading(true);
-      fileUploadService.uploadFile(files, {
-        onSuccess: (urls) => {
-          get().setApplication({
-            ...get().application,
-            document_urls: [...get().application.document_urls, ...urls],
-          });
-        },
-        onError: (message) => {
-          toaster.create({
-            title: "Failed to upload documents",
-            description: message,
-            type: "error",
-            duration: 3000,
-          });
-        },
-        onFullfilled() {
-          get().setDocumentUploading(false);
-        },
+      return new Promise((resolve, reject) => {
+        fileUploadService.uploadFile(files, {
+          onSuccess: (urls) => {
+            resolve(urls);
+          },
+          onError: (message) => {
+            toaster.create({
+              title: "Failed to upload documents",
+              description: message,
+              type: "error",
+              duration: 3000,
+            });
+            reject(message);
+          },
+          onFullfilled() {
+            get().setDocumentUploading(false);
+          },
+        });
       });
     },
 
     deleteDocument: (url) => {
       get().setDocumentDeleting(true);
       fileUploadService.deleteFile(url, {
-        onSuccess: () => {
-          get().setApplication({
-            ...get().application,
-            document_urls: get().application.document_urls.filter(
-              (document) => document !== url,
-            ),
-          });
-        },
+        onSuccess: () => {},
         onError: (message) => {
           toaster.create({
             title: "Failed to delete document",

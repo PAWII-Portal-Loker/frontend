@@ -1,5 +1,5 @@
 import { Stack, Input } from "@chakra-ui/react";
-import { LuLogIn } from "react-icons/lu";
+import { GiClick } from "react-icons/gi";
 import { FieldError, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import clsx from "clsx";
@@ -14,42 +14,45 @@ import {
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
 import {
+  deleteFileFromList,
   getFocusRingColorClass,
   getSubmitButtonClass,
-  handleFileUpload,
+  handleFileChange,
 } from "@utils/form";
 import { useApplicationStore } from "@application/store";
-import { CreateApplicationDto } from "@application/types/create";
-import { CreateApplicationSchema } from "@application/schemas/create";
+import { CreateApplicationFormDto } from "@application/types/create";
 import { CreateApplicationField } from "@application/fields/create";
 import useVacancyStore from "@vacancy/store";
+import { useParams } from "next/navigation";
+import { CreateApplicationSchema } from "@application/schemas/create";
 
 const ApplicationDialog = () => {
+  const vacancyId = useParams().id as string;
   const { vacancy } = useVacancyStore();
   const {
-    application: { document_urls },
     isApplicationLoading,
     isApplicationDialogOpen,
     setApplicationDialogOpen,
     createApplication,
+    documents,
+    setDocuments,
+    uploadDocuments,
     isDocumentUploading,
     isDocumentDeleting,
-    uploadDocuments,
-    deleteDocument,
   } = useApplicationStore();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateApplicationDto>({
+  } = useForm<CreateApplicationFormDto>({
     resolver: yupResolver(CreateApplicationSchema),
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     createApplication({
-      vacancy_id: vacancy.id,
-      document_urls: document_urls,
+      vacancy_id: vacancyId,
+      document_urls: await uploadDocuments(documents!),
       message: data.message,
     });
   });
@@ -76,13 +79,14 @@ const ApplicationDialog = () => {
                 errorText={errors[field.name]?.message}
               >
                 <Input
-                  {...register(field.name)}
+                  {...register(field.name, { 
+                    onChange: field.type === "file" ? handleFileChange(setDocuments) : undefined 
+                  })}
                   disabled={
                     field.type === "file" && (isDocumentUploading || isDocumentDeleting)
                   }
-                  onChange={handleFileUpload(uploadDocuments)}
                   type={field.type}
-                  {...(field.type === "file" && { multiple: true })}
+                  multiple={field.type === "file"}
                   placeholder={field.placeholder}
                   className={clsx(
                     "rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
@@ -95,11 +99,13 @@ const ApplicationDialog = () => {
               </Field>
             ))}
             <ul className="mt-2">
-              {document_urls?.map((url, index) => (
+              {Array.from(documents || []).map((document, index) => (
                 <li key={index} className="flex items-center justify-between">
-                  <span className="text-gray-200">{url}</span>
+                  <span className="text-gray-200">{document.name}</span>
                   <button
-                    onClick={() => deleteDocument(url)}
+                    onClick={() => {
+                      setDocuments(deleteFileFromList(documents, index));
+                    }}
                     className="text-red-500 hover:text-red-600"
                     disabled={isDocumentUploading || isDocumentDeleting}
                   >
@@ -118,7 +124,7 @@ const ApplicationDialog = () => {
               size="lg"
               mt={2}
             >
-              <LuLogIn />
+              <GiClick />
               Apply
             </Button>
           </Stack>

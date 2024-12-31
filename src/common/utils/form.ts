@@ -17,11 +17,19 @@ export const getSubmitButtonClass = (
   );
 };
 
-export const handleFileUpload =
-  (uploadFile: (files: FileList) => void) =>
+export const handleFileChange =
+  (setDocuments: (documents: FileList | null) => void) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const files = e.target.files;
-      if (files) {
-        uploadFile(files);
+      if (e.target.files) {
+        setDocuments(e.target.files);
       }
     };
+
+export const deleteFileFromList = (files: FileList | null, index: number): FileList | null => {
+  if (!files) return null;
+  const filesArray = Array.from(files);
+  const newFilesArray = filesArray.filter((_, i) => i !== index);
+  const newFiles = new DataTransfer();
+  newFilesArray.forEach(file => newFiles.items.add(file));
+  return newFiles.files;
+};

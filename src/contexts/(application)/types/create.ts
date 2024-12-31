@@ -6,3 +6,9 @@ export interface CreateApplicationDto {
   document_urls?: ApplicationDto["document_urls"];
   message: ApplicationDto["message"];
 }
+
+export interface CreateApplicationFormDto {
+  document_urls: FileList;
+  message: ApplicationDto["message"];
+}
+
