@@ -10,6 +10,7 @@ import ApplicantsList from "./(company)/ApplicantsList";
 import { hasPermission } from "@utils/permissions";
 import useAuthStore from "@auth/store";
 import { useApplicationStore } from "@application/store";
+import ApplicationDialog from "./(jobSeeker)/ApplicationDialog";
 
 const VacancyDetailPage = () => {
   const { id } = useParams();
@@ -30,6 +31,7 @@ const VacancyDetailPage = () => {
 
   return (
     <div className="p-8">
+      <ApplicationDialog />
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="w-fit">
           <AsyncImage
