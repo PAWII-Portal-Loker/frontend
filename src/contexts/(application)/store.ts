@@ -28,6 +28,7 @@ export const useApplicationStore = create<ApplicationStoreState>(
     // job seeker - create application
     application: DefaultApplicationDto,
     isApplicationLoading: false,
+    isApplicationDialogOpen: false,
 
     // company
     applicants: [],
@@ -90,6 +91,9 @@ export const useApplicationStore = create<ApplicationStoreState>(
     },
 
     // job seeker
+    setApplicationDialogOpen: (isOpen) =>
+      set({ isApplicationDialogOpen: isOpen }),
+
     createApplication: (request) => {
       get().setApplicationLoading(true);
       applicationService.createApplication(request, {
@@ -140,7 +144,7 @@ export const useApplicationStore = create<ApplicationStoreState>(
           get().setApplication({
             ...get().application,
             document_urls: get().application.document_urls.filter(
-              (url) => url !== key
+              (url) => url !== key,
             ),
           });
         },
@@ -154,5 +158,5 @@ export const useApplicationStore = create<ApplicationStoreState>(
         },
       });
     },
-  })
+  }),
 );
