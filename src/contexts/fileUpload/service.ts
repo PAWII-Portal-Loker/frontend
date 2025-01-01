@@ -7,7 +7,7 @@ export default class FileUploadService {
 
   async getFile(key: string, callback: FetchCallback<GetFileDto>) {
     const res = (await this.api.GET(
-      `v1/files/${key}`,
+      `v1/files/${key}`
     )) as unknown as GetFileDto;
 
     if (!res?.url) {
@@ -18,7 +18,7 @@ export default class FileUploadService {
     callback.onFullfilled?.();
   }
 
-  async uploadFile(files: FileList, callback: FetchCallback<string[]>) {
+  async uploadFile(files: File[], callback: FetchCallback<string[]>) {
     const formData = new FormData();
     Array.from(files).forEach((file) => {
       formData.append("files", file);

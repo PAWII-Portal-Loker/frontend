@@ -182,9 +182,10 @@ const Navbar = () => {
       <AnimatePresence>
         {isNavigationOpen && (
           <motion.ul
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            variants={slideVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
             transition={{ duration: 0.2 }}
             className="bg-slate-600 md:hidden px-4 py-4 absolute top-16 left-0 w-full"
           >

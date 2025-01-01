@@ -1,6 +1,11 @@
 import { Stack, Input } from "@chakra-ui/react";
 import { GiClick } from "react-icons/gi";
-import { FieldError, useForm } from "react-hook-form";
+import {
+  FieldError,
+  useForm,
+  UseFormSetValue,
+  UseFormTrigger,
+} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import clsx from "clsx";
 import {
@@ -14,9 +19,10 @@ import {
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
 import {
+  DocumentUrlsInputProps,
   getFocusRingColorClass,
   getSubmitButtonClass,
-  handleFileChange,
+  updateForm,
 } from "@utils/form";
 import { useApplicationStore } from "@application/store";
 import { CreateApplicationFormDto } from "@application/types/create";
@@ -24,7 +30,12 @@ import { CreateApplicationField } from "@application/fields/create";
 import useVacancyStore from "@vacancy/store";
 import { useParams } from "next/navigation";
 import { CreateApplicationSchema } from "@application/schemas/create";
-import FileList from "./FileList";
+import {
+  FileUploadDropzone,
+  FileUploadList,
+  FileUploadRoot,
+} from "@components/ui/file-upload";
+import { useEffect } from "react";
 
 const ApplicationDialog = () => {
   const vacancyId = useParams().id as string;
@@ -46,18 +57,28 @@ const ApplicationDialog = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
     trigger,
   } = useForm<CreateApplicationFormDto>({
     resolver: yupResolver(CreateApplicationSchema),
+    defaultValues: {
+      document_urls: [],
+    },
   });
 
   const onSubmit = handleSubmit(async (data) => {
     createApplication({
       vacancy_id: vacancyId,
-      document_urls: await uploadDocuments(documents!),
+      document_urls: await uploadDocuments(getValues("document_urls")),
       message: data.message,
     });
   });
+
+  useEffect(() => {
+    setValue("document_urls", documents);
+  }, [documents, setValue]);
+  console.log("documents", documents);
+  console.log("document_urls", getValues("document_urls"));
 
   return (
     <DialogRoot
@@ -80,33 +101,54 @@ const ApplicationDialog = () => {
                 invalid={!!errors[field.name]}
                 errorText={errors[field.name]?.message}
               >
-                <Input
-                  {...register(field.name, {
-                    onChange:
-                      field.type === "file"
-                        ? handleFileChange(setDocuments)
-                        : undefined,
-                  })}
-                  disabled={
-                    isDocumentUploading ||
-                    isDocumentDeleting ||
-                    isApplicationLoading
-                  }
-                  type={field.type}
-                  multiple={field.type === "file"}
-                  placeholder={field.placeholder}
-                  className={clsx(
-                    "rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
-                    field.type == "file"
-                      ? "file:rounded-lg file:border-0 file:bg-blue-500 file:text-white file:px-4 file:py-2 file:cursor-pointer file:hover:bg-blue-600 leading-none"
-                      : "p-4",
-                    getFocusRingColorClass(errors[field.name] as FieldError)
-                  )}
-                />
+                {field.type === "file" ? (
+                  <FileUploadRoot
+                    {...register(field.name)}
+                    maxW="xl"
+                    disabled={
+                      isDocumentUploading ||
+                      isDocumentDeleting ||
+                      isApplicationLoading
+                    }
+                    onFileChange={(filesObject) => {
+                      console.log("filesObject", filesObject);
+                      updateForm(
+                        filesObject.acceptedFiles,
+                        setDocuments,
+                        setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
+                        trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
+                      );
+                    }}
+                    alignItems="stretch"
+                    maxFiles={5}
+                    maxFileSize={5 * 1024 * 1024}
+                  >
+                    <FileUploadDropzone
+                      label={field.placeholder}
+                      description=".png, .jpg up to 5MB (max 5 files)"
+                    />
+                    <FileUploadList
+                      files={getValues("document_urls")}
+                      showSize
+                      clearable
+                      setValue={setValue}
+                      trigger={trigger}
+                    />
+                  </FileUploadRoot>
+                ) : (
+                  <Input
+                    {...register(field.name)}
+                    disabled={isApplicationLoading}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    className={clsx(
+                      "p-4 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
+                      getFocusRingColorClass(errors[field.name] as FieldError)
+                    )}
+                  />
+                )}
               </Field>
             ))}
-
-            <FileList setValue={setValue} trigger={trigger} />
 
             <Button
               className={getSubmitButtonClass(isApplicationLoading, errors)}

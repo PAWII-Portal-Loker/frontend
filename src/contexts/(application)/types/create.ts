@@ -8,6 +8,6 @@ export interface CreateApplicationDto {
 }
 
 export interface CreateApplicationFormDto {
-  document_urls: FileList;
+  document_urls: File[];
   message: ApplicationDto["message"];
 }

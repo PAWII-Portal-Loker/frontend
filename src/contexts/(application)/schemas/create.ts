@@ -3,18 +3,10 @@ import * as Yup from "yup";
 
 export const CreateApplicationSchema: Yup.ObjectSchema<CreateApplicationFormDto> =
   Yup.object({
-    document_urls: Yup.mixed<FileList>()
-      .test(
-        "is-valid-filelist",
-        "Document must be a FileList with at least one file",
-        (value) => {
-          return (
-            value instanceof FileList &&
-            value.length > 0 &&
-            Array.from(value).every((file) => file instanceof File)
-          );
-        },
-      )
+    document_urls: Yup.array()
+      .of(Yup.mixed<File>().required())
+      .min(1, "Please select at least one file")
+      .max(5, "You can only upload up to 5 files")
       .required("Document is required"),
     message: Yup.string()
       .required("Message is required")

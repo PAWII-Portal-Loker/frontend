@@ -98,8 +98,7 @@ export const useApplicationStore = create<ApplicationStoreState>(
       get().setApplicationLoading(true);
 
       request.document_urls = request.document_urls!.map(
-        (filename) =>
-          `${process.env.NEXT_PUBLIC_BASE_URL}/v1/files/${filename}`,
+        (filename) => `${process.env.NEXT_PUBLIC_BASE_URL}/v1/files/${filename}`
       );
       applicationService.createApplication(request, {
         onSuccess: () => {
@@ -125,7 +124,7 @@ export const useApplicationStore = create<ApplicationStoreState>(
     },
 
     // document
-    documents: null,
+    documents: [],
     isDocumentLoading: false,
     isDocumentUploading: false,
     isDocumentDeleting: false,
@@ -193,5 +192,5 @@ export const useApplicationStore = create<ApplicationStoreState>(
         },
       });
     },
-  }),
+  })
 );

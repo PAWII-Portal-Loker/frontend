@@ -12,7 +12,7 @@ export interface ApplicationStoreState {
 
   isApplicationDialogOpen: boolean;
 
-  documents: FileList | null;
+  documents: File[];
   isDocumentLoading: boolean;
   isDocumentUploading: boolean;
   isDocumentDeleting: boolean;
@@ -31,11 +31,11 @@ export interface ApplicationStoreState {
   setApplicationDialogOpen: (isOpen: boolean) => void;
   createApplication: (request: CreateApplicationDto) => void;
 
-  setDocuments: (documents: FileList | null) => void;
+  setDocuments: (documents: File[]) => void;
   setDocumentLoading: (isDocumentLoading: boolean) => void;
   setDocumentUploading: (isDocumentUploading: boolean) => void;
   setDocumentDeleting: (isDocumentDeleting: boolean) => void;
   getDocument: (key: string) => void;
-  uploadDocuments: (file: FileList) => Promise<ApplicationDto["document_urls"]>;
+  uploadDocuments: (file: File[]) => Promise<ApplicationDto["document_urls"]>;
   deleteDocument: (url: string) => void;
 }

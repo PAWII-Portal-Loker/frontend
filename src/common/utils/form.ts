@@ -22,33 +22,36 @@ export const getSubmitButtonClass = (
   );
 };
 
-export const handleFileChange =
-  (setDocuments: (documents: FileList | null) => void) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
-        setDocuments(e.target.files);
-      }
-    };
-
-export const deleteFileFromList = (
-  files: FileList,
-  index: number
-): FileList => {
-  const filesArray = Array.from(files);
-  const newFilesArray = filesArray.filter((_, i) => i !== index);
-  const newFiles = new DataTransfer();
-  newFilesArray.forEach((file) => newFiles.items.add(file));
-  return newFiles.files;
-};
-
 export interface DocumentUrlsInputProps {
-  document_urls: FileList;
+  document_urls: File[];
 }
 
+export const updateForm = (
+  newDocuments: File[],
+  setDocuments: (documents: File[]) => void,
+  setValue: UseFormSetValue<DocumentUrlsInputProps>,
+  trigger: UseFormTrigger<DocumentUrlsInputProps>
+) => {
+  console.log("newDocumentsUpdateForm", newDocuments);
+  setDocuments(newDocuments);
+  setValue("document_urls", newDocuments);
+  trigger("document_urls");
+};
+
+export const deleteFileFromList = (files: File[], index: number): File[] => {
+  console.log("files", files);
+  console.log("index", index);
+  const newFiles = [...files];
+  console.log("newFiles", newFiles);
+  newFiles.splice(index, 1);
+  console.log("newFiles", newFiles);
+  return newFiles;
+};
+
 export const handleDeleteFile = (
-  documents: FileList | null,
+  documents: File[],
   index: number,
-  setDocuments: (documents: FileList | null) => void,
+  setDocuments: (documents: File[]) => void,
   setValue: UseFormSetValue<DocumentUrlsInputProps>,
   trigger: UseFormTrigger<DocumentUrlsInputProps>,
   event: React.MouseEvent<HTMLButtonElement>
@@ -56,8 +59,6 @@ export const handleDeleteFile = (
   event.preventDefault();
   if (documents) {
     const newDocuments = deleteFileFromList(documents, index);
-    setDocuments(newDocuments);
-    setValue("document_urls", newDocuments);
-    trigger("document_urls");
+    updateForm(newDocuments, setDocuments, setValue, trigger);
   }
 };

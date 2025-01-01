@@ -50,7 +50,6 @@ const VacancyDetailPage = () => {
           variants={scaleVariants}
           initial="initial"
           animate="animate"
-          exit="exit"
           className="w-fit mx-auto"
         >
           <AsyncImage
@@ -65,7 +64,7 @@ const VacancyDetailPage = () => {
           variants={fadeVariants}
           animate="animate"
           initial="initial"
-          exit="exit"
+          transition={{ delay: 0.2 }}
           className="lg:w-full p-4 bg-white text-gray-800 rounded-lg shadow-md"
         >
           <div className="flex items-center justify-between mb-4">
@@ -75,7 +74,7 @@ const VacancyDetailPage = () => {
             <span
               className={clsx(
                 "px-2 py-1 rounded-md text-xs font-bold text-white",
-                vacancy.is_closed ? "bg-red-500 " : "bg-green-500 ",
+                vacancy.is_closed ? "bg-red-500 " : "bg-green-500 "
               )}
             >
               {vacancy.is_closed ? "Closed" : "Open"}
