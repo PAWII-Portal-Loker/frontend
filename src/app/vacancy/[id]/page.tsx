@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import clsx from "clsx";
-import useVacancyStore from "@vacancy/store";
+import useVacancyStore, { DefaultVacancyDto } from "@vacancy/store";
 import LoadingCard from "@components/containers/loadingCard";
 import AsyncImage from "@commoncomponents/async/AsyncImage";
 import ApplicantsList from "./(company)/ApplicantsList";
@@ -11,6 +11,7 @@ import { hasPermission } from "@utils/permissions";
 import useAuthStore from "@auth/store";
 import { useApplicationStore } from "@application/store";
 import ApplicationDialog from "./(jobSeeker)/ApplicationDialog";
+import NotFoundPage from "src/app/not-found";
 
 const VacancyDetailPage = () => {
   const { id } = useParams();
@@ -23,17 +24,27 @@ const VacancyDetailPage = () => {
   }, [id]);
 
   if (isVacancyLoading) {
-    return <LoadingCard />;
+    return (
+      <div className="p-8 flex flex-col lg:flex-row justify-between gap-8">
+        <div className="lg:w-[30%]">
+          <LoadingCard />
+        </div>
+        <div className="lg:w-[70%]">
+          <LoadingCard />
+        </div>
+      </div>
+    );
   }
-  if (!vacancy) {
-    return <div className="text-center text-yellow-500">Vacancy not found</div>;
+
+  if (vacancy == DefaultVacancyDto) {
+    return <NotFoundPage />;
   }
 
   return (
     <div className="p-8">
       <ApplicationDialog />
       <div className="flex flex-col lg:flex-row gap-8">
-        <div className="w-fit">
+        <div className="w-fit mx-auto">
           <AsyncImage
             imgId={vacancy.thumbnail_url}
             alt={vacancy.position}
