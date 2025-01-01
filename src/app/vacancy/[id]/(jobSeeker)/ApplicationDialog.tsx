@@ -1,6 +1,11 @@
 import { Stack, Input } from "@chakra-ui/react";
 import { GiClick } from "react-icons/gi";
-import { FieldError, useForm } from "react-hook-form";
+import {
+  FieldError,
+  useForm,
+  UseFormSetValue,
+  UseFormTrigger,
+} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import clsx from "clsx";
 import {
@@ -14,9 +19,10 @@ import {
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
 import {
-  deleteFileFromList,
+  DocumentUrlsInputProps,
   getFocusRingColorClass,
   getSubmitButtonClass,
+  handleDeleteFile,
   handleFileChange,
 } from "@utils/form";
 import { useApplicationStore } from "@application/store";
@@ -45,6 +51,8 @@ const ApplicationDialog = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    trigger,
   } = useForm<CreateApplicationFormDto>({
     resolver: yupResolver(CreateApplicationSchema),
   });
@@ -97,7 +105,7 @@ const ApplicationDialog = () => {
                     field.type == "file"
                       ? "file:rounded-lg file:border-0 file:bg-blue-500 file:text-white file:px-4 file:py-2 file:cursor-pointer file:hover:bg-blue-600 leading-none"
                       : "p-4",
-                    getFocusRingColorClass(errors[field.name] as FieldError),
+                    getFocusRingColorClass(errors[field.name] as FieldError)
                   )}
                 />
               </Field>
@@ -107,8 +115,15 @@ const ApplicationDialog = () => {
                 <li key={index} className="flex items-center justify-between">
                   <span className="text-gray-200">{document.name}</span>
                   <button
-                    onClick={() => {
-                      setDocuments(deleteFileFromList(documents, index));
+                    onClick={(event) => {
+                      handleDeleteFile(
+                        documents,
+                        index,
+                        setDocuments,
+                        setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
+                        trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>,
+                        event
+                      );
                     }}
                     className="text-red-500 hover:text-red-600"
                     disabled={isDocumentUploading || isDocumentDeleting}
