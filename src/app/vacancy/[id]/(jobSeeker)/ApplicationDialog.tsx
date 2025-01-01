@@ -1,11 +1,6 @@
 import { Stack, Input } from "@chakra-ui/react";
 import { GiClick } from "react-icons/gi";
-import {
-  FieldError,
-  useForm,
-  UseFormSetValue,
-  UseFormTrigger,
-} from "react-hook-form";
+import { FieldError, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import clsx from "clsx";
 import {
@@ -19,10 +14,8 @@ import {
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
 import {
-  DocumentUrlsInputProps,
   getFocusRingColorClass,
   getSubmitButtonClass,
-  handleDeleteFile,
   handleFileChange,
 } from "@utils/form";
 import { useApplicationStore } from "@application/store";
@@ -31,6 +24,7 @@ import { CreateApplicationField } from "@application/fields/create";
 import useVacancyStore from "@vacancy/store";
 import { useParams } from "next/navigation";
 import { CreateApplicationSchema } from "@application/schemas/create";
+import FileList from "./FileList";
 
 const ApplicationDialog = () => {
   const vacancyId = useParams().id as string;
@@ -94,8 +88,9 @@ const ApplicationDialog = () => {
                         : undefined,
                   })}
                   disabled={
-                    field.type === "file" &&
-                    (isDocumentUploading || isDocumentDeleting)
+                    isDocumentUploading ||
+                    isDocumentDeleting ||
+                    isApplicationLoading
                   }
                   type={field.type}
                   multiple={field.type === "file"}
@@ -110,29 +105,9 @@ const ApplicationDialog = () => {
                 />
               </Field>
             ))}
-            <ul className="mt-2">
-              {Array.from(documents || []).map((document, index) => (
-                <li key={index} className="flex items-center justify-between">
-                  <span className="text-gray-200">{document.name}</span>
-                  <button
-                    onClick={(event) => {
-                      handleDeleteFile(
-                        documents,
-                        index,
-                        setDocuments,
-                        setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
-                        trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>,
-                        event
-                      );
-                    }}
-                    className="text-red-500 hover:text-red-600"
-                    disabled={isDocumentUploading || isDocumentDeleting}
-                  >
-                    Delete
-                  </button>
-                </li>
-              ))}
-            </ul>
+
+            <FileList setValue={setValue} trigger={trigger} />
+
             <Button
               className={getSubmitButtonClass(isApplicationLoading, errors)}
               disabled={isApplicationLoading || Object.keys(errors).length > 0}
