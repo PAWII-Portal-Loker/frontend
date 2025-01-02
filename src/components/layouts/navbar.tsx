@@ -24,7 +24,7 @@ import {
   useHideNavbarOnScroll,
   useIsNavbarActive,
 } from "@hooks/navbar/useNavbar";
-import { ROLE_COMPANY, ROLE_JOB_SEEKER } from "@enums/types/roles";
+import { hasPermission } from "@utils/permissions";
 
 type NavLinkProps = {
   href: string;
@@ -76,9 +76,9 @@ const Navbar = () => {
     { href: "/notification", label: "Notification" },
   ];
 
-  if (auth?.role === ROLE_JOB_SEEKER) {
+  if (hasPermission(auth, "myApplications:view")) {
     navLinks.push({ href: "/my-applications", label: "My Applications" });
-  } else if (auth?.role === ROLE_COMPANY) {
+  } else if (hasPermission(auth, "myVacancies:view")) {
     navLinks.push({ href: "/my-vacancies", label: "My Vacancies" });
   }
 
@@ -124,9 +124,9 @@ const Navbar = () => {
                 <span
                   className={clsx(
                     "mr-2 px-2 py-1 rounded-full",
-                    auth.role === "Company"
+                    hasPermission(auth, "companyDashboard:view")
                       ? "bg-green-500 text-white"
-                      : "bg-gray-500 text-white"
+                      : "bg-yellow-500 text-white"
                   )}
                 >
                   {auth.role}

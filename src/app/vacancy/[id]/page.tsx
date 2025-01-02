@@ -44,7 +44,7 @@ const VacancyDetailPage = () => {
 
   return (
     <>
-      <ApplicationDialog />
+      {hasPermission(auth, "application:create") && <ApplicationDialog />}
       <div className="flex flex-col lg:flex-row gap-8">
         <motion.div
           variants={scaleVariants}

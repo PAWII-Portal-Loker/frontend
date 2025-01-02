@@ -6,21 +6,22 @@ const rolePermissions = {
     "vacancy:view",
     "vacancy:update",
     "vacancy:updateStatus",
+    "myVacancies:view",
     "companyDashboard:view",
     "application:view",
   ],
   "Job Seeker": [
     "vacancy:view",
     "jobSeekerDashboard:view",
+    "myApplications:view",
     "application:create",
-    "application:view",
   ],
 };
 
 export const hasPermission = (
   auth: AuthDto,
   permission: string,
-  resourceId?: string,
+  resourceId?: string
 ): boolean => {
   if (!auth.role) {
     return false;
