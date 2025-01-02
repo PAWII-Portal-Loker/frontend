@@ -14,9 +14,9 @@ export const getFocusRingColorClass = (error: FieldError | undefined) =>
 export const getSubmitButtonClass = (isLoading: boolean, errors: FieldErrors) =>
   clsx(
     "bg-blue-300 text-white font-bold rounded transition-all duration-200",
-    isLoading || Object.keys(errors).length > 0
-      ? "cursor-not-allowed"
-      : "hover:bg-blue-400"
+    Object.keys(errors).length > 0 && "cursor-not-allowed",
+    isLoading && "cursor-wait",
+    Object.keys(errors).length === 0 && !isLoading && "hover:bg-blue-400"
   );
 
 export interface DocumentUrlsInputProps {

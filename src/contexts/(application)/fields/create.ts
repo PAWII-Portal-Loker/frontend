@@ -6,7 +6,7 @@ export const CreateApplicationField: FieldConfig<CreateApplicationFormDto>[] = [
   {
     name: "message",
     label: "Message",
-    type: "text",
+    type: "textarea",
     placeholder: "Enter your message",
     rules: CreateApplicationSchema.fields.message,
   },

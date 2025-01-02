@@ -10,7 +10,8 @@ export const CreateApplicationSchema: Yup.ObjectSchema<CreateApplicationFormDto>
       .required("Document is required"),
     message: Yup.string()
       .required("Message is required")
-      .min(3, "Message must be at least 3 characters"),
+      .min(3, "Message must be at least 3 characters")
+      .max(500, "Message must be at most 500 characters"),
   })
     .noUnknown(true)
     .strict(true);
