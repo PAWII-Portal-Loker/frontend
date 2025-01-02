@@ -35,7 +35,7 @@ import {
   FileUploadDropzone,
   FileUploadList,
   FileUploadRoot,
-} from "@components/ui/file-upload";
+} from "@ui/file-upload";
 
 const ApplicationDialog = () => {
   const vacancyId = useParams().id as string;

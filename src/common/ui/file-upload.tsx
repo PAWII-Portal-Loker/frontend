@@ -18,7 +18,15 @@ import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { CreateApplicationFormDto } from "@application/types/create";
 import { useApplicationStore } from "@application/store";
 import { DocumentUrlsInputProps, handleDeleteFile } from "@utils/form";
-
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import {
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverRoot,
+  PopoverTrigger,
+} from "./popover";
 export interface FileUploadRootProps extends ChakraFileUpload.RootProps {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
@@ -77,59 +85,104 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
   function FileUploadItem(props, ref) {
     const { file, showSize, clearable, setValue, trigger, index } = props;
     const { setDocuments } = useApplicationStore();
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+    useEffect(() => {
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewUrl(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
+    }, [file]);
     return (
-      <motion.div
-        variants={scaleVariants}
-        animate="animate"
-        exit="exit"
-        initial="initial"
-        transition={{ delay: index * 0.1 }}
-      >
-        <ChakraFileUpload.Item file={file} ref={ref}>
-          <ChakraFileUpload.ItemPreview asChild>
-            <Icon fontSize="lg" color="fg.muted">
-              <LuFile />
-            </Icon>
-          </ChakraFileUpload.ItemPreview>
+      <PopoverRoot positioning={{ placement: "left" }}>
+        <PopoverTrigger asChild>
+          <motion.div
+            variants={scaleVariants}
+            animate="animate"
+            exit="exit"
+            initial="initial"
+            transition={{ delay: index * 0.1 }}
+          >
+            <ChakraFileUpload.Item file={file} ref={ref}>
+              <ChakraFileUpload.ItemPreview asChild>
+                {previewUrl ? (
+                  <Image
+                    src={previewUrl}
+                    alt={file.name}
+                    width={30}
+                    height={30}
+                  />
+                ) : (
+                  <Icon fontSize="lg" color="fg.muted">
+                    <LuFile />
+                  </Icon>
+                )}
+              </ChakraFileUpload.ItemPreview>
 
-          {showSize ? (
-            <ChakraFileUpload.ItemContent>
-              <ChakraFileUpload.ItemName />
-              <ChakraFileUpload.ItemSizeText />
-            </ChakraFileUpload.ItemContent>
-          ) : (
-            <ChakraFileUpload.ItemName flex="1" />
-          )}
+              {showSize ? (
+                <ChakraFileUpload.ItemContent>
+                  <ChakraFileUpload.ItemName />
+                  <ChakraFileUpload.ItemSizeText />
+                </ChakraFileUpload.ItemContent>
+              ) : (
+                <ChakraFileUpload.ItemName flex="1" />
+              )}
 
-          {clearable && (
-            <ChakraFileUpload.ItemDeleteTrigger asChild>
-              <IconButton
-                variant="solid"
-                bg="red.100"
-                color="red.500"
-                colorScheme="red"
-                size="sm"
-                aria-label="Remove file"
-                _hover={{
-                  bg: "red.200",
-                  color: "red.600",
-                }}
-                onClick={(event) =>
-                  handleDeleteFile(
-                    index,
-                    setDocuments,
-                    setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
-                    trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>,
-                    event
-                  )
-                }
-              >
-                <LuX />
-              </IconButton>
-            </ChakraFileUpload.ItemDeleteTrigger>
-          )}
-        </ChakraFileUpload.Item>
-      </motion.div>
+              {clearable && (
+                <ChakraFileUpload.ItemDeleteTrigger asChild>
+                  <IconButton
+                    variant="solid"
+                    bg="red.100"
+                    color="red.500"
+                    colorScheme="red"
+                    size="sm"
+                    aria-label="Remove file"
+                    _hover={{
+                      bg: "red.200",
+                      color: "red.600",
+                    }}
+                    onClick={(event) =>
+                      handleDeleteFile(
+                        index,
+                        setDocuments,
+                        setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
+                        trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>,
+                        event
+                      )
+                    }
+                  >
+                    <LuX />
+                  </IconButton>
+                </ChakraFileUpload.ItemDeleteTrigger>
+              )}
+            </ChakraFileUpload.Item>
+          </motion.div>
+        </PopoverTrigger>
+        <PopoverContent>
+          <PopoverArrow />
+          <PopoverBody padding={file.type === "application/pdf" ? 0 : 4}>
+            {previewUrl && (
+              <Image
+                src={previewUrl}
+                alt={file.name}
+                width={400}
+                height={400}
+              />
+            )}
+            {file.type === "application/pdf" && (
+              <iframe
+                src={URL.createObjectURL(file)}
+                className="rounded-lg shadow-md"
+                width="100%"
+                height="400"
+              />
+            )}
+          </PopoverBody>
+        </PopoverContent>
+      </PopoverRoot>
     );
   }
 );
