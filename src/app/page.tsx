@@ -38,7 +38,7 @@ const Home = () => {
       animate="animate"
       exit="exit"
     >
-      {hasPermission(auth, "companyDashboard:view") ? (
+      {hasPermission(auth, "companyDashboard", "view") ? (
         <CompanyDashboard />
       ) : (
         <JobSeekerDashboard />

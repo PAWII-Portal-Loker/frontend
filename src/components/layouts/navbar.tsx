@@ -76,9 +76,9 @@ const Navbar = () => {
     { href: "/notification", label: "Notification" },
   ];
 
-  if (hasPermission(auth, "myApplications:view")) {
+  if (hasPermission(auth, "myApplications", "view")) {
     navLinks.push({ href: "/my-applications", label: "My Applications" });
-  } else if (hasPermission(auth, "myVacancies:view")) {
+  } else if (hasPermission(auth, "myVacancies", "view")) {
     navLinks.push({ href: "/my-vacancies", label: "My Vacancies" });
   }
 
@@ -124,7 +124,7 @@ const Navbar = () => {
                 <span
                   className={clsx(
                     "mr-2 px-2 py-1 rounded-full",
-                    hasPermission(auth, "companyDashboard:view")
+                    hasPermission(auth, "companyDashboard", "view")
                       ? "bg-green-500 text-white"
                       : "bg-yellow-500 text-white"
                   )}

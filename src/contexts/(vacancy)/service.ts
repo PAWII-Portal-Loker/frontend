@@ -12,7 +12,6 @@ export default class VacancyService {
     callback: FetchCallback<VacancyDto[]>,
     params?: FilterParams
   ) {
-    console.log("params", params);
     const res: APIResponse<VacancyDto[]> = await this.api.GET(
       "v1/vacancies",
       params

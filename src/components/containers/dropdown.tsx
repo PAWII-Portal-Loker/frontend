@@ -12,14 +12,7 @@ interface DropdownProps {
 }
 
 const Dropdown = (props: DropdownProps) => {
-  const {
-    items,
-    name,
-    value = "ALL",
-    onSelect,
-    isLoading,
-    isAlwaysFullWidth,
-  } = props;
+  const { items, name, value, onSelect, isLoading, isAlwaysFullWidth } = props;
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
@@ -44,7 +37,7 @@ const Dropdown = (props: DropdownProps) => {
             value={value}
             onChange={handleChange}
           >
-            <option value="ALL">Select {name}</option>
+            <option value="">Select {name}</option>
             {items.map((item) => (
               <option key={item} value={item}>
                 {item}

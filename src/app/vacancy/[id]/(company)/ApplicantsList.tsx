@@ -15,12 +15,12 @@ const ApplicantsList = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (hasPermission(auth, "application:view")) {
+    if (hasPermission(auth, "application", "view")) {
       getApplicantsByVacancyId(id as string);
     }
   }, [auth?.role]);
 
-  if (!hasPermission(auth, "application:view")) {
+  if (!hasPermission(auth, "application", "view")) {
     return null;
   }
 

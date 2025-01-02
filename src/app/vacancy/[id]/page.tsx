@@ -44,7 +44,7 @@ const VacancyDetailPage = () => {
 
   return (
     <>
-      {hasPermission(auth, "application:create") && <ApplicationDialog />}
+      {hasPermission(auth, "application", "create") && <ApplicationDialog />}
       <div className="flex flex-col lg:flex-row gap-8">
         <motion.div
           variants={scaleVariants}
@@ -94,7 +94,7 @@ const VacancyDetailPage = () => {
           <p className="text-gray-700 text-lg leading-relaxed mb-6">
             {vacancy.description}
           </p>
-          {hasPermission(auth, "application:create") && (
+          {hasPermission(auth, "application", "create") && (
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full transition-colors duration-200"
               onClick={() => setApplicationDialogOpen(true)}
