@@ -8,7 +8,6 @@ import {
   IconButton,
   Span,
   Text,
-  useFileUploadContext,
   useRecipe,
 } from "@chakra-ui/react";
 import * as React from "react";
@@ -77,7 +76,7 @@ interface FileUploadItemProps extends VisibilityProps {
 const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
   function FileUploadItem(props, ref) {
     const { file, showSize, clearable, setValue, trigger, index } = props;
-    const { documents, setDocuments } = useApplicationStore();
+    const { setDocuments } = useApplicationStore();
     return (
       <motion.div
         variants={scaleVariants}
@@ -117,7 +116,6 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
                 }}
                 onClick={(event) =>
                   handleDeleteFile(
-                    documents,
                     index,
                     setDocuments,
                     setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
@@ -148,11 +146,9 @@ export const FileUploadList = React.forwardRef<
   HTMLUListElement,
   FileUploadListProps
 >(function FileUploadList(props, ref) {
-  const { showSize, clearable, files, setValue, trigger, ...rest } = props;
-  const fileUpload = useFileUploadContext();
+  const { showSize, clearable, setValue, trigger, ...rest } = props;
   const { documents } = useApplicationStore();
-  const acceptedFiles = files ?? fileUpload.acceptedFiles;
-  if (acceptedFiles.length === 0) return null;
+  if (documents.length === 0) return null;
 
   return (
     <ChakraFileUpload.ItemGroup ref={ref} {...rest}>

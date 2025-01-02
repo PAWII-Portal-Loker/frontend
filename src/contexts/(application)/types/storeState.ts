@@ -31,7 +31,9 @@ export interface ApplicationStoreState {
   setApplicationDialogOpen: (isOpen: boolean) => void;
   createApplication: (request: CreateApplicationDto) => void;
 
-  setDocuments: (documents: File[]) => void;
+  setDocuments: (
+    documents: File[] | ((prevDocuments: File[]) => File[])
+  ) => void;
   setDocumentLoading: (isDocumentLoading: boolean) => void;
   setDocumentUploading: (isDocumentUploading: boolean) => void;
   setDocumentDeleting: (isDocumentDeleting: boolean) => void;

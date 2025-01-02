@@ -28,37 +28,49 @@ export interface DocumentUrlsInputProps {
 
 export const updateForm = (
   newDocuments: File[],
-  setDocuments: (documents: File[]) => void,
+  setDocuments: (
+    documents: File[] | ((prevDocuments: File[]) => File[])
+  ) => void,
   setValue: UseFormSetValue<DocumentUrlsInputProps>,
   trigger: UseFormTrigger<DocumentUrlsInputProps>
 ) => {
-  console.log("newDocumentsUpdateForm", newDocuments);
   setDocuments(newDocuments);
   setValue("document_urls", newDocuments);
   trigger("document_urls");
 };
+export const handleFileChange = (
+  filesObject: { acceptedFiles: File[] },
+  documents: File[],
+  setDocuments: (
+    documents: File[] | ((prevDocuments: File[]) => File[])
+  ) => void,
+  setValue: UseFormSetValue<DocumentUrlsInputProps>,
+  trigger: UseFormTrigger<DocumentUrlsInputProps>
+) => {
+  const newDocuments = [...documents, ...filesObject.acceptedFiles];
+  updateForm(newDocuments, setDocuments, setValue, trigger);
+};
 
 export const deleteFileFromList = (files: File[], index: number): File[] => {
-  console.log("files", files);
-  console.log("index", index);
   const newFiles = [...files];
-  console.log("newFiles", newFiles);
   newFiles.splice(index, 1);
-  console.log("newFiles", newFiles);
   return newFiles;
 };
 
 export const handleDeleteFile = (
-  documents: File[],
   index: number,
-  setDocuments: (documents: File[]) => void,
+  setDocuments: (
+    documents: File[] | ((prevDocuments: File[]) => File[])
+  ) => void,
   setValue: UseFormSetValue<DocumentUrlsInputProps>,
   trigger: UseFormTrigger<DocumentUrlsInputProps>,
   event: React.MouseEvent<HTMLButtonElement>
 ) => {
   event.preventDefault();
-  if (documents) {
-    const newDocuments = deleteFileFromList(documents, index);
-    updateForm(newDocuments, setDocuments, setValue, trigger);
-  }
+  setDocuments((prevDocuments) => {
+    const newDocuments = deleteFileFromList(prevDocuments, index);
+    setValue("document_urls", newDocuments);
+    trigger("document_urls");
+    return newDocuments;
+  });
 };

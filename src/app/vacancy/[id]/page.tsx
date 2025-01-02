@@ -27,7 +27,7 @@ const VacancyDetailPage = () => {
 
   if (isVacancyLoading) {
     return (
-      <div className="p-8 flex flex-col lg:flex-row justify-between gap-8">
+      <div className="flex flex-col lg:flex-row justify-between gap-8">
         <div className="lg:w-[30%]">
           <LoadingCard />
         </div>
@@ -43,7 +43,7 @@ const VacancyDetailPage = () => {
   }
 
   return (
-    <div className="p-8">
+    <>
       <ApplicationDialog />
       <div className="flex flex-col lg:flex-row gap-8">
         <motion.div
@@ -107,7 +107,7 @@ const VacancyDetailPage = () => {
       <div className="mt-6 w-full">
         <ApplicantsList />
       </div>
-    </div>
+    </>
   );
 };
 

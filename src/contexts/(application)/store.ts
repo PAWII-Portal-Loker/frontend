@@ -129,7 +129,13 @@ export const useApplicationStore = create<ApplicationStoreState>(
     isDocumentUploading: false,
     isDocumentDeleting: false,
 
-    setDocuments: (documents) => set({ documents }),
+    setDocuments: (documents) =>
+      set((state) => ({
+        documents:
+          typeof documents === "function"
+            ? documents(state.documents)
+            : documents,
+      })),
     setDocumentLoading: (isDocumentLoading) => set({ isDocumentLoading }),
     setDocumentUploading: (isDocumentUploading) => set({ isDocumentUploading }),
     setDocumentDeleting: (isDocumentDeleting) => set({ isDocumentDeleting }),

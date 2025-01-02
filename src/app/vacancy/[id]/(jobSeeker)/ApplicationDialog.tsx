@@ -22,7 +22,7 @@ import {
   DocumentUrlsInputProps,
   getFocusRingColorClass,
   getSubmitButtonClass,
-  updateForm,
+  handleFileChange,
 } from "@utils/form";
 import { useApplicationStore } from "@application/store";
 import { CreateApplicationFormDto } from "@application/types/create";
@@ -35,7 +35,6 @@ import {
   FileUploadList,
   FileUploadRoot,
 } from "@components/ui/file-upload";
-import { useEffect } from "react";
 
 const ApplicationDialog = () => {
   const vacancyId = useParams().id as string;
@@ -74,12 +73,6 @@ const ApplicationDialog = () => {
     });
   });
 
-  useEffect(() => {
-    setValue("document_urls", documents);
-  }, [documents, setValue]);
-  console.log("documents", documents);
-  console.log("document_urls", getValues("document_urls"));
-
   return (
     <DialogRoot
       lazyMount
@@ -110,15 +103,15 @@ const ApplicationDialog = () => {
                       isDocumentDeleting ||
                       isApplicationLoading
                     }
-                    onFileChange={(filesObject) => {
-                      console.log("filesObject", filesObject);
-                      updateForm(
-                        filesObject.acceptedFiles,
+                    onFileChange={(filesObject) =>
+                      handleFileChange(
+                        filesObject,
+                        documents,
                         setDocuments,
                         setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
                         trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
-                      );
-                    }}
+                      )
+                    }
                     alignItems="stretch"
                     maxFiles={5}
                     maxFileSize={5 * 1024 * 1024}
