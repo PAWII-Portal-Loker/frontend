@@ -10,11 +10,12 @@ export default class VacancyService {
 
   async getVacancies(
     callback: FetchCallback<VacancyDto[]>,
-    params?: FilterParams,
+    params?: FilterParams
   ) {
+    console.log("params", params);
     const res: APIResponse<VacancyDto[]> = await this.api.GET(
       "v1/vacancies",
-      params,
+      params
     );
     if (!res?.success) {
       callback.onError(res.message);
@@ -26,7 +27,7 @@ export default class VacancyService {
 
   async getVacancy(id: string, callback: FetchCallback<VacancyDto>) {
     const res: APIResponse<VacancyDto> = await this.api.GET(
-      `v1/vacancies/${id}`,
+      `v1/vacancies/${id}`
     );
     if (!res?.success) {
       callback.onError(res.message);
@@ -38,11 +39,11 @@ export default class VacancyService {
 
   async createVacancy(
     payload: CreateVacancyDto,
-    callback: FetchCallback<VacancyDto>,
+    callback: FetchCallback<VacancyDto>
   ) {
     const res: APIResponse<VacancyDto> = await this.api.POST(
       "v1/vacancies",
-      payload,
+      payload
     );
     if (!res?.success) {
       callback.onError(res.message);
@@ -55,11 +56,11 @@ export default class VacancyService {
   async updateVacancy(
     id: string,
     payload: UpdateVacancyDto,
-    callback: FetchCallback<VacancyDto>,
+    callback: FetchCallback<VacancyDto>
   ) {
     const res: APIResponse<VacancyDto> = await this.api.PUT(
       `v1/vacancies/${id}`,
-      payload,
+      payload
     );
     if (!res?.success) {
       callback.onError(res.message);
@@ -72,11 +73,11 @@ export default class VacancyService {
   async updateVacancyStatus(
     id: string,
     payload: UpdateVacancyStatusDto,
-    callback: FetchCallback<VacancyDto>,
+    callback: FetchCallback<VacancyDto>
   ) {
     const res: APIResponse<VacancyDto> = await this.api.PATCH(
       `v1/vacancies/${id}/status`,
-      payload,
+      payload
     );
     if (!res?.success) {
       callback.onError(res.message);

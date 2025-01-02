@@ -6,6 +6,7 @@ import VacancyService from "./service";
 import { VacancyStoreState } from "./types/storeState";
 import { toaster } from "@ui/toaster";
 import { DefaultPagination } from "@utils/defaultPagination";
+import { mapObjectToFilterParams } from "@utils/mapper";
 
 export const DefaultVacancyDto: VacancyDto = {
   id: "",
@@ -48,12 +49,13 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
   setVacanciesLoading: (isVacanciesLoading) => set({ isVacanciesLoading }),
   setVacancy: (vacancy) => set({ vacancy }),
   setVacancyLoading: (isVacancyLoading) => set({ isVacancyLoading }),
-  setFilters: (filters) => set({ filters }),
+  setFilters: (filters) => set({ filters: { ...get().filters, ...filters } }),
   setPagination: (pagination) => set({ pagination }),
 
   getVacancies: () => {
     get().setVacanciesLoading(true);
 
+    const params = mapObjectToFilterParams({ ...get().filters });
     vacancyService.getVacancies(
       {
         onSuccess: (vacancies) => {
@@ -71,7 +73,7 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
           get().setVacanciesLoading(false);
         },
       },
-      Object.assign(useVacancyStore.getState().filters)
+      params
     );
   },
 

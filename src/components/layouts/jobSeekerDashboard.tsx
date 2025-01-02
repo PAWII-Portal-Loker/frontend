@@ -8,12 +8,29 @@ import useDashboardStore from "@hooks/dashboard/store";
 import { useJobTypestore } from "@enums/stores/jobType";
 import { useIncomeTypestore } from "@enums/stores/incomeType";
 import { scaleVariants, slideVariants } from "@consts/animationVariants";
+import useVacancyStore from "@vacancy/store";
+import { VacancyFilter } from "@vacancy/types/filter";
 
 const JobSeekerDashboard = () => {
   const { isSearchFocused } = useDashboardStore();
+  const { filters, setFilters } = useVacancyStore();
   const { jobTypes, isJobTypesLoading } = useJobTypestore();
   const { incomeTypes, isIncomeTypesLoading } = useIncomeTypestore();
   const router = useRouter();
+
+  const handleSearch = () => {
+    const queryParams = new URLSearchParams();
+    for (const key in filters) {
+      const value = filters[key as keyof VacancyFilter];
+      if (value) {
+        queryParams.append(key, value.toString());
+      }
+    }
+
+    const queryString = queryParams.toString();
+    router.push(`/vacancy${queryString ? "?" + queryString : ""}`);
+  };
+
   return (
     <div className="container flex flex-col items-center gap-6 px-4 py-16">
       <motion.div
@@ -44,6 +61,8 @@ const JobSeekerDashboard = () => {
             placeholder="Keyword e.g. (Job Title, Description, Company Name)"
             ref={isSearchFocused ? (input) => input?.focus() : null}
             className="pl-10 pr-14 py-3 rounded-lg border-2 bg-gray-100 border-gray-300 focus:border-blue-500 text-lg text-gray-800 placeholder-gray-400"
+            value={filters.position}
+            onChange={(e) => setFilters({ position: e.target.value })}
           />
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <FaKey className="text-gray-400" />
@@ -58,17 +77,21 @@ const JobSeekerDashboard = () => {
         <Dropdown
           items={jobTypes}
           name="Job Type"
+          value={filters.jobType}
+          onSelect={(value) => setFilters({ jobType: value })}
           isLoading={isJobTypesLoading}
         />
         <Dropdown
           items={incomeTypes}
           name="Income Type"
+          value={filters.incomeType}
+          onSelect={(value) => setFilters({ incomeType: value })}
           isLoading={isIncomeTypesLoading}
         />
 
         <Button
           className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded"
-          onClick={() => router.push("/vacancy")}
+          onClick={handleSearch}
         >
           Search
         </Button>
