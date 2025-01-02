@@ -1,6 +1,9 @@
+import { CreateUserDto } from "@user/types/create";
 import * as Yup from "yup";
 
-export const CreateUserSchema = Yup.object()
+export const CreateUserSchema: Yup.ObjectSchema<
+  CreateUserDto & { confirm_password: string }
+> = Yup.object()
   .shape({
     wa_number: Yup.string()
       .required("WhatsApp number is required")

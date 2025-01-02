@@ -10,6 +10,13 @@ export interface ApplicationStoreState {
   applicants: ApplicationDto[];
   isApplicantsLoading: boolean;
 
+  isApplicationDialogOpen: boolean;
+
+  documents: File[];
+  isDocumentLoading: boolean;
+  isDocumentUploading: boolean;
+  isDocumentDeleting: boolean;
+
   setApplications: (applications: ApplicationDto[]) => void;
   setApplicationsLoading: (isApplicationsLoading: boolean) => void;
   setApplication: (application: ApplicationDto) => void;
@@ -20,7 +27,17 @@ export interface ApplicationStoreState {
 
   getJobSeekerApplications: () => void;
   getApplicantsByVacancyId: (id: string) => void;
+
+  setApplicationDialogOpen: (isOpen: boolean) => void;
   createApplication: (request: CreateApplicationDto) => void;
-  uploadResume: (file: File) => void;
-  deleteResume: (key: string) => void;
+
+  setDocuments: (
+    documents: File[] | ((prevDocuments: File[]) => File[])
+  ) => void;
+  setDocumentLoading: (isDocumentLoading: boolean) => void;
+  setDocumentUploading: (isDocumentUploading: boolean) => void;
+  setDocumentDeleting: (isDocumentDeleting: boolean) => void;
+  getDocument: (key: string) => void;
+  uploadDocuments: (file: File[]) => Promise<ApplicationDto["document_urls"]>;
+  deleteDocument: (url: string) => void;
 }

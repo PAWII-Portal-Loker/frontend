@@ -44,7 +44,7 @@ const LoginDialog = () => {
     <DialogRoot
       lazyMount
       open={isLoginDialogOpen}
-      onOpenChange={() => setLoginDialogOpen(isLoginDialogOpen)}
+      onOpenChange={() => setLoginDialogOpen(false)}
     >
       <DialogContent className="bg-slate-500 text-gray-100">
         <DialogHeader>
@@ -67,7 +67,7 @@ const LoginDialog = () => {
                   placeholder={field.placeholder}
                   className={clsx(
                     "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
-                    getFocusRingColorClass(errors[field.name])
+                    getFocusRingColorClass(errors[field.name]),
                   )}
                 />
               </Field>
@@ -90,7 +90,8 @@ const LoginDialog = () => {
             Don't have an account?{" "}
             <Text
               as="span"
-              color="blue.500"
+              color="blue.400"
+              fontWeight="bold"
               cursor="pointer"
               onClick={() => {
                 setLoginDialogOpen(false);

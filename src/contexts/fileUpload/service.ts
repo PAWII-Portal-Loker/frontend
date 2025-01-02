@@ -1,17 +1,14 @@
 import API from "..";
 import { APIResponse, FetchCallback } from "@types";
-
-type GetFileRes = {
-  url: string;
-};
+import { GetFileDto } from "./types/get";
 
 export default class FileUploadService {
   private api: API = new API();
 
-  async getFile(key: string, callback: FetchCallback<GetFileRes>) {
+  async getFile(key: string, callback: FetchCallback<GetFileDto>) {
     const res = (await this.api.GET(
       `v1/files/${key}`
-    )) as unknown as GetFileRes;
+    )) as unknown as GetFileDto;
 
     if (!res?.url) {
       callback.onError("File not found");
@@ -21,14 +18,19 @@ export default class FileUploadService {
     callback.onFullfilled?.();
   }
 
-  async uploadFile(file: File, callback: FetchCallback<string>) {
+  async uploadFile(files: File[], callback: FetchCallback<string[]>) {
     const formData = new FormData();
-    formData.append("file", file);
-    const res: APIResponse<string> = await this.api.POST("v1/files", formData);
+    Array.from(files).forEach((file) => {
+      formData.append("files", file);
+    });
+
+    const res: APIResponse<{ success: string[]; failed: string[] }> =
+      await this.api.POSTFile("v1/files", formData);
+
     if (!res?.success) {
       callback.onError(res.message);
     } else {
-      callback.onSuccess(res.data);
+      callback.onSuccess(res.data.success);
     }
     callback.onFullfilled?.();
   }

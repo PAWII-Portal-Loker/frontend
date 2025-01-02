@@ -4,13 +4,13 @@ import axios, { AxiosInstance, AxiosRequestConfig, isAxiosError } from "axios";
 
 type Headers = {
   Accept: string;
-  "Content-type": string;
+  "Content-Type": string;
 };
 
 export default class API {
   headers: Headers = {
     Accept: "application/json",
-    "Content-type": "application/json",
+    "Content-Type": "application/json",
   };
   api: AxiosInstance;
 
@@ -50,6 +50,30 @@ export default class API {
   async POST<T>(path: string, data: unknown): Promise<APIResponse<T>> {
     try {
       const res = await this.api.post(path, data);
+      return res.data;
+    } catch (err: unknown) {
+      if (isAxiosError(err)) {
+        return {
+          success: false,
+          message: err?.response?.data?.message || err?.response?.data,
+          data: null,
+        } as unknown as APIResponse<T>;
+      } else {
+        return {
+          success: false,
+          message: "Internal Server Error",
+        } as APIResponse<T>;
+      }
+    }
+  }
+
+  async POSTFile<T>(path: string, formData: FormData): Promise<APIResponse<T>> {
+    try {
+      const res = await this.api.post(path, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return res.data;
     } catch (err: unknown) {
       if (isAxiosError(err)) {

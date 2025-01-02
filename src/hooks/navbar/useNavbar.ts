@@ -4,7 +4,7 @@ import useMainStore from "@hooks/main/store";
 
 export const useIsNavbarActive = (href: string) => {
   const pathname = usePathname();
-  return pathname.startsWith(href);
+  return pathname === href;
 };
 
 export const useHideNavbarOnScroll = () => {

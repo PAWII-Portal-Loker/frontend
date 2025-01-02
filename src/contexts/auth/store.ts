@@ -27,6 +27,7 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
 
   signIn: (request) => {
     const { email, password } = request;
+    get().setAuthLoading(true);
 
     authService.signIn(
       { email, password },
@@ -52,7 +53,7 @@ const useAuthStore = create<AuthStoreState>((set, get) => ({
         onFullfilled() {
           get().setAuthLoading(false);
         },
-      }
+      },
     );
   },
 

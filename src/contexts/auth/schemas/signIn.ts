@@ -1,6 +1,7 @@
+import { SignInDto } from "@auth/types/signIn";
 import * as Yup from "yup";
 
-export const SignInSchema = Yup.object({
+export const SignInSchema: Yup.ObjectSchema<SignInDto> = Yup.object({
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),

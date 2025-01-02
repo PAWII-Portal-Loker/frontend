@@ -28,6 +28,7 @@ export const useApplicationStore = create<ApplicationStoreState>(
     // job seeker - create application
     application: DefaultApplicationDto,
     isApplicationLoading: false,
+    isApplicationDialogOpen: false,
 
     // company
     applicants: [],
@@ -90,8 +91,15 @@ export const useApplicationStore = create<ApplicationStoreState>(
     },
 
     // job seeker
+    setApplicationDialogOpen: (isOpen) =>
+      set({ isApplicationDialogOpen: isOpen }),
+
     createApplication: (request) => {
       get().setApplicationLoading(true);
+
+      request.document_urls = request.document_urls!.map(
+        (filename) => `${process.env.NEXT_PUBLIC_BASE_URL}/v1/files/${filename}`
+      );
       applicationService.createApplication(request, {
         onSuccess: () => {
           toaster.create({
@@ -115,42 +123,78 @@ export const useApplicationStore = create<ApplicationStoreState>(
       });
     },
 
-    uploadResume: (file) => {
-      fileUploadService.uploadFile(file, {
-        onSuccess: (url) => {
-          get().setApplication({
-            ...get().application,
-            document_urls: [...get().application.document_urls, url],
-          });
-        },
+    // document
+    documents: [],
+    isDocumentLoading: false,
+    isDocumentUploading: false,
+    isDocumentDeleting: false,
+
+    setDocuments: (documents) =>
+      set((state) => ({
+        documents:
+          typeof documents === "function"
+            ? documents(state.documents)
+            : documents,
+      })),
+    setDocumentLoading: (isDocumentLoading) => set({ isDocumentLoading }),
+    setDocumentUploading: (isDocumentUploading) => set({ isDocumentUploading }),
+    setDocumentDeleting: (isDocumentDeleting) => set({ isDocumentDeleting }),
+
+    getDocument: (key) => {
+      get().setDocumentLoading(true);
+      fileUploadService.getFile(key, {
+        onSuccess: () => {},
         onError: (message) => {
           toaster.create({
-            title: "Failed to upload resume",
+            title: "Failed to get document",
             description: message,
             type: "error",
             duration: 3000,
           });
+        },
+        onFullfilled() {
+          get().setDocumentLoading(false);
         },
       });
     },
 
-    deleteResume: (key) => {
-      fileUploadService.deleteFile(key, {
-        onSuccess: () => {
-          get().setApplication({
-            ...get().application,
-            document_urls: get().application.document_urls.filter(
-              (url) => url !== key
-            ),
-          });
-        },
+    uploadDocuments: (files) => {
+      get().setDocumentUploading(true);
+      return new Promise((resolve, reject) => {
+        fileUploadService.uploadFile(files, {
+          onSuccess: (urls) => {
+            resolve(urls);
+          },
+          onError: (message) => {
+            toaster.create({
+              title: "Failed to upload documents",
+              description: message,
+              type: "error",
+              duration: 3000,
+            });
+            reject(message);
+          },
+          onFullfilled() {
+            get().setDocumentUploading(false);
+          },
+        });
+      });
+    },
+
+    deleteDocument: (url) => {
+      get().setDocumentDeleting(true);
+      fileUploadService.deleteFile(url, {
+        onSuccess: () => {},
         onError: (message) => {
           toaster.create({
-            title: "Failed to delete resume",
+            title: "Failed to delete document",
             description: message,
             type: "error",
             duration: 3000,
           });
+        },
+        onFullfilled() {
+          get().setDocumentDeleting(false);
         },
       });
     },

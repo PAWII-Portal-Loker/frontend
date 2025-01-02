@@ -67,7 +67,7 @@ export interface FieldConfig<T extends FieldValues> {
   rules:
     | Reference<unknown>
     | ISchema<
-        string | string[] | number | Date | boolean | undefined,
+        string | string[] | number | Date | boolean | undefined | unknown,
         AnyObject
       >;
 }
