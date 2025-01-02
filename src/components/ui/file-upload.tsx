@@ -54,7 +54,7 @@ export const FileUploadDropzone = React.forwardRef<
       </Icon>
       <ChakraFileUpload.DropzoneContent>
         <Text color="fg.muted">{label}</Text>
-        {description && <Text color="fg.muted">{description}</Text>}
+        {description && <Text color="fg.warning">{description}</Text>}
       </ChakraFileUpload.DropzoneContent>
       {children}
     </ChakraFileUpload.Dropzone>

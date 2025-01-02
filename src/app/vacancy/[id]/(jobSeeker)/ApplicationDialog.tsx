@@ -23,6 +23,7 @@ import {
   getFocusRingColorClass,
   getSubmitButtonClass,
   handleFileChange,
+  validateFile,
 } from "@utils/form";
 import { useApplicationStore } from "@application/store";
 import { CreateApplicationFormDto } from "@application/types/create";
@@ -112,13 +113,14 @@ const ApplicationDialog = () => {
                         trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
                       )
                     }
+                    validate={(file) => validateFile(file, documents)}
                     alignItems="stretch"
                     maxFiles={5}
                     maxFileSize={5 * 1024 * 1024}
                   >
                     <FileUploadDropzone
                       label={field.placeholder}
-                      description=".png, .jpg up to 5MB (max 5 files)"
+                      description=".png, .jpg, ,pdf up to 5MB (max 5 files)"
                     />
                     <FileUploadList
                       files={getValues("document_urls")}

@@ -89,3 +89,80 @@ export const handleDeleteFile = (
     return newDocuments;
   });
 };
+
+type FileError =
+  | "TOO_MANY_FILES"
+  | "FILE_INVALID_TYPE"
+  | "FILE_TOO_LARGE"
+  | "FILE_TOO_SMALL"
+  | "FILE_INVALID";
+export const validateFile = (
+  file: File,
+  documents: File[]
+): FileError[] | null => {
+  const errors: FileError[] = [];
+
+  if (file.size > 5 * 1024 * 1024) {
+    toaster.create({
+      title: "File too large",
+      description: `${file.name} is too large. Please upload a file less than 5MB`,
+      type: "error",
+      duration: 3000,
+    });
+    errors.push("FILE_TOO_LARGE");
+  }
+
+  if (
+    !["image/png", "image/jpg", "image/jpeg", "application/pdf"].includes(
+      file.type
+    )
+  ) {
+    toaster.create({
+      title: "Invalid file type",
+      description: `${file.name} is not a valid file type. Please upload a .png, .jpg, or .pdf file`,
+      type: "error",
+      duration: 3000,
+    });
+    errors.push("FILE_INVALID_TYPE");
+  }
+
+  if (documents.length >= 5) {
+    toaster.create({
+      title: "Maximum files reached",
+      description: "You can only upload up to 5 files",
+      type: "error",
+      duration: 3000,
+    });
+    errors.push("TOO_MANY_FILES");
+  }
+
+  if (/\s/.test(file.name)) {
+    toaster.create({
+      title: "Invalid file name",
+      description: `${file.name} contains whitespace. Please rename the file and try again`,
+      type: "error",
+      duration: 3000,
+    });
+    errors.push("FILE_INVALID");
+  }
+
+  if (
+    documents.some(
+      (doc) =>
+        doc.lastModified === file.lastModified &&
+        doc.name === file.name &&
+        doc.size === file.size &&
+        doc.type === file.type
+    )
+  ) {
+    toaster.create({
+      title: "Duplicate file",
+      description: `${file.name} is already uploaded. Please upload a different file`,
+      type: "error",
+      duration: 3000,
+    });
+    errors.push("FILE_INVALID");
+  }
+
+  return errors.length > 0 ? errors : null;
+};
