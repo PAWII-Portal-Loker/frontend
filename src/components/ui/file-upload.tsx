@@ -154,7 +154,7 @@ export const FileUploadList = React.forwardRef<
     <ChakraFileUpload.ItemGroup ref={ref} {...rest}>
       {documents.map((file, index) => (
         <FileUploadItem
-          key={`${file.name}-${index}`}
+          key={`${file.lastModified}-${file.name}-${index}`}
           file={file}
           showSize={showSize}
           clearable={clearable}

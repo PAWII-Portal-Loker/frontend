@@ -1,4 +1,6 @@
+import { toaster } from "@ui/toaster";
 import clsx from "clsx";
+import { FileChangeDetails } from "node_modules/@chakra-ui/react/dist/types/components/file-upload/namespace";
 import {
   FieldError,
   FieldErrors,
@@ -6,27 +8,22 @@ import {
   UseFormTrigger,
 } from "react-hook-form";
 
-export const getFocusRingColorClass = (error: FieldError | undefined) => {
-  return error ? "focus:ring-red-500" : "focus:ring-blue-500";
-};
+export const getFocusRingColorClass = (error: FieldError | undefined) =>
+  error ? "focus:ring-red-500" : "focus:ring-blue-500";
 
-export const getSubmitButtonClass = (
-  isLoading: boolean,
-  errors: FieldErrors
-) => {
-  return clsx(
+export const getSubmitButtonClass = (isLoading: boolean, errors: FieldErrors) =>
+  clsx(
     "bg-blue-300 text-white font-bold rounded transition-all duration-200",
     isLoading || Object.keys(errors).length > 0
       ? "cursor-not-allowed"
       : "hover:bg-blue-400"
   );
-};
 
 export interface DocumentUrlsInputProps {
   document_urls: File[];
 }
 
-export const updateForm = (
+const updateDocumentsAndForm = (
   newDocuments: File[],
   setDocuments: (
     documents: File[] | ((prevDocuments: File[]) => File[])
@@ -38,8 +35,9 @@ export const updateForm = (
   setValue("document_urls", newDocuments);
   trigger("document_urls");
 };
+
 export const handleFileChange = (
-  filesObject: { acceptedFiles: File[] },
+  filesObject: FileChangeDetails,
   documents: File[],
   setDocuments: (
     documents: File[] | ((prevDocuments: File[]) => File[])
@@ -47,14 +45,32 @@ export const handleFileChange = (
   setValue: UseFormSetValue<DocumentUrlsInputProps>,
   trigger: UseFormTrigger<DocumentUrlsInputProps>
 ) => {
-  const newDocuments = [...documents, ...filesObject.acceptedFiles];
-  updateForm(newDocuments, setDocuments, setValue, trigger);
+  if (filesObject.rejectedFiles.length > 0) {
+    toaster.create({
+      title: `${filesObject.rejectedFiles.length} file(s) rejected`,
+      description: "Please upload a valid file",
+      type: "error",
+      duration: 3000,
+    });
+  }
+
+  const uniqueFiles = filesObject.acceptedFiles.filter(
+    (newFile) =>
+      !documents.some(
+        (doc) =>
+          doc.lastModified === newFile.lastModified &&
+          doc.name === newFile.name &&
+          doc.size === newFile.size &&
+          doc.type === newFile.type
+      )
+  );
+
+  const newDocuments = [...documents, ...uniqueFiles];
+  updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
 };
 
 export const deleteFileFromList = (files: File[], index: number): File[] => {
-  const newFiles = [...files];
-  newFiles.splice(index, 1);
-  return newFiles;
+  return files.filter((_, i) => i !== index);
 };
 
 export const handleDeleteFile = (
@@ -69,8 +85,7 @@ export const handleDeleteFile = (
   event.preventDefault();
   setDocuments((prevDocuments) => {
     const newDocuments = deleteFileFromList(prevDocuments, index);
-    setValue("document_urls", newDocuments);
-    trigger("document_urls");
+    updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
     return newDocuments;
   });
 };
