@@ -11,7 +11,7 @@ import {
   useRecipe,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { LuFile, LuUpload, LuX } from "react-icons/lu";
+import { LuUpload, LuX } from "react-icons/lu";
 import { motion } from "framer-motion";
 import { scaleVariants } from "@consts/animationVariants";
 import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
@@ -27,6 +27,7 @@ import {
   PopoverRoot,
   PopoverTrigger,
 } from "./popover";
+import { FaRegFilePdf } from "react-icons/fa6";
 export interface FileUploadRootProps extends ChakraFileUpload.RootProps {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
@@ -108,16 +109,16 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
           >
             <ChakraFileUpload.Item file={file} ref={ref}>
               <ChakraFileUpload.ItemPreview asChild>
-                {previewUrl ? (
+                {file.type.startsWith("image/") ? (
                   <Image
-                    src={previewUrl}
+                    src={previewUrl ?? "/no-image.jpg"}
                     alt={file.name}
                     width={30}
                     height={30}
                   />
                 ) : (
                   <Icon fontSize="lg" color="fg.muted">
-                    <LuFile />
+                    <FaRegFilePdf />
                   </Icon>
                 )}
               </ChakraFileUpload.ItemPreview>
@@ -164,15 +165,14 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
         <PopoverContent>
           <PopoverArrow />
           <PopoverBody padding={file.type === "application/pdf" ? 0 : 4}>
-            {previewUrl && (
+            {file.type.startsWith("image/") ? (
               <Image
-                src={previewUrl}
+                src={previewUrl ?? "/no-image.jpg"}
                 alt={file.name}
                 width={400}
                 height={400}
               />
-            )}
-            {file.type === "application/pdf" && (
+            ) : (
               <iframe
                 src={URL.createObjectURL(file)}
                 className="rounded-lg shadow-md"
