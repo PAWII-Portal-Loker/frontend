@@ -4,7 +4,9 @@ import { useApplicationStore } from "@application/store";
 import useAuthStore from "@auth/store";
 import ApplicantCard from "@components/applicant/ApplicantCard";
 import ApplicantsSkeleton from "@components/skeletons/ApplicantsSkeleton";
+import { CONTAINER_CLASSES, getThemeClassNames } from "@utils/classNames";
 import { hasPermission } from "@utils/permissions";
+import clsx from "clsx";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
@@ -25,7 +27,7 @@ const ApplicantsList = () => {
   }
 
   return (
-    <div className="w-full p-4 pb-6 bg-white text-gray-800 rounded-lg shadow-md">
+    <div className={clsx(getThemeClassNames(CONTAINER_CLASSES), "w-full p-4 pb-6 rounded-lg shadow-md")}>
       <h1 className="text-2xl font-bold mb-4">Applicants</h1>
       {isApplicantsLoading ? (
         <ApplicantsSkeleton />

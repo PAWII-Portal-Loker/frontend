@@ -19,6 +19,7 @@ import { SignInDto } from "@auth/types/signIn";
 import { SignInSchema } from "@auth/schemas/signIn";
 import { SignInField } from "@auth/fields/signIn";
 import { getFocusRingColorClass, getSubmitButtonClass } from "@utils/form";
+import { CONTAINER_ACTIVE_CLASSES, CONTAINER_CLASSES, getThemeClassNames, TEXT_CLASSES } from "@utils/classNames";
 
 const LoginDialog = () => {
   const { isLoginDialogOpen, setLoginDialogOpen, setRegisterDialogOpen } =
@@ -46,7 +47,7 @@ const LoginDialog = () => {
       open={isLoginDialogOpen}
       onOpenChange={() => setLoginDialogOpen(false)}
     >
-      <DialogContent className="bg-slate-500 text-gray-100">
+      <DialogContent className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}>
         <DialogHeader>
           <DialogTitle textAlign="center" fontSize="2xl" fontWeight="bold">
             Login
@@ -68,6 +69,7 @@ const LoginDialog = () => {
                   className={clsx(
                     "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
                     getFocusRingColorClass(errors[field.name]),
+                    getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)
                   )}
                 />
               </Field>

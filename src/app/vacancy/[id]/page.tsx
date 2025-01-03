@@ -14,6 +14,7 @@ import NotFoundPage from "src/app/not-found";
 import { fadeVariants, scaleVariants } from "@consts/animationVariants";
 import { motion } from "framer-motion";
 import VacancyDetailLoadingCard from "@components/containers/vacancyDetailLoadingCard";
+import { CONTAINER_CLASSES, getThemeClassNames } from "@utils/classNames";
 
 const VacancyDetailPage = () => {
   const { id } = useParams();
@@ -56,7 +57,7 @@ const VacancyDetailPage = () => {
           animate="animate"
           initial="initial"
           transition={{ delay: 0.2 }}
-          className="lg:w-full p-4 bg-white text-gray-800 rounded-lg shadow-md"
+          className={clsx(getThemeClassNames(CONTAINER_CLASSES),"lg:w-full p-4 rounded-lg shadow-md")}
         >
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-3xl font-bold text-primary">
@@ -71,18 +72,18 @@ const VacancyDetailPage = () => {
               {vacancy.is_closed ? "Closed" : "Open"}
             </span>
           </div>
-          <h2 className="text-lg font-medium text-gray-800 mb-2">
+          <h2 className="text-lg font-medium mb-2">
             {vacancy.company.company_name}
           </h2>
-          <div className="flex items-center mb-4">
-            <span className="text-gray-500 text-sm">
+          <div className="flex items-center mb-4 text-sm">
+            <span>
               {vacancy.applied_count} Applied
             </span>
-            <span className="text-primary text-sm font-medium ml-4">
+            <span className="text-primary font-medium ml-4">
               {vacancy.job_type} - {vacancy.income_type}
             </span>
           </div>
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
+          <p className="text-lg leading-relaxed mb-6">
             {vacancy.description}
           </p>
           {hasPermission(auth, "application", "create") && (

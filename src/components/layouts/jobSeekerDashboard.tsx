@@ -10,6 +10,8 @@ import { useIncomeTypestore } from "@enums/stores/incomeType";
 import { scaleVariants, slideVariants } from "@consts/animationVariants";
 import useVacancyStore from "@vacancy/store";
 import { VacancyFilter } from "@vacancy/types/filter";
+import clsx from "clsx";
+import { CONTAINER_ACTIVE_CLASSES, CONTAINER_CLASSES, getThemeClassNames, TEXT_CLASSES } from "@utils/classNames";
 
 const JobSeekerDashboard = () => {
   const { isSearchFocused } = useDashboardStore();
@@ -49,7 +51,7 @@ const JobSeekerDashboard = () => {
         </p>
       </motion.div>
       <motion.div
-        className="bg-slate-500 p-4 flex flex-col gap-4 lg:flex-row lg:gap-8 rounded-md"
+        className={clsx(getThemeClassNames(CONTAINER_CLASSES),"p-4 flex flex-col gap-4 lg:flex-row lg:gap-8 rounded-md")}
         variants={scaleVariants}
         initial="initial"
         animate="animate"
@@ -60,15 +62,15 @@ const JobSeekerDashboard = () => {
           <Input
             placeholder="Keyword e.g. (Job Title, Description, Company Name)"
             ref={isSearchFocused ? (input) => input?.focus() : null}
-            className="pl-10 pr-14 py-3 rounded-lg border-2 bg-gray-100 border-gray-300 focus:border-blue-500 text-lg text-gray-800 placeholder-gray-400"
+            className={clsx("pl-10 pr-14 py-3 rounded-lg focus:border-blue-500 text-lg", getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES))}
             value={filters.position}
             onChange={(e) => setFilters({ position: e.target.value })}
           />
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <FaKey className="text-gray-400" />
+            <FaKey className="dark:text-gray-200 text-gray-500" />
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-            <kbd className="bg-gray-500 text-white rounded-lg text-sm px-2 py-1">
+            <kbd className="dark:bg-gray-200 bg-gray-500 dark:text-slate-700 text-slate-100 rounded-lg text-sm px-2 py-1">
               ⌘F
             </kbd>
           </div>

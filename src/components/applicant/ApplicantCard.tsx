@@ -8,6 +8,8 @@ import { Button } from "@ui/button";
 import { IoDocumentAttachOutline } from "react-icons/io5";
 import { useDisclosure } from "@chakra-ui/react";
 import ApplicantDetailsDialog from "./ApplicantDetailsDialog";
+import { CONTAINER_ACTIVE_CLASSES, getThemeClassNames } from "@utils/classNames";
+import clsx from "clsx";
 
 interface Props {
   applicant?: ApplicationDto;
@@ -28,7 +30,7 @@ const ApplicantCard = (props: Props) => {
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-md border border-gray-200/60 flex items-center justify-between"
+      className={clsx(getThemeClassNames(CONTAINER_ACTIVE_CLASSES),"rounded-lg shadow-md flex items-center justify-between")}
       variants={slideVariants}
       initial="initial"
       animate="animate"

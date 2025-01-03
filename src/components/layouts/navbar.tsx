@@ -26,6 +26,14 @@ import {
 } from "@hooks/navbar/useNavbar";
 import { hasPermission } from "@utils/permissions";
 import { ColorModeButton } from "@ui/color-mode";
+import {
+  CONTAINER_ACTIVE_CLASSES,
+  CONTAINER_CLASSES,
+  CONTAINER_HOVER_CLASSES,
+  getThemeClassNames,
+  TEXT_CLASSES,
+  TEXT_PRIMARY_CLASSES,
+} from "@utils/classNames";
 
 type NavLinkProps = {
   href: string;
@@ -38,8 +46,8 @@ const NavLink = ({ href, label }: NavLinkProps) => (
       className={clsx(
         "px-3 py-2 rounded-md",
         useIsNavbarActive(href)
-          ? "bg-gray-500 text-blue-300 font-semibold"
-          : "hover:text-blue-400 hover:bg-gray-500 transition-all duration-200"
+          ? "font-semibold dark:text-blue-400 text-blue-800 dark:bg-slate-600 bg-slate-200"
+          : "dark:text-slate-100 text-slate-700 dark:hover:bg-slate-600 hover:bg-gray-300 transition-all duration-200"
       )}
       disabled={useIsNavbarActive(href)}
     >
@@ -52,10 +60,13 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
   <Link href={href}>
     <Button
       className={clsx(
-        "dark:text-slate-600 w-full px-3 py-2 rounded-md",
+        "w-full px-3 py-2 rounded-md",
         useIsNavbarActive(href)
-          ? "bg-gray-500 text-blue-300 font-semibold"
-          : "hover:text-blue-400 hover:bg-gray-500 transition-all duration-200"
+          ? clsx(
+            "font-semibold",
+            getThemeClassNames(TEXT_PRIMARY_CLASSES, CONTAINER_ACTIVE_CLASSES)
+          )
+          : getThemeClassNames(TEXT_CLASSES, CONTAINER_HOVER_CLASSES)
       )}
       disabled={useIsNavbarActive(href)}
     >
@@ -85,7 +96,10 @@ const Navbar = () => {
 
   return (
     <motion.header
-      className="dark:bg-slate-200 bg-slate-600 text-gray-100 px-4 py-3 fixed top-0 left-0 w-full z-10"
+      className={clsx(
+        "px-4 py-3 fixed top-0 left-0 w-full z-10",
+        getThemeClassNames(CONTAINER_CLASSES)
+      )}
       aria-hidden={!isNavigationOpen}
       variants={slideVariants}
       initial="initial"
@@ -99,9 +113,9 @@ const Navbar = () => {
           onClick={() => setNavigationOpen(!isNavigationOpen)}
         >
           {isNavigationOpen ? (
-            <IoIosClose className="dark:text-slate-600" />
+            <IoIosClose className={getThemeClassNames(TEXT_CLASSES)} />
           ) : (
-            <RxHamburgerMenu className="dark:text-slate-600" />
+            <RxHamburgerMenu className={getThemeClassNames(TEXT_CLASSES)} />
           )}
         </IconButton>
         <div className="flex items-center gap-2">
@@ -132,7 +146,7 @@ const Navbar = () => {
                   className={clsx(
                     "mr-2 px-2 py-1 rounded-full text-center text-xs font-bold",
                     hasPermission(auth, "companyDashboard", "view")
-                      ? "bg-green-500 text-white"
+                      ? "bg-violet-500 text-white"
                       : "bg-yellow-500 text-white"
                   )}
                 >
@@ -141,7 +155,10 @@ const Navbar = () => {
               )}
               <MenuTrigger asChild>
                 <Button className="rounded-full cursor-pointer bg-blue-500 hover:bg-blue-700 transition-all duration-200">
-                  <BsPerson size={24} />
+                  <BsPerson
+                    size={24}
+                    className={getThemeClassNames(TEXT_CLASSES)}
+                  />
                 </Button>
               </MenuTrigger>
               <MenuContent>
@@ -194,7 +211,7 @@ const Navbar = () => {
             animate="animate"
             exit="exit"
             transition={{ duration: 0.2 }}
-            className="dark:bg-slate-200 bg-slate-600 md:hidden px-4 py-4 absolute top-16 left-0 w-full"
+            className="dark:bg-slate-700 bg-slate-100 md:hidden px-4 py-4 absolute top-16 left-0 w-full"
           >
             {navLinks.map((link) => (
               <MobileNavLink key={link.href} {...link} />

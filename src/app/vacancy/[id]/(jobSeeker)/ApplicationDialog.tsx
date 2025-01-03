@@ -36,6 +36,7 @@ import {
   FileUploadList,
   FileUploadRoot,
 } from "@ui/file-upload";
+import { CONTAINER_ACTIVE_CLASSES, CONTAINER_CLASSES, getThemeClassNames, TEXT_CLASSES } from "@utils/classNames";
 
 const ApplicationDialog = () => {
   const vacancyId = useParams().id as string;
@@ -80,7 +81,7 @@ const ApplicationDialog = () => {
       open={isApplicationDialogOpen}
       onOpenChange={() => setApplicationDialogOpen(false)}
     >
-      <DialogContent className="bg-slate-500 text-gray-100">
+      <DialogContent className={(getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES))}>
         <DialogHeader>
           <DialogTitle textAlign="center" fontSize="2xl" fontWeight="bold">
             Apply to {vacancy.position} ({vacancy.company.company_name})
@@ -121,6 +122,7 @@ const ApplicationDialog = () => {
                     <FileUploadDropzone
                       label={field.placeholder}
                       description=".png, .jpg, ,pdf up to 5MB (max 5 files)"
+                      className={getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)}
                     />
                     <FileUploadList
                       files={getValues("document_urls")}
@@ -137,7 +139,8 @@ const ApplicationDialog = () => {
                     placeholder={field.placeholder}
                     className={clsx(
                       "p-4 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
-                      getFocusRingColorClass(errors[field.name] as FieldError)
+                      getFocusRingColorClass(errors[field.name] as FieldError),
+                      getThemeClassNames(CONTAINER_ACTIVE_CLASSES)
                     )}
                     autoComplete="off"
                     minLength={3}

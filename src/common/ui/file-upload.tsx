@@ -28,6 +28,7 @@ import {
   PopoverTrigger,
 } from "./popover";
 import { FaRegFilePdf } from "react-icons/fa6";
+import { getThemeClassNames, TEXT_CLASSES } from "@utils/classNames";
 export interface FileUploadRootProps extends ChakraFileUpload.RootProps {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
@@ -62,7 +63,8 @@ export const FileUploadDropzone = React.forwardRef<
         <LuUpload />
       </Icon>
       <ChakraFileUpload.DropzoneContent>
-        <Text color="fg.muted">{label}</Text>
+        <Text className={getThemeClassNames(TEXT_CLASSES)}
+        >{label}</Text>
         {description && <Text color="fg.warning">{description}</Text>}
       </ChakraFileUpload.DropzoneContent>
       {children}
