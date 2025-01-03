@@ -81,7 +81,8 @@ const AsyncImage = (props: AsyncImageProps) => {
             isLoading ? "opacity-0" : "opacity-100",
             imageClassName
           )}
-          onLoadingComplete={() => setIsLoading(false)}
+          priority
+          onLoad={() => setIsLoading(false)}
           onError={() => setImageUrl("/no-image.jpg")}
         />
       )}
