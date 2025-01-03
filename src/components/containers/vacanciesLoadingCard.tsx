@@ -1,6 +1,6 @@
 import { Skeleton } from "@ui/skeleton";
 
-const LoadingCard = () => {
+const VacanciesLoadingCard = () => {
   return (
     <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden relative animate-pulse p-4">
       <div className="w-full h-[200px] bg-gray-200 mb-3 rounded-lg" />
@@ -14,4 +14,4 @@ const LoadingCard = () => {
   );
 };
 
-export default LoadingCard;
+export default VacanciesLoadingCard;

@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import clsx from "clsx";
 import useVacancyStore, { DefaultVacancyDto } from "@vacancy/store";
-import LoadingCard from "@components/containers/loadingCard";
 import AsyncImage from "@commoncomponents/async/AsyncImage";
 import ApplicantsList from "./(company)/ApplicantsList";
 import { hasPermission } from "@utils/permissions";
@@ -14,6 +13,7 @@ import ApplicationDialog from "./(jobSeeker)/ApplicationDialog";
 import NotFoundPage from "src/app/not-found";
 import { fadeVariants, scaleVariants } from "@consts/animationVariants";
 import { motion } from "framer-motion";
+import VacancyDetailLoadingCard from "@components/containers/vacancyDetailLoadingCard";
 
 const VacancyDetailPage = () => {
   const { id } = useParams();
@@ -26,16 +26,7 @@ const VacancyDetailPage = () => {
   }, [id]);
 
   if (isVacancyLoading) {
-    return (
-      <div className="flex flex-col lg:flex-row justify-between gap-8">
-        <div className="lg:w-[30%]">
-          <LoadingCard />
-        </div>
-        <div className="lg:w-[70%]">
-          <LoadingCard />
-        </div>
-      </div>
-    );
+    return <VacancyDetailLoadingCard />;
   }
 
   if (vacancy == DefaultVacancyDto) {
