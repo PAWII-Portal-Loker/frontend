@@ -25,6 +25,7 @@ import {
   useIsNavbarActive,
 } from "@hooks/navbar/useNavbar";
 import { hasPermission } from "@utils/permissions";
+import { ColorModeButton } from "@ui/color-mode";
 
 type NavLinkProps = {
   href: string;
@@ -51,7 +52,7 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
   <Link href={href}>
     <Button
       className={clsx(
-        "w-full px-3 py-2 rounded-md",
+        "dark:text-slate-600 w-full px-3 py-2 rounded-md",
         useIsNavbarActive(href)
           ? "bg-gray-500 text-blue-300 font-semibold"
           : "hover:text-blue-400 hover:bg-gray-500 transition-all duration-200"
@@ -84,7 +85,8 @@ const Navbar = () => {
 
   return (
     <motion.header
-      className="bg-slate-600 text-gray-100 px-4 py-3 fixed top-0 left-0 w-full z-10"
+      className="dark:bg-slate-200 bg-slate-600 text-gray-100 px-4 py-3 fixed top-0 left-0 w-full z-10"
+      aria-hidden={!isNavigationOpen}
       variants={slideVariants}
       initial="initial"
       animate={isNavbarHidden ? "exit" : "animate"}
@@ -96,7 +98,11 @@ const Navbar = () => {
           display={{ md: "none" }}
           onClick={() => setNavigationOpen(!isNavigationOpen)}
         >
-          {isNavigationOpen ? <IoIosClose /> : <RxHamburgerMenu />}
+          {isNavigationOpen ? (
+            <IoIosClose className="dark:text-slate-600" />
+          ) : (
+            <RxHamburgerMenu className="dark:text-slate-600" />
+          )}
         </IconButton>
         <div className="flex items-center gap-2">
           <Image
@@ -110,20 +116,21 @@ const Navbar = () => {
             PortalLoker
           </Link>
         </div>
-        <div className="flex items-center gap-8">
-          <ul className="hidden md:flex gap-5">
+        <div className="flex items-center gap-2 md:gap-8">
+          <ul className="dark:text-slate-600 hidden md:flex gap-5">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <NavLink {...link} />
               </li>
             ))}
           </ul>
+          <ColorModeButton />
           {isLogin ? (
             <MenuRoot>
               {auth.role && (
                 <span
                   className={clsx(
-                    "mr-2 px-2 py-1 rounded-full",
+                    "mr-2 px-2 py-1 rounded-full text-center text-xs font-bold",
                     hasPermission(auth, "companyDashboard", "view")
                       ? "bg-green-500 text-white"
                       : "bg-yellow-500 text-white"
@@ -187,7 +194,7 @@ const Navbar = () => {
             animate="animate"
             exit="exit"
             transition={{ duration: 0.2 }}
-            className="bg-slate-600 md:hidden px-4 py-4 absolute top-16 left-0 w-full"
+            className="dark:bg-slate-200 bg-slate-600 md:hidden px-4 py-4 absolute top-16 left-0 w-full"
           >
             {navLinks.map((link) => (
               <MobileNavLink key={link.href} {...link} />

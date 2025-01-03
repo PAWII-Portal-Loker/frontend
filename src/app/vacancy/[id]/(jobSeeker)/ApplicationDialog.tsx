@@ -139,7 +139,6 @@ const ApplicationDialog = () => {
                       "p-4 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-blue-500 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
                       getFocusRingColorClass(errors[field.name] as FieldError)
                     )}
-                    autoresize
                     autoComplete="off"
                     minLength={3}
                     maxLength={500}
