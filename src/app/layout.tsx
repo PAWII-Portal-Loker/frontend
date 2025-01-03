@@ -49,7 +49,9 @@ const RootLayout = ({
         <Provider>
           {isNotHomePage && <Navbar />}
           <Toaster />
-          <main className={clsx(isNotHomePage && "pt-16 h-full flex-grow")}>
+          <main
+            className={clsx(isNotHomePage && "pt-16 h-full flex-grow inert")}
+          >
             <LoginDialog />
             <RegisterDialog />
             <RoleDialog />
