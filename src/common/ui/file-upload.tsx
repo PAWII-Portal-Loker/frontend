@@ -28,7 +28,13 @@ import {
   PopoverTrigger,
 } from "./popover";
 import { FaRegFilePdf } from "react-icons/fa6";
-import { getThemeClassNames, TEXT_CLASSES } from "@utils/classNames";
+import {
+  CONTAINER_ACTIVE_CLASSES,
+  getThemeClassNames,
+  TEXT_CLASSES,
+} from "@utils/classNames";
+import { useScreenSize } from "@utils/screenSize";
+import clsx from "clsx";
 export interface FileUploadRootProps extends ChakraFileUpload.RootProps {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
@@ -63,8 +69,7 @@ export const FileUploadDropzone = React.forwardRef<
         <LuUpload />
       </Icon>
       <ChakraFileUpload.DropzoneContent>
-        <Text className={getThemeClassNames(TEXT_CLASSES)}
-        >{label}</Text>
+        <Text className={getThemeClassNames(TEXT_CLASSES)}>{label}</Text>
         {description && <Text color="fg.warning">{description}</Text>}
       </ChakraFileUpload.DropzoneContent>
       {children}
@@ -89,6 +94,8 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
     const { file, showSize, clearable, setValue, trigger, index } = props;
     const { setDocuments } = useApplicationStore();
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+    const { isMd } = useScreenSize();
+    const [isOpen, setOpen] = useState<boolean>(false);
 
     useEffect(() => {
       if (file.type.startsWith("image/")) {
@@ -99,8 +106,12 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
         reader.readAsDataURL(file);
       }
     }, [file]);
+
     return (
-      <PopoverRoot positioning={{ placement: "left" }}>
+      <PopoverRoot
+        positioning={{ placement: isMd ? "left" : "top" }}
+        onOpenChange={(e) => setOpen(e.open)}
+      >
         <PopoverTrigger asChild>
           <motion.div
             variants={scaleVariants}
@@ -109,7 +120,14 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
             initial="initial"
             transition={{ delay: index * 0.1 }}
           >
-            <ChakraFileUpload.Item file={file} ref={ref}>
+            <ChakraFileUpload.Item
+              file={file}
+              ref={ref}
+              className={clsx(
+                isOpen && "font-bold",
+                getThemeClassNames(CONTAINER_ACTIVE_CLASSES)
+              )}
+            >
               <ChakraFileUpload.ItemPreview asChild>
                 {file.type.startsWith("image/") ? (
                   <Image
@@ -119,7 +137,7 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
                     height={30}
                   />
                 ) : (
-                  <Icon fontSize="lg" color="fg.muted">
+                  <Icon fontSize="lg" color="fg.error" width={30} height={30}>
                     <FaRegFilePdf />
                   </Icon>
                 )}
@@ -139,6 +157,7 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
                   <IconButton
                     variant="solid"
                     bg="red.100"
+                    marginY="auto"
                     color="red.500"
                     colorScheme="red"
                     size="sm"
@@ -146,6 +165,8 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
                     _hover={{
                       bg: "red.200",
                       color: "red.600",
+                      scale: "1.1",
+                      transition: "all 0.2s",
                     }}
                     onClick={(event) =>
                       handleDeleteFile(
@@ -166,13 +187,20 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
         </PopoverTrigger>
         <PopoverContent>
           <PopoverArrow />
-          <PopoverBody padding={file.type === "application/pdf" ? 0 : 4}>
+          <PopoverBody
+            className={clsx(
+              "rounded-md",
+              getThemeClassNames(CONTAINER_ACTIVE_CLASSES)
+            )}
+            padding={file.type === "application/pdf" ? 0 : 1}
+          >
             {file.type.startsWith("image/") ? (
               <Image
                 src={previewUrl ?? "/no-image.jpg"}
                 alt={file.name}
                 width={400}
                 height={400}
+                className="rounded-md"
               />
             ) : (
               <iframe

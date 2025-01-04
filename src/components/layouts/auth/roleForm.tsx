@@ -20,8 +20,12 @@ import { CreateCompanyDto } from "@company/types/create";
 import { CreateJobSeekerDto } from "@jobSeeker/types/create";
 import { CreateCompanyField } from "@company/fields/create";
 import { CreateJobSeekerField } from "@jobSeeker/fields/create";
-import { getFocusRingColorClass, getSubmitButtonClass } from "@utils/form";
-import { CONTAINER_ACTIVE_CLASSES, getThemeClassNames, TEXT_CLASSES } from "@utils/classNames";
+import { getInputClass, getSubmitButtonClass } from "@utils/form";
+import {
+  CONTAINER_ACTIVE_CLASSES,
+  getThemeClassNames,
+  TEXT_CLASSES,
+} from "@utils/classNames";
 
 type RoleFormProps<T extends CreateCompanyDto | CreateJobSeekerDto> = {
   selectedRole: "COMPANY" | "JOB_SEEKER";
@@ -66,7 +70,10 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
             <NativeSelectRoot size="md">
               <NativeSelectField
                 isLoading={isSelectDataLoading}
-                className={clsx("w-full pl-3 pr-8 py-1 rounded-lg border-2 bg-gray-100 border-gray-300 text-lg text-gray-600 appearance-none", getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES))}
+                className={clsx(
+                  "w-full pl-3 pr-8 py-1 rounded-lg border-2 bg-gray-100 border-gray-300 text-lg text-gray-600 appearance-none",
+                  getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)
+                )}
                 {...register(
                   field.name as keyof (CreateCompanyDto | CreateJobSeekerDto)
                 )}
@@ -89,8 +96,7 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
               type={field.type}
               placeholder={field.placeholder}
               className={clsx(
-                "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400",
-                getFocusRingColorClass(
+                getInputClass(
                   errors[field.name as keyof FieldErrors<T>] as FieldError
                 ),
                 getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)

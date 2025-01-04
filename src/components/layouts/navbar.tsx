@@ -193,7 +193,7 @@ const Navbar = () => {
             </MenuRoot>
           ) : (
             <Button
-              className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded text-sm transition-all duration-200"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded text-sm transition-all duration-200"
               onClick={() => setLoginDialogOpen(true)}
             >
               Login

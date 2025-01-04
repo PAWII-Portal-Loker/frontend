@@ -8,15 +8,18 @@ import {
   UseFormTrigger,
 } from "react-hook-form";
 
-export const getFocusRingColorClass = (error: FieldError | undefined) =>
-  error ? "focus:ring-red-500" : "focus:ring-blue-500";
+export const getInputClass = (error: FieldError | undefined) =>
+  clsx(
+    "p-4 rounded-lg border-2 bg-gray-100 text-lg placeholder-gray-400 appearance-none",
+    error ? "focus-visible:ring-red-500 border-red-500" : "border-gray-300"
+  );
 
 export const getSubmitButtonClass = (isLoading: boolean, errors: FieldErrors) =>
   clsx(
-    "bg-blue-300 text-white font-bold rounded transition-all duration-200",
+    "bg-blue-500 text-white font-bold rounded transition-all duration-200",
     Object.keys(errors).length > 0 && "cursor-not-allowed",
     isLoading && "cursor-wait",
-    Object.keys(errors).length === 0 && !isLoading && "hover:bg-blue-400"
+    Object.keys(errors).length === 0 && !isLoading && "hover:bg-blue-600"
   );
 
 export interface DocumentUrlsInputProps {

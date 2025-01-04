@@ -47,7 +47,7 @@ const RootLayout = ({
           <main
             className={clsx(
               isNotHomePage &&
-                "pt-16 h-full flex-grow dark:text-slate-100 text-slate-700 bg-gradient-to-r from-slate-200 to-slate-400 dark:from-slate-500 dark:to-slate-600"
+                "pt-16 h-full flex-grow dark:text-slate-100 text-slate-700 bg-gradient-to-r from-slate-200 to-slate-400 dark:from-slate-400 dark:to-slate-600"
             )}
           >
             <LoginDialog />

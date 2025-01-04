@@ -6,7 +6,7 @@ export const CONTAINER_ACTIVE_CLASSES = "dark:bg-slate-600 bg-slate-200";
 export const CONTAINER_HOVER_CLASSES =
   "dark:hover:bg-slate-600 hover:bg-gray-300 transition-all duration-200";
 export const CONTAINER_GRADIENT_CLASSES =
-  "bg-gradient-to-r from-slate-200 to-slate-400 dark:from-slate-500 dark:to-slate-600";
+  "bg-gradient-to-r from-slate-200 to-slate-400 dark:from-slate-400 dark:to-slate-600";
 
 type ThemeClassOptions =
   | typeof TEXT_CLASSES
