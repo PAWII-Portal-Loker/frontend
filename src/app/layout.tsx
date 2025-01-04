@@ -27,12 +27,6 @@ const RootLayout = ({
 
   useEffect(() => {
     checkLogin();
-
-    const intervalId = setInterval(() => {
-      checkLogin();
-    }, 60000);
-
-    return () => clearInterval(intervalId);
   }, []);
 
   return (
