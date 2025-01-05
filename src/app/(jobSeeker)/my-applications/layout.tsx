@@ -8,7 +8,7 @@ import NotAuthorizedPage from "src/app/not-authorized";
 const MyApplicationsLayout = ({ children }: { children: React.ReactNode }) => {
   const { auth } = useAuthStore();
 
-  if (hasPermission(auth, "myApplications", "view")) {
+  if (!hasPermission(auth, "myApplications", "view")) {
     return <NotAuthorizedPage />;
   }
 

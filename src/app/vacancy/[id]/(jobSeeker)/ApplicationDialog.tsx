@@ -20,6 +20,7 @@ import { Field } from "@ui/field";
 import { Button } from "@ui/button";
 import {
   DocumentUrlsInputProps,
+  downloadZip,
   getInputClass,
   getSubmitButtonClass,
   handleFileChange,
@@ -144,6 +145,18 @@ const ApplicationDialog = () => {
                       <Text fontSize="sm" color="gray.500">
                         Compressing...
                       </Text>
+                    )}
+                    {getValues("document_urls").length > 0 && (
+                      <Button
+                        onClick={() => downloadZip(getValues("document_urls"))}
+                        disabled={getValues("document_urls").length === 0}
+                        className={clsx(
+                          "mt-2 dark:bg-slate-600/80 bg-slate-400/80 dark:hover:bg-slate-500/70 hover:bg-slate-500/70 transition-colors duration-200 font-bold",
+                          getThemeClassNames(TEXT_CLASSES)
+                        )}
+                      >
+                        Download All Files (ZIP)
+                      </Button>
                     )}
                     <FileUploadList
                       files={getValues("document_urls")}

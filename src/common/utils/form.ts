@@ -1,3 +1,5 @@
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
 import { useApplicationStore } from "@application/store";
 import { toaster } from "@ui/toaster";
 import clsx from "clsx";
@@ -9,6 +11,7 @@ import {
   UseFormTrigger,
 } from "react-hook-form";
 import { compressPdf, compressImage } from "./compress";
+import useVacancyStore from "@vacancy/store";
 
 const { setDocuments } = useApplicationStore.getState();
 
@@ -183,4 +186,28 @@ export const validateFile = (
   }
 
   return errors.length > 0 ? errors : null;
+};
+
+export const downloadZip = (files: File[]) => {
+  const { vacancy } = useVacancyStore.getState();
+
+  const zip = new JSZip();
+  files.forEach((file) => {
+    zip.file(file.name, file);
+  });
+  zip
+    .generateAsync({ type: "blob" })
+    .then((content) => {
+      saveAs(
+        content,
+        `${vacancy?.position}-${vacancy?.company.company_name}-documents.zip`
+      );
+    })
+    .catch((error) => {
+      toaster.error({
+        title: "Failed to download documents",
+        description: error.message,
+        duration: 3000,
+      });
+    });
 };
