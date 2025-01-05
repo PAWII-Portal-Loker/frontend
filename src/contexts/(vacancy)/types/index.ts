@@ -12,6 +12,7 @@ export interface VacancyDto {
   description: string;
   applied_count: number;
   is_closed: boolean;
+  is_applied: boolean;
   created_at: Date;
   updated_at: Date;
 }

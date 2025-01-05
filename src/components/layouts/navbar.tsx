@@ -82,11 +82,7 @@ const Navbar = () => {
   const { setRoleDialogOpen } = useRoleDialogStore();
   const isNavbarHidden = useHideNavbarOnScroll();
 
-  const navLinks = [
-    { href: "/vacancy", label: "Vacancy" },
-    { href: "/history", label: "History" },
-    { href: "/notification", label: "Notification" },
-  ];
+  const navLinks = [{ href: "/vacancy", label: "Vacancy" }];
 
   if (hasPermission(auth, "myApplications", "view")) {
     navLinks.push({ href: "/my-applications", label: "My Applications" });

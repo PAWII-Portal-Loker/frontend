@@ -18,6 +18,7 @@ export const DefaultVacancyDto: VacancyDto = {
   description: "",
   applied_count: 0,
   is_closed: false,
+  is_applied: false,
   created_at: new Date(),
   updated_at: new Date(),
 };
