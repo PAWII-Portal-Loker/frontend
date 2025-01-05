@@ -63,9 +63,9 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
         "w-full px-3 py-2 rounded-md",
         useIsNavbarActive(href)
           ? clsx(
-              "font-semibold",
-              getThemeClassNames(TEXT_PRIMARY_CLASSES, CONTAINER_ACTIVE_CLASSES)
-            )
+            "font-semibold",
+            getThemeClassNames(TEXT_PRIMARY_CLASSES, CONTAINER_ACTIVE_CLASSES)
+          )
           : getThemeClassNames(TEXT_CLASSES, CONTAINER_HOVER_CLASSES)
       )}
       disabled={useIsNavbarActive(href)}
