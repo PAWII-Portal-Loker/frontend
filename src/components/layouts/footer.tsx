@@ -1,6 +1,12 @@
 import Link from "next/link";
 import moment from "moment";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import clsx from "clsx";
+import {
+  CONTAINER_CLASSES,
+  getThemeClassNames,
+  TEXT_CLASSES,
+} from "@utils/classNames";
 
 const socialLinks = [
   { href: "#", icon: <FaFacebook size={40} color="#3b5998" /> },
@@ -21,7 +27,12 @@ const SocialLink = ({ href, icon }: SocialLinkProps) => (
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-600 text-gray-100 text-center mt-auto">
+    <footer
+      className={clsx(
+        "text-center mt-auto",
+        getThemeClassNames(TEXT_CLASSES, CONTAINER_CLASSES)
+      )}
+    >
       <div className="px-4 py-3 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <p>© {moment().format("YYYY")} PortalLoker. All rights reserved</p>
         <ul className="flex gap-8 justify-center">

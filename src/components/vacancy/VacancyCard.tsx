@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { VacancyDto } from "@vacancy/types";
 import { slideVariants } from "@consts/animationVariants";
 import AsyncImage from "@commoncomponents/async/AsyncImage";
+import { CONTAINER_CLASSES, getThemeClassNames, TEXT_TITLE_CLASSES } from "@utils/classNames";
 
 interface VacancyCardProps {
   vacancy?: VacancyDto;
@@ -16,7 +17,7 @@ const VacancyCard = ({ vacancy, delay }: VacancyCardProps) => {
   return (
     <Link href={`/vacancy/${vacancy.id}`} className="block">
       <motion.div
-        className="bg-white rounded-lg shadow-md overflow-hidden relative"
+        className={clsx(getThemeClassNames(CONTAINER_CLASSES),"rounded-lg shadow-md overflow-hidden relative")}
         variants={slideVariants}
         initial="initial"
         animate="animate"
@@ -42,14 +43,14 @@ const VacancyCard = ({ vacancy, delay }: VacancyCardProps) => {
           {vacancy.is_closed ? "Closed" : "Open"}
         </span>
         <div className="p-4">
-          <p className="text-lg font-bold text-gray-800 hover:text-primary transition-colors duration-200">
+          <p className={clsx(getThemeClassNames(TEXT_TITLE_CLASSES),"text-lg font-bold hover:text-primary transition-colors duration-200")}>
             {vacancy.position}
           </p>
-          <p className="text-gray-600 text-sm mb-2">
+          <p className="text-sm mb-2">
             {vacancy.company.company_name}
           </p>
           <div className="flex items-center justify-between">
-            <span className="text-gray-500 text-xs">
+            <span className="text-xs">
               {vacancy.applied_count} Applied
             </span>
             <span className="text-primary text-xs font-medium">

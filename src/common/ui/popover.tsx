@@ -1,6 +1,7 @@
 import { Popover as ChakraPopover, Portal } from "@chakra-ui/react";
 import { CloseButton } from "./close-button";
 import * as React from "react";
+import { useColorMode } from "./color-mode";
 
 interface PopoverContentProps extends ChakraPopover.ContentProps {
   portalled?: boolean;
@@ -25,9 +26,17 @@ export const PopoverArrow = React.forwardRef<
   HTMLDivElement,
   ChakraPopover.ArrowProps
 >(function PopoverArrow(props, ref) {
+  const {colorMode} = useColorMode();
   return (
     <ChakraPopover.Arrow {...props} ref={ref}>
-      <ChakraPopover.ArrowTip />
+      <ChakraPopover.ArrowTip style={
+        { 
+          backgroundColor: colorMode === "light"
+            ? "rgb(226 232 240 / var(--tw-bg-opacity, 1))"
+            : "rgb(71 85 105 / var(--tw-bg-opacity, 1))",
+          zIndex: -1
+        }
+      } />
     </ChakraPopover.Arrow>
   );
 });

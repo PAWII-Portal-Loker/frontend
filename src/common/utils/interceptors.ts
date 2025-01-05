@@ -3,6 +3,7 @@ import {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
+import { generateDeviceId } from "./deviceId";
 
 const authReqInterceptors = (config: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("access_token");
@@ -41,8 +42,7 @@ const authResInterceptors = (response: AxiosResponse) => {
 };
 
 const deviceIdInterceptors = (config: InternalAxiosRequestConfig) => {
-  // TODO: implement device id logic
-  const deviceId = "qwerty";
+  const deviceId = generateDeviceId();
 
   if (deviceId) {
     config.headers["x-device-id"] = deviceId;

@@ -1,27 +1,20 @@
 import { CreateApplicationSchema } from "@application/schemas/create";
-import { CreateApplicationDto } from "@application/types/create";
+import { CreateApplicationFormDto } from "@application/types/create";
 import { FieldConfig } from "@types";
 
-export const CreateApplicationField: FieldConfig<CreateApplicationDto>[] = [
-  {
-    name: "vacancy_id",
-    label: "Vacancy",
-    type: "select",
-    placeholder: "Select a vacancy",
-    rules: CreateApplicationSchema.fields.vacancy_id,
-  },
-  {
-    name: "document_urls",
-    label: "Document URLs",
-    type: "text",
-    placeholder: "Enter document URLs",
-    rules: CreateApplicationSchema.fields.document_urls,
-  },
+export const CreateApplicationField: FieldConfig<CreateApplicationFormDto>[] = [
   {
     name: "message",
     label: "Message",
-    type: "text",
+    type: "textarea",
     placeholder: "Enter your message",
     rules: CreateApplicationSchema.fields.message,
+  },
+  {
+    name: "document_urls",
+    label: "Documents",
+    type: "file",
+    placeholder: "Drag and drop your documents here",
+    rules: CreateApplicationSchema.fields.document_urls,
   },
 ];

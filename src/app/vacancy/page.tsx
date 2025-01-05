@@ -2,13 +2,18 @@
 
 import VacanciesSkeleton from "@components/skeletons/VacanciesSkeleton";
 import VacancyCard from "@components/vacancy/VacancyCard";
+import { extractQueryParams } from "@utils/searchParams";
 import useVacancyStore from "@vacancy/store";
+import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 const VacancyPage = () => {
-  const { vacancies, isVacanciesLoading, getVacancies } = useVacancyStore();
+  const { vacancies, isVacanciesLoading, setFilters, getVacancies } =
+    useVacancyStore();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
+    setFilters(extractQueryParams(searchParams));
     getVacancies();
   }, []);
 

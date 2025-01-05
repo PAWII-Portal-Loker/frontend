@@ -25,6 +25,7 @@ import { CreateJobSeekerSchema } from "@jobSeeker/schemas/create";
 import { slideVariants } from "@consts/animationVariants";
 import RoleForm from "./roleForm";
 import AnimatedHeight from "@commoncomponents/animated/AnimatedHeight";
+import { CONTAINER_CLASSES, getThemeClassNames, TEXT_CLASSES } from "@utils/classNames";
 
 const RoleDialog = () => {
   const {
@@ -83,7 +84,7 @@ const RoleDialog = () => {
       open={isRoleDialogOpen}
       onOpenChange={() => setRoleDialogOpen(isRoleDialogOpen)}
     >
-      <DialogContent className="bg-slate-700 text-gray-100">
+      <DialogContent className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}>
         <DialogHeader>
           <DialogTitle textAlign="center" fontSize="2xl" fontWeight="bold">
             Choose Your Role

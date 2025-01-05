@@ -18,7 +18,13 @@ import useAuthStore from "@auth/store";
 import { SignInDto } from "@auth/types/signIn";
 import { SignInSchema } from "@auth/schemas/signIn";
 import { SignInField } from "@auth/fields/signIn";
-import { getFocusRingColorClass, getSubmitButtonClass } from "@utils/form";
+import { getInputClass, getSubmitButtonClass } from "@utils/form";
+import {
+  CONTAINER_ACTIVE_CLASSES,
+  CONTAINER_CLASSES,
+  getThemeClassNames,
+  TEXT_CLASSES,
+} from "@utils/classNames";
 
 const LoginDialog = () => {
   const { isLoginDialogOpen, setLoginDialogOpen, setRegisterDialogOpen } =
@@ -44,9 +50,11 @@ const LoginDialog = () => {
     <DialogRoot
       lazyMount
       open={isLoginDialogOpen}
-      onOpenChange={() => setLoginDialogOpen(isLoginDialogOpen)}
+      onOpenChange={() => setLoginDialogOpen(false)}
     >
-      <DialogContent className="bg-slate-500 text-gray-100">
+      <DialogContent
+        className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}
+      >
         <DialogHeader>
           <DialogTitle textAlign="center" fontSize="2xl" fontWeight="bold">
             Login
@@ -66,8 +74,12 @@ const LoginDialog = () => {
                   type={field.type}
                   placeholder={field.placeholder}
                   className={clsx(
-                    "rounded-lg border-2 p-4 focus:ring-2 bg-gray-100 text-lg text-gray-800 placeholder-gray-400 appearance-none",
-                    getFocusRingColorClass(errors[field.name])
+                    "p-4 rounded-lg border-2 bg-gray-100 text-lg placeholder-gray-400 appearance-none",
+                    errors[field.name]
+                      ? "focus-visible:ring-red-500 border-red-500"
+                      : "border-gray-300",
+                    getInputClass(errors[field.name]),
+                    getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)
                   )}
                 />
               </Field>
@@ -90,7 +102,8 @@ const LoginDialog = () => {
             Don't have an account?{" "}
             <Text
               as="span"
-              color="blue.500"
+              color="blue.400"
+              fontWeight="bold"
               cursor="pointer"
               onClick={() => {
                 setLoginDialogOpen(false);
