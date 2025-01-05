@@ -1,4 +1,4 @@
-import { Stack, Textarea } from "@chakra-ui/react";
+import { Stack, Text, Textarea } from "@chakra-ui/react";
 import { GiClick } from "react-icons/gi";
 import {
   FieldError,
@@ -42,6 +42,7 @@ import {
   getThemeClassNames,
   TEXT_CLASSES,
 } from "@utils/classNames";
+import { toaster } from "@ui/toaster";
 
 const ApplicationDialog = () => {
   const vacancyId = useParams().id as string;
@@ -52,10 +53,8 @@ const ApplicationDialog = () => {
     setApplicationDialogOpen,
     createApplication,
     documents,
-    setDocuments,
     uploadDocuments,
-    isDocumentUploading,
-    isDocumentDeleting,
+    isDocumentLoading,
   } = useApplicationStore();
 
   const {
@@ -107,19 +106,23 @@ const ApplicationDialog = () => {
                   <FileUploadRoot
                     {...register(field.name)}
                     maxW="xl"
-                    disabled={
-                      isDocumentUploading ||
-                      isDocumentDeleting ||
-                      isApplicationLoading
-                    }
-                    onFileChange={(filesObject) =>
+                    accept=".png, .jpg, .pdf"
+                    disabled={isDocumentLoading || isApplicationLoading}
+                    onFileAccept={(acceptedFilesObject) =>
                       handleFileChange(
-                        filesObject,
+                        acceptedFilesObject,
                         documents,
-                        setDocuments,
                         setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
                         trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
                       )
+                    }
+                    onFileReject={(rejectedFilesObject) =>
+                      rejectedFilesObject.files.length > 0 &&
+                      toaster.error({
+                        title: `${rejectedFilesObject.files.length} file(s) rejected`,
+                        description: "Please upload a valid file",
+                        duration: 3000,
+                      })
                     }
                     validate={(file) => validateFile(file, documents)}
                     alignItems="stretch"
@@ -137,6 +140,11 @@ const ApplicationDialog = () => {
                         )
                       )}
                     />
+                    {isDocumentLoading && (
+                      <Text fontSize="sm" color="gray.500">
+                        Compressing...
+                      </Text>
+                    )}
                     <FileUploadList
                       files={getValues("document_urls")}
                       showSize

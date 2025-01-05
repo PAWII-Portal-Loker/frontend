@@ -1,12 +1,16 @@
+import { useApplicationStore } from "@application/store";
 import { toaster } from "@ui/toaster";
 import clsx from "clsx";
-import { FileChangeDetails } from "node_modules/@chakra-ui/react/dist/types/components/file-upload/namespace";
+import { FileAcceptDetails } from "node_modules/@chakra-ui/react/dist/types/components/file-upload/namespace";
 import {
   FieldError,
   FieldErrors,
   UseFormSetValue,
   UseFormTrigger,
 } from "react-hook-form";
+import { compressPdf, compressImage } from "./compress";
+
+const { setDocuments } = useApplicationStore.getState();
 
 export const getInputClass = (error: FieldError | undefined) =>
   clsx(
@@ -26,7 +30,7 @@ export interface DocumentUrlsInputProps {
   document_urls: File[];
 }
 
-const updateDocumentsAndForm = (
+export const updateDocumentsAndForm = (
   newDocuments: File[],
   setDocuments: (
     documents: File[] | ((prevDocuments: File[]) => File[])
@@ -39,37 +43,70 @@ const updateDocumentsAndForm = (
   trigger("document_urls");
 };
 
-export const handleFileChange = (
-  filesObject: FileChangeDetails,
-  documents: File[],
-  setDocuments: (
-    documents: File[] | ((prevDocuments: File[]) => File[])
-  ) => void,
+const processFile = (
+  file: File,
+  newDocuments: File[],
   setValue: UseFormSetValue<DocumentUrlsInputProps>,
   trigger: UseFormTrigger<DocumentUrlsInputProps>
 ) => {
-  if (filesObject.rejectedFiles.length > 0) {
-    toaster.create({
-      title: `${filesObject.rejectedFiles.length} file(s) rejected`,
-      description: "Please upload a valid file",
-      type: "error",
-      duration: 3000,
+  if (file.type.startsWith("image/")) {
+    compressImage(file, (compressedFile) => {
+      newDocuments.push(compressedFile);
+      updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
     });
+  } else if (file.type === "application/pdf") {
+    compressPdf(file, (compressedFile) => {
+      newDocuments.push(compressedFile);
+      updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
+    });
+  } else {
+    newDocuments.push(file);
+    updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
   }
+};
 
-  const uniqueFiles = filesObject.acceptedFiles.filter(
-    (newFile) =>
-      !documents.some(
-        (doc) =>
-          doc.lastModified === newFile.lastModified &&
-          doc.name === newFile.name &&
-          doc.size === newFile.size &&
-          doc.type === newFile.type
-      )
+const replaceWhitespaceWithHyphen = (fileName: string): string => {
+  return fileName.replace(/\s+/g, "-");
+};
+
+export const handleFileChange = (
+  acceptedFilesObject: FileAcceptDetails,
+  documents: File[],
+  setValue: UseFormSetValue<DocumentUrlsInputProps>,
+  trigger: UseFormTrigger<DocumentUrlsInputProps>
+) => {
+  const { setDocumentLoading } = useApplicationStore.getState();
+  setDocumentLoading(true);
+
+  const newDocuments = [...documents];
+
+  const uniqueAcceptedFiles = acceptedFilesObject.files.filter(
+    (file, index, self) => {
+      return (
+        index ===
+        self.findIndex(
+          (f) =>
+            replaceWhitespaceWithHyphen(f.name) ===
+            replaceWhitespaceWithHyphen(file.name)
+        )
+      );
+    }
   );
 
-  const newDocuments = [...documents, ...uniqueFiles];
-  updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
+  uniqueAcceptedFiles.forEach((file) => {
+    const newFileName = replaceWhitespaceWithHyphen(file.name);
+    const newFile = new File([file], newFileName, { type: file.type });
+
+    if (
+      documents.some((doc) => doc.name === newFileName) ||
+      newDocuments.some((doc) => doc.name === newFileName)
+    ) {
+      return;
+    }
+
+    processFile(newFile, newDocuments, setValue, trigger);
+  });
+  setDocumentLoading(false);
 };
 
 export const deleteFileFromList = (files: File[], index: number): File[] => {
@@ -78,9 +115,6 @@ export const deleteFileFromList = (files: File[], index: number): File[] => {
 
 export const handleDeleteFile = (
   index: number,
-  setDocuments: (
-    documents: File[] | ((prevDocuments: File[]) => File[])
-  ) => void,
   setValue: UseFormSetValue<DocumentUrlsInputProps>,
   trigger: UseFormTrigger<DocumentUrlsInputProps>,
   event: React.MouseEvent<HTMLButtonElement>
@@ -104,12 +138,12 @@ export const validateFile = (
   documents: File[]
 ): FileError[] | null => {
   const errors: FileError[] = [];
+  const fileName = replaceWhitespaceWithHyphen(file.name);
 
   if (file.size > 5 * 1024 * 1024) {
-    toaster.create({
+    toaster.error({
       title: "File too large",
-      description: `${file.name} is too large. Please upload a file less than 5MB`,
-      type: "error",
+      description: `${fileName} is too large. Please upload a file less than 5MB`,
       duration: 3000,
     });
     errors.push("FILE_TOO_LARGE");
@@ -120,48 +154,29 @@ export const validateFile = (
       file.type
     )
   ) {
-    toaster.create({
+    toaster.error({
       title: "Invalid file type",
-      description: `${file.name} is not a valid file type. Please upload a .png, .jpg, or .pdf file`,
-      type: "error",
+      description: `${fileName} is not a valid file type. Please upload a .png, .jpg, or .pdf file`,
       duration: 3000,
     });
     errors.push("FILE_INVALID_TYPE");
   }
 
   if (documents.length >= 5) {
-    toaster.create({
+    toaster.error({
       title: "Maximum files reached",
       description: "You can only upload up to 5 files",
-      type: "error",
       duration: 3000,
     });
     errors.push("TOO_MANY_FILES");
   }
 
-  if (/\s/.test(file.name)) {
-    toaster.create({
-      title: "Invalid file name",
-      description: `${file.name} contains whitespace. Please rename the file and try again`,
-      type: "error",
-      duration: 3000,
-    });
-    errors.push("FILE_INVALID");
-  }
-
   if (
-    documents.some(
-      (doc) =>
-        doc.lastModified === file.lastModified &&
-        doc.name === file.name &&
-        doc.size === file.size &&
-        doc.type === file.type
-    )
+    documents.some((doc) => replaceWhitespaceWithHyphen(doc.name) === fileName)
   ) {
-    toaster.create({
+    toaster.error({
       title: "Duplicate file",
-      description: `${file.name} is already uploaded. Please upload a different file`,
-      type: "error",
+      description: `${fileName} is already uploaded. Please upload a different file`,
       duration: 3000,
     });
     errors.push("FILE_INVALID");

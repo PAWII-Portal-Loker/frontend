@@ -1,14 +1,14 @@
 "use client";
 
 import useAuthStore from "@auth/store";
-import { ROLE_COMPANY } from "@enums/types/roles";
+import { hasPermission } from "@utils/permissions";
 import Head from "next/head";
 import NotAuthorizedPage from "src/app/not-authorized";
 
 const MyVacanciesLayout = ({ children }: { children: React.ReactNode }) => {
   const { auth } = useAuthStore();
 
-  if (auth.role !== ROLE_COMPANY) {
+  if (hasPermission(auth, "myVacancies", "view")) {
     return <NotAuthorizedPage />;
   }
 

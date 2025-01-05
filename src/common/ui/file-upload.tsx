@@ -35,6 +35,7 @@ import {
 } from "@utils/classNames";
 import { useScreenSize } from "@utils/screenSize";
 import clsx from "clsx";
+import Link from "next/link";
 export interface FileUploadRootProps extends ChakraFileUpload.RootProps {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
@@ -92,19 +93,16 @@ interface FileUploadItemProps extends VisibilityProps {
 const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
   function FileUploadItem(props, ref) {
     const { file, showSize, clearable, setValue, trigger, index } = props;
-    const { setDocuments } = useApplicationStore();
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const { isMd } = useScreenSize();
     const [isOpen, setOpen] = useState<boolean>(false);
 
     useEffect(() => {
-      if (file.type.startsWith("image/")) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreviewUrl(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }, [file]);
 
     return (
@@ -135,6 +133,7 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
                     alt={file.name}
                     width={30}
                     height={30}
+                    className="rounded-md"
                   />
                 ) : (
                   <Icon fontSize="lg" color="fg.error" width={30} height={30}>
@@ -145,7 +144,16 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
 
               {showSize ? (
                 <ChakraFileUpload.ItemContent>
-                  <ChakraFileUpload.ItemName />
+                  <ChakraFileUpload.ItemName>
+                    <Link
+                      href={URL.createObjectURL(file)}
+                      passHref
+                      target="_blank"
+                      className="cursor-pointer underline text-blue-500"
+                    >
+                      {file.name}
+                    </Link>
+                  </ChakraFileUpload.ItemName>
                   <ChakraFileUpload.ItemSizeText />
                 </ChakraFileUpload.ItemContent>
               ) : (
@@ -153,34 +161,31 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
               )}
 
               {clearable && (
-                <ChakraFileUpload.ItemDeleteTrigger asChild>
-                  <IconButton
-                    variant="solid"
-                    bg="red.100"
-                    marginY="auto"
-                    color="red.500"
-                    colorScheme="red"
-                    size="sm"
-                    aria-label="Remove file"
-                    _hover={{
-                      bg: "red.200",
-                      color: "red.600",
-                      scale: "1.1",
-                      transition: "all 0.2s",
-                    }}
-                    onClick={(event) =>
-                      handleDeleteFile(
-                        index,
-                        setDocuments,
-                        setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
-                        trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>,
-                        event
-                      )
-                    }
-                  >
-                    <LuX />
-                  </IconButton>
-                </ChakraFileUpload.ItemDeleteTrigger>
+                <IconButton
+                  variant="solid"
+                  bg="red.100"
+                  marginY="auto"
+                  color="red.500"
+                  colorScheme="red"
+                  size="sm"
+                  aria-label="Remove file"
+                  _hover={{
+                    bg: "red.200",
+                    color: "red.600",
+                    scale: "1.1",
+                    transition: "all 0.2s",
+                  }}
+                  onClick={(event) =>
+                    handleDeleteFile(
+                      index,
+                      setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
+                      trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>,
+                      event
+                    )
+                  }
+                >
+                  <LuX />
+                </IconButton>
               )}
             </ChakraFileUpload.Item>
           </motion.div>
@@ -194,22 +199,24 @@ const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
             )}
             padding={file.type === "application/pdf" ? 0 : 1}
           >
-            {file.type.startsWith("image/") ? (
-              <Image
-                src={previewUrl ?? "/no-image.jpg"}
-                alt={file.name}
-                width={400}
-                height={400}
-                className="rounded-md"
-              />
-            ) : (
-              <iframe
-                src={URL.createObjectURL(file)}
-                className="rounded-lg shadow-md"
-                width="100%"
-                height="400"
-              />
-            )}
+            <Link href={URL.createObjectURL(file)} target="_blank">
+              {file.type.startsWith("image/") ? (
+                <Image
+                  src={previewUrl ?? "/no-image.jpg"}
+                  alt={file.name}
+                  width={400}
+                  height={400}
+                  className="rounded-md"
+                />
+              ) : (
+                <iframe
+                  src={URL.createObjectURL(file)}
+                  className="rounded-lg shadow-md"
+                  width="100%"
+                  height="400"
+                />
+              )}
+            </Link>
           </PopoverBody>
         </PopoverContent>
       </PopoverRoot>
