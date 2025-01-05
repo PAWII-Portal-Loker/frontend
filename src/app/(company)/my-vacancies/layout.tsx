@@ -17,7 +17,7 @@ const MyVacanciesLayout = ({ children }: { children: React.ReactNode }) => {
       <Head>
         <title>My Vacancies</title>
       </Head>
-      <section className="p-8">{children}</section>
+      <section className="p-[min(8%, 2rem)]">{children}</section>
     </>
   );
 };

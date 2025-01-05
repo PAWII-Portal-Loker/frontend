@@ -74,6 +74,10 @@ const LoginDialog = () => {
                   type={field.type}
                   placeholder={field.placeholder}
                   className={clsx(
+                    "p-4 rounded-lg border-2 bg-gray-100 text-lg placeholder-gray-400 appearance-none",
+                    errors[field.name]
+                      ? "focus-visible:ring-red-500 border-red-500"
+                      : "border-gray-300",
                     getInputClass(errors[field.name]),
                     getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)
                   )}

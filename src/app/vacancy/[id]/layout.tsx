@@ -1,4 +1,4 @@
-import VacancyDetailLoadingCard from "@components/containers/vacancyDetailLoadingCard";
+import VacancyDetailLoadingCard from "@components/skeletons/VacancyDetailSkeleton";
 import Head from "next/head";
 import { Suspense } from "react";
 

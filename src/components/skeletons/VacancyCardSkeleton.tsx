@@ -1,10 +1,18 @@
 import { Skeleton } from "@ui/skeleton";
-import { CONTAINER_GRADIENT_CLASSES, getThemeClassNames } from "@utils/classNames";
+import {
+  CONTAINER_GRADIENT_CLASSES,
+  getThemeClassNames,
+} from "@utils/classNames";
 import clsx from "clsx";
 
-const VacanciesLoadingCard = () => {
+const VacancyCardSkeleton = () => {
   return (
-    <div className={clsx(getThemeClassNames(CONTAINER_GRADIENT_CLASSES),"rounded-lg shadow-md overflow-hidden relative animate-pulse p-4")}>
+    <div
+      className={clsx(
+        getThemeClassNames(CONTAINER_GRADIENT_CLASSES),
+        "rounded-lg shadow-md overflow-hidden relative animate-pulse p-4"
+      )}
+    >
       <div className="w-full h-[200px] mb-3 rounded-lg" />
       <Skeleton width="60%" height="20px" mb="2" />
       <Skeleton width="30%" height="16px" mb="2" />
@@ -16,4 +24,4 @@ const VacanciesLoadingCard = () => {
   );
 };
 
-export default VacanciesLoadingCard;
+export default VacancyCardSkeleton;

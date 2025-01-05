@@ -63,9 +63,9 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
         "w-full px-3 py-2 rounded-md",
         useIsNavbarActive(href)
           ? clsx(
-            "font-semibold",
-            getThemeClassNames(TEXT_PRIMARY_CLASSES, CONTAINER_ACTIVE_CLASSES)
-          )
+              "font-semibold",
+              getThemeClassNames(TEXT_PRIMARY_CLASSES, CONTAINER_ACTIVE_CLASSES)
+            )
           : getThemeClassNames(TEXT_CLASSES, CONTAINER_HOVER_CLASSES)
       )}
       disabled={useIsNavbarActive(href)}
@@ -126,7 +126,7 @@ const Navbar = () => {
             height={30}
             priority
           />
-          <Link href="/" className="text-blue-300 font-bold text-lg">
+          <Link href="/" className="text-blue-500 font-bold text-lg">
             PortalLoker
           </Link>
         </div>

@@ -38,9 +38,17 @@ export function useColorModeValue<T>(light: T, dark: T) {
 export function ColorModeIcon() {
   const { colorMode } = useColorMode();
   return colorMode === "light" ? (
-    <LuSun className="text-yellow-500" />
+    <LuSun
+      style={{
+        color: "orange",
+      }}
+    />
   ) : (
-    <LuMoon className="text-violet-500" />
+    <LuMoon
+      style={{
+        color: "violet",
+      }}
+    />
   );
 }
 

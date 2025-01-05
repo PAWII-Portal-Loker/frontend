@@ -6,11 +6,7 @@ export const extractQueryParams = (
   searchParams.forEach((value, key) => {
     if (key === "page" || key === "limit") {
       params[key] = parseInt(value);
-    } else if (
-      key === "ownedByMe" ||
-      key === "isClosed" ||
-      key === "ownedByMe"
-    ) {
+    } else if (key === "ownedByMe" || key === "isClosed") {
       params[key] = value === "true";
     } else {
       params[key] = value;

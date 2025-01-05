@@ -2,7 +2,7 @@ import { Input } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { FaKey } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import Dropdown from "@components/containers/dropdown";
+import Dropdown from "@ui/dropdown";
 import { Button } from "@ui/button";
 import useDashboardStore from "@hooks/dashboard/store";
 import { useJobTypestore } from "@enums/stores/jobType";
@@ -11,7 +11,12 @@ import { scaleVariants, slideVariants } from "@consts/animationVariants";
 import useVacancyStore from "@vacancy/store";
 import { VacancyFilter } from "@vacancy/types/filter";
 import clsx from "clsx";
-import { CONTAINER_ACTIVE_CLASSES, CONTAINER_CLASSES, getThemeClassNames, TEXT_CLASSES } from "@utils/classNames";
+import {
+  CONTAINER_ACTIVE_CLASSES,
+  CONTAINER_CLASSES,
+  getThemeClassNames,
+  TEXT_CLASSES,
+} from "@utils/classNames";
 
 const JobSeekerDashboard = () => {
   const { isSearchFocused } = useDashboardStore();
@@ -43,7 +48,7 @@ const JobSeekerDashboard = () => {
         exit="exit"
         transition={{ delay: 0.3 }}
       >
-        <p className="text-5xl font-bold tracking-tight text-center text-blue-300 sm:text-6xl">
+        <p className="text-5xl font-bold tracking-tight text-center text-blue-500 sm:text-6xl">
           Find Your Dream Job
         </p>
         <p className="text-lg text-center">
@@ -51,7 +56,10 @@ const JobSeekerDashboard = () => {
         </p>
       </motion.div>
       <motion.div
-        className={clsx(getThemeClassNames(CONTAINER_CLASSES),"p-4 flex flex-col gap-4 lg:flex-row lg:gap-8 rounded-md")}
+        className={clsx(
+          getThemeClassNames(CONTAINER_CLASSES),
+          "p-4 flex flex-col gap-4 lg:flex-row lg:gap-8 rounded-md"
+        )}
         variants={scaleVariants}
         initial="initial"
         animate="animate"
@@ -62,7 +70,10 @@ const JobSeekerDashboard = () => {
           <Input
             placeholder="Keyword e.g. (Job Title, Description, Company Name)"
             ref={isSearchFocused ? (input) => input?.focus() : null}
-            className={clsx("pl-10 pr-14 py-3 rounded-lg focus:border-blue-500 text-lg", getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES))}
+            className={clsx(
+              "pl-10 pr-14 py-3 rounded-lg focus:border-blue-500 text-lg",
+              getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)
+            )}
             value={filters.position}
             onChange={(e) => setFilters({ position: e.target.value })}
           />
@@ -92,7 +103,7 @@ const JobSeekerDashboard = () => {
         />
 
         <Button
-          className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded"
           onClick={handleSearch}
         >
           Search

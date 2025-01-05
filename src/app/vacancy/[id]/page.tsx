@@ -13,7 +13,7 @@ import ApplicationDialog from "./(jobSeeker)/ApplicationDialog";
 import NotFoundPage from "src/app/not-found";
 import { fadeVariants, scaleVariants } from "@consts/animationVariants";
 import { motion } from "framer-motion";
-import VacancyDetailLoadingCard from "@components/containers/vacancyDetailLoadingCard";
+import VacancyDetailLoadingCard from "@components/skeletons/VacancyDetailSkeleton";
 import { CONTAINER_CLASSES, getThemeClassNames } from "@utils/classNames";
 
 const VacancyDetailPage = () => {
@@ -57,7 +57,10 @@ const VacancyDetailPage = () => {
           animate="animate"
           initial="initial"
           transition={{ delay: 0.2 }}
-          className={clsx(getThemeClassNames(CONTAINER_CLASSES),"lg:w-full p-4 rounded-lg shadow-md")}
+          className={clsx(
+            getThemeClassNames(CONTAINER_CLASSES),
+            "lg:w-full p-4 rounded-lg shadow-md"
+          )}
         >
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-3xl font-bold text-primary">
@@ -76,16 +79,12 @@ const VacancyDetailPage = () => {
             {vacancy.company.company_name}
           </h2>
           <div className="flex items-center mb-4 text-sm">
-            <span>
-              {vacancy.applied_count} Applied
-            </span>
+            <span>{vacancy.applied_count} Applied</span>
             <span className="text-primary font-medium ml-4">
               {vacancy.job_type} - {vacancy.income_type}
             </span>
           </div>
-          <p className="text-lg leading-relaxed mb-6">
-            {vacancy.description}
-          </p>
+          <p className="text-lg leading-relaxed mb-6">{vacancy.description}</p>
           {hasPermission(auth, "application", "create") && (
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full transition-colors duration-200"
