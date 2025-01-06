@@ -19,7 +19,6 @@ import {
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
 import {
-  DocumentUrlsInputProps,
   downloadZip,
   getInputClass,
   getSubmitButtonClass,
@@ -33,6 +32,7 @@ import useVacancyStore from "@vacancy/store";
 import { useParams } from "next/navigation";
 import { CreateApplicationSchema } from "@application/schemas/create";
 import {
+  DocumentUrlsInputProps,
   FileUploadDropzone,
   FileUploadList,
   FileUploadRoot,
@@ -54,6 +54,7 @@ const ApplicationDialog = () => {
     setApplicationDialogOpen,
     createApplication,
     documents,
+    setDocuments,
     uploadDocuments,
     isDocumentLoading,
   } = useApplicationStore();
@@ -80,6 +81,8 @@ const ApplicationDialog = () => {
     });
   });
 
+  console.log("documents", documents);
+  console.log("getValues", getValues("document_urls"));
   return (
     <DialogRoot
       lazyMount
@@ -113,8 +116,13 @@ const ApplicationDialog = () => {
                       handleFileChange(
                         acceptedFilesObject,
                         documents,
-                        setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
-                        trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
+                        (
+                          newDocuments: CreateApplicationFormDto["document_urls"]
+                        ) => {
+                          setDocuments(newDocuments);
+                          setValue("document_urls", newDocuments);
+                          trigger("document_urls");
+                        }
                       )
                     }
                     onFileReject={(rejectedFilesObject) =>
@@ -158,12 +166,16 @@ const ApplicationDialog = () => {
                         Download All Files (ZIP)
                       </Button>
                     )}
-                    <FileUploadList<CreateApplicationFormDto>
+                    <FileUploadList
                       files={getValues("document_urls")}
                       showSize
                       clearable
-                      setValue={setValue}
-                      trigger={trigger}
+                      setValue={
+                        setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>
+                      }
+                      trigger={
+                        trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
+                      }
                     />
                   </FileUploadRoot>
                 ) : (

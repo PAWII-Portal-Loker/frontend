@@ -15,9 +15,8 @@ import { LuUpload, LuX } from "react-icons/lu";
 import { motion } from "framer-motion";
 import { scaleVariants } from "@consts/animationVariants";
 import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
-import { CreateApplicationFormDto } from "@application/types/create";
 import { useApplicationStore } from "@application/store";
-import { DocumentUrlsInputProps, handleDeleteFile } from "@utils/form";
+import { handleDeleteFile } from "@utils/form";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
@@ -36,7 +35,6 @@ import {
 import { useScreenSize } from "@utils/screenSize";
 import clsx from "clsx";
 import Link from "next/link";
-import { CreateVacancyFormDto } from "@vacancy/types/create";
 export interface FileUploadRootProps extends ChakraFileUpload.RootProps {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
@@ -84,19 +82,18 @@ interface VisibilityProps {
   clearable?: boolean;
 }
 
-interface FileUploadItemProps<
-  T extends CreateApplicationFormDto | CreateVacancyFormDto
-> extends VisibilityProps {
+export interface DocumentUrlsInputProps {
+  document_urls: File[];
+}
+interface FileUploadItemProps extends VisibilityProps {
   file: File;
-  setValue: UseFormSetValue<T>;
-  trigger: UseFormTrigger<T>;
+  setValue: UseFormSetValue<DocumentUrlsInputProps>;
+  trigger: UseFormTrigger<DocumentUrlsInputProps>;
   index: number;
 }
 
-const FileUploadItem = <
-  T extends CreateApplicationFormDto | CreateVacancyFormDto
->(
-  props: FileUploadItemProps<T>,
+const FileUploadItem = (
+  props: FileUploadItemProps,
   ref: React.ForwardedRef<HTMLLIElement>
 ) => {
   const { file, showSize, clearable, setValue, trigger, index } = props;
@@ -183,12 +180,11 @@ const FileUploadItem = <
                   transition: "all 0.2s",
                 }}
                 onClick={(event) =>
-                  handleDeleteFile(
-                    index,
-                    setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
-                    trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>,
-                    event
-                  )
+                  handleDeleteFile(index, event, (newDocuments) => {
+                    console.log("newDocumentsDelete", newDocuments);
+                    setValue("document_urls", newDocuments);
+                    trigger("document_urls");
+                  })
                 }
               >
                 <LuX />
@@ -230,19 +226,16 @@ const FileUploadItem = <
   );
 };
 
-interface FileUploadListProps<
-  T extends CreateApplicationFormDto | CreateVacancyFormDto
-> extends VisibilityProps,
+interface FileUploadListProps
+  extends VisibilityProps,
     ChakraFileUpload.ItemGroupProps {
   files?: File[];
-  setValue: UseFormSetValue<T>;
-  trigger: UseFormTrigger<T>;
+  setValue: UseFormSetValue<DocumentUrlsInputProps>;
+  trigger: UseFormTrigger<DocumentUrlsInputProps>;
 }
 
-export const FileUploadList = <
-  T extends CreateApplicationFormDto | CreateVacancyFormDto
->(
-  props: FileUploadListProps<T>,
+export const FileUploadList = (
+  props: FileUploadListProps,
   ref: React.ForwardedRef<HTMLUListElement>
 ) => {
   const { showSize, clearable, setValue, trigger, ...rest } = props;
