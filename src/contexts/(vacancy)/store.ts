@@ -7,6 +7,9 @@ import { VacancyStoreState } from "./types/storeState";
 import { toaster } from "@ui/toaster";
 import { DefaultPagination } from "@utils/defaultPagination";
 import { mapObjectToFilterParams } from "@utils/mapper";
+import FileUploadService from "@fileUpload/service";
+
+const fileUploadService = new FileUploadService();
 
 export const DefaultVacancyDto: VacancyDto = {
   id: "",
@@ -45,6 +48,9 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
   isVacancyLoading: false,
   filters: DefaultVacancyFilter,
   pagination: DefaultPagination,
+  isVacancyDialogOpen: false,
+  image: [],
+  isImageLoading: false,
 
   setVacancies: (vacancies) => set({ vacancies }),
   setVacanciesLoading: (isVacanciesLoading) => set({ isVacanciesLoading }),
@@ -52,6 +58,35 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
   setVacancyLoading: (isVacancyLoading) => set({ isVacancyLoading }),
   setFilters: (filters) => set({ filters: { ...get().filters, ...filters } }),
   setPagination: (pagination) => set({ pagination }),
+  setVacancyDialogOpen: (isOpen) => set({ isVacancyDialogOpen: isOpen }),
+
+  uploadImage: (image) => {
+    get().setImageLoading(true);
+    return new Promise((resolve, reject) => {
+      fileUploadService.uploadFile(image, {
+        onSuccess: (urls) => {
+          resolve(urls[0]);
+        },
+        onError: (message) => {
+          toaster.create({
+            title: "Failed to upload images",
+            description: message,
+            type: "error",
+            duration: 3000,
+          });
+          reject(message);
+        },
+        onFullfilled() {
+          get().setImageLoading(false);
+        },
+      });
+    });
+  },
+  setImage: (image) =>
+    set((state) => ({
+      image: typeof image === "function" ? image(state.image) : image,
+    })),
+  setImageLoading: (isImageLoading) => set({ isImageLoading }),
 
   getVacancies: () => {
     get().setVacanciesLoading(true);
@@ -61,6 +96,7 @@ const useVacancyStore = create<VacancyStoreState>((set, get) => ({
       {
         onSuccess: (vacancies) => {
           get().setVacancies(vacancies);
+          get().setVacancyDialogOpen(false);
         },
         onError: (message: string) => {
           toaster.create({

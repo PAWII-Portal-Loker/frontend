@@ -36,6 +36,7 @@ import {
 import { useScreenSize } from "@utils/screenSize";
 import clsx from "clsx";
 import Link from "next/link";
+import { CreateVacancyFormDto } from "@vacancy/types/create";
 export interface FileUploadRootProps extends ChakraFileUpload.RootProps {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
@@ -83,159 +84,167 @@ interface VisibilityProps {
   clearable?: boolean;
 }
 
-interface FileUploadItemProps extends VisibilityProps {
+interface FileUploadItemProps<
+  T extends CreateApplicationFormDto | CreateVacancyFormDto
+> extends VisibilityProps {
   file: File;
-  setValue: UseFormSetValue<CreateApplicationFormDto>;
-  trigger: UseFormTrigger<CreateApplicationFormDto>;
+  setValue: UseFormSetValue<T>;
+  trigger: UseFormTrigger<T>;
   index: number;
 }
 
-const FileUploadItem = React.forwardRef<HTMLLIElement, FileUploadItemProps>(
-  function FileUploadItem(props, ref) {
-    const { file, showSize, clearable, setValue, trigger, index } = props;
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-    const { isMd } = useScreenSize();
-    const [isOpen, setOpen] = useState<boolean>(false);
+const FileUploadItem = <
+  T extends CreateApplicationFormDto | CreateVacancyFormDto
+>(
+  props: FileUploadItemProps<T>,
+  ref: React.ForwardedRef<HTMLLIElement>
+) => {
+  const { file, showSize, clearable, setValue, trigger, index } = props;
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const { isMd } = useScreenSize();
+  const [isOpen, setOpen] = useState<boolean>(false);
 
-    useEffect(() => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }, [file]);
+  useEffect(() => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewUrl(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  }, [file]);
 
-    return (
-      <PopoverRoot
-        positioning={{ placement: isMd ? "left" : "top" }}
-        onOpenChange={(e) => setOpen(e.open)}
-      >
-        <PopoverTrigger asChild>
-          <motion.div
-            variants={scaleVariants}
-            animate="animate"
-            exit="exit"
-            initial="initial"
-            transition={{ delay: index * 0.1 }}
-          >
-            <ChakraFileUpload.Item
-              file={file}
-              ref={ref}
-              className={clsx(
-                isOpen && "font-bold",
-                getThemeClassNames(CONTAINER_ACTIVE_CLASSES)
-              )}
-            >
-              <ChakraFileUpload.ItemPreview asChild>
-                {file.type.startsWith("image/") ? (
-                  <Image
-                    src={previewUrl ?? "/no-image.jpg"}
-                    alt={file.name}
-                    width={30}
-                    height={30}
-                    className="rounded-md"
-                  />
-                ) : (
-                  <Icon fontSize="lg" color="fg.error" width={30} height={30}>
-                    <FaRegFilePdf />
-                  </Icon>
-                )}
-              </ChakraFileUpload.ItemPreview>
-
-              {showSize ? (
-                <ChakraFileUpload.ItemContent>
-                  <ChakraFileUpload.ItemName>
-                    <Link
-                      href={URL.createObjectURL(file)}
-                      passHref
-                      target="_blank"
-                      className="cursor-pointer underline text-blue-500"
-                    >
-                      {file.name}
-                    </Link>
-                  </ChakraFileUpload.ItemName>
-                  <ChakraFileUpload.ItemSizeText />
-                </ChakraFileUpload.ItemContent>
-              ) : (
-                <ChakraFileUpload.ItemName flex="1" />
-              )}
-
-              {clearable && (
-                <IconButton
-                  variant="solid"
-                  bg="red.100"
-                  marginY="auto"
-                  color="red.500"
-                  colorScheme="red"
-                  size="sm"
-                  aria-label="Remove file"
-                  _hover={{
-                    bg: "red.200",
-                    color: "red.600",
-                    scale: "1.1",
-                    transition: "all 0.2s",
-                  }}
-                  onClick={(event) =>
-                    handleDeleteFile(
-                      index,
-                      setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
-                      trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>,
-                      event
-                    )
-                  }
-                >
-                  <LuX />
-                </IconButton>
-              )}
-            </ChakraFileUpload.Item>
-          </motion.div>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverBody
+  return (
+    <PopoverRoot
+      positioning={{ placement: isMd ? "left" : "top" }}
+      onOpenChange={(e) => setOpen(e.open)}
+    >
+      <PopoverTrigger asChild>
+        <motion.div
+          variants={scaleVariants}
+          animate="animate"
+          exit="exit"
+          initial="initial"
+          transition={{ delay: index * 0.1 }}
+        >
+          <ChakraFileUpload.Item
+            file={file}
+            ref={ref}
             className={clsx(
-              "rounded-md",
+              isOpen && "font-bold",
               getThemeClassNames(CONTAINER_ACTIVE_CLASSES)
             )}
-            padding={file.type === "application/pdf" ? 0 : 1}
           >
-            <Link href={URL.createObjectURL(file)} target="_blank">
+            <ChakraFileUpload.ItemPreview asChild>
               {file.type.startsWith("image/") ? (
                 <Image
                   src={previewUrl ?? "/no-image.jpg"}
                   alt={file.name}
-                  width={400}
-                  height={400}
+                  width={30}
+                  height={30}
                   className="rounded-md"
                 />
               ) : (
-                <iframe
-                  src={URL.createObjectURL(file)}
-                  className="rounded-lg shadow-md"
-                  width="100%"
-                  height="400"
-                />
+                <Icon fontSize="lg" color="fg.error" width={30} height={30}>
+                  <FaRegFilePdf />
+                </Icon>
               )}
-            </Link>
-          </PopoverBody>
-        </PopoverContent>
-      </PopoverRoot>
-    );
-  }
-);
+            </ChakraFileUpload.ItemPreview>
 
-interface FileUploadListProps
-  extends VisibilityProps,
+            {showSize ? (
+              <ChakraFileUpload.ItemContent>
+                <ChakraFileUpload.ItemName>
+                  <Link
+                    href={URL.createObjectURL(file)}
+                    passHref
+                    target="_blank"
+                    className="cursor-pointer underline text-blue-500"
+                  >
+                    {file.name}
+                  </Link>
+                </ChakraFileUpload.ItemName>
+                <ChakraFileUpload.ItemSizeText />
+              </ChakraFileUpload.ItemContent>
+            ) : (
+              <ChakraFileUpload.ItemName flex="1" />
+            )}
+
+            {clearable && (
+              <IconButton
+                variant="solid"
+                bg="red.100"
+                marginY="auto"
+                color="red.500"
+                colorScheme="red"
+                size="sm"
+                aria-label="Remove file"
+                _hover={{
+                  bg: "red.200",
+                  color: "red.600",
+                  scale: "1.1",
+                  transition: "all 0.2s",
+                }}
+                onClick={(event) =>
+                  handleDeleteFile(
+                    index,
+                    setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
+                    trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>,
+                    event
+                  )
+                }
+              >
+                <LuX />
+              </IconButton>
+            )}
+          </ChakraFileUpload.Item>
+        </motion.div>
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverArrow />
+        <PopoverBody
+          className={clsx(
+            "rounded-md",
+            getThemeClassNames(CONTAINER_ACTIVE_CLASSES)
+          )}
+          padding={file.type === "application/pdf" ? 0 : 1}
+        >
+          <Link href={URL.createObjectURL(file)} target="_blank">
+            {file.type.startsWith("image/") ? (
+              <Image
+                src={previewUrl ?? "/no-image.jpg"}
+                alt={file.name}
+                width={400}
+                height={400}
+                className="rounded-md"
+              />
+            ) : (
+              <iframe
+                src={URL.createObjectURL(file)}
+                className="rounded-lg shadow-md"
+                width="100%"
+                height="400"
+              />
+            )}
+          </Link>
+        </PopoverBody>
+      </PopoverContent>
+    </PopoverRoot>
+  );
+};
+
+interface FileUploadListProps<
+  T extends CreateApplicationFormDto | CreateVacancyFormDto
+> extends VisibilityProps,
     ChakraFileUpload.ItemGroupProps {
   files?: File[];
-  setValue: UseFormSetValue<CreateApplicationFormDto>;
-  trigger: UseFormTrigger<CreateApplicationFormDto>;
+  setValue: UseFormSetValue<T>;
+  trigger: UseFormTrigger<T>;
 }
 
-export const FileUploadList = React.forwardRef<
-  HTMLUListElement,
-  FileUploadListProps
->(function FileUploadList(props, ref) {
+export const FileUploadList = <
+  T extends CreateApplicationFormDto | CreateVacancyFormDto
+>(
+  props: FileUploadListProps<T>,
+  ref: React.ForwardedRef<HTMLUListElement>
+) => {
   const { showSize, clearable, setValue, trigger, ...rest } = props;
   const { documents } = useApplicationStore();
   if (documents.length === 0) return null;
@@ -255,7 +264,7 @@ export const FileUploadList = React.forwardRef<
       ))}
     </ChakraFileUpload.ItemGroup>
   );
-});
+};
 
 type Assign<T, U> = Omit<T, keyof U> & U;
 

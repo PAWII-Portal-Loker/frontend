@@ -158,7 +158,7 @@ const ApplicationDialog = () => {
                         Download All Files (ZIP)
                       </Button>
                     )}
-                    <FileUploadList
+                    <FileUploadList<CreateApplicationFormDto>
                       files={getValues("document_urls")}
                       showSize
                       clearable
