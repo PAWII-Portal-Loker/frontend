@@ -19,7 +19,6 @@ import {
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
 import {
-  DocumentUrlsInputProps,
   getInputClass,
   getSubmitButtonClass,
   handleFileChange,
@@ -27,6 +26,7 @@ import {
 } from "@utils/form";
 import useVacancyStore from "@vacancy/store";
 import {
+  DocumentUrlsInputProps,
   FileUploadDropzone,
   FileUploadList,
   FileUploadRoot,
@@ -53,6 +53,7 @@ const CreateVacancyDialog = () => {
     setVacancyDialogOpen,
     createVacancy,
     image,
+    setImage,
     uploadImage,
     isImageLoading,
   } = useVacancyStore();
@@ -95,7 +96,7 @@ const CreateVacancyDialog = () => {
     <DialogRoot
       lazyMount
       open={isVacancyDialogOpen}
-      onOpenChange={() => setVacancyDialogOpen(false)}
+      onOpenChange={() => setVacancyDialogOpen(!isVacancyDialogOpen)}
     >
       <DialogContent
         className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}
@@ -126,8 +127,13 @@ const CreateVacancyDialog = () => {
                           handleFileChange(
                             acceptedFilesObject,
                             image,
-                            setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
-                            trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
+                            (
+                              newDocuments: CreateVacancyFormDto["document_urls"]
+                            ) => {
+                              setImage(newDocuments);
+                              setValue("document_urls", newDocuments);
+                              trigger("document_urls");
+                            }
                           )
                         }
                         onFileReject={(rejectedFilesObject) =>
@@ -164,8 +170,12 @@ const CreateVacancyDialog = () => {
                           files={getValues("document_urls")}
                           showSize
                           clearable
-                          setValue={setValue}
-                          trigger={trigger}
+                          setValue={
+                            setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>
+                          }
+                          trigger={
+                            trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
+                          }
                         />
                       </FileUploadRoot>
                     );
