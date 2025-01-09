@@ -181,7 +181,6 @@ const FileUploadItem = (
                 }}
                 onClick={(event) =>
                   handleDeleteFile(index, event, (newDocuments) => {
-                    console.log("newDocumentsDelete", newDocuments);
                     setValue("document_urls", newDocuments);
                     trigger("document_urls");
                   })

@@ -101,9 +101,7 @@ export const handleDeleteFile = (
 ) => {
   event.preventDefault();
   setDocuments((prevDocuments) => {
-    console.log(prevDocuments);
     const newDocuments = deleteFileFromList(prevDocuments, index);
-    console.log(newDocuments);
     callback(newDocuments);
     return newDocuments;
   });

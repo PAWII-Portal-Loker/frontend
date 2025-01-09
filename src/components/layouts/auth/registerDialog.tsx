@@ -1,8 +1,7 @@
-import { Stack, Input, Text } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import { LuUserPlus } from "react-icons/lu";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import clsx from "clsx";
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -18,13 +17,13 @@ import useUserStore from "@user/store";
 import { CreateUserDto } from "@user/types/create";
 import { CreateUserSchema } from "@user/schemas/create";
 import { CreateUserField } from "@user/fields/create";
-import { getInputClass, getSubmitButtonClass } from "@utils/form";
+import { getSubmitButtonClass } from "@utils/form";
 import {
-  CONTAINER_ACTIVE_CLASSES,
   CONTAINER_CLASSES,
   getThemeClassNames,
   TEXT_CLASSES,
 } from "@utils/classNames";
+import TextInput from "@commoncomponents/form/TextInput";
 
 const RegisterDialog = () => {
   const { setLoginDialogOpen, isRegisterDialogOpen, setRegisterDialogOpen } =
@@ -70,15 +69,7 @@ const RegisterDialog = () => {
                 invalid={!!errors[field.name]}
                 errorText={errors[field.name]?.message}
               >
-                <Input
-                  {...register(field.name)}
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  className={clsx(
-                    getInputClass(errors[field.name]),
-                    getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)
-                  )}
-                />
+                <TextInput register={register} field={field} errors={errors} />
               </Field>
             ))}
             <Button

@@ -1,13 +1,7 @@
-import { Input, Stack, Text, Textarea } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { GiClick } from "react-icons/gi";
-import {
-  FieldError,
-  useForm,
-  UseFormSetValue,
-  UseFormTrigger,
-} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import clsx from "clsx";
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -18,33 +12,23 @@ import {
 } from "@ui/dialog";
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
-import {
-  getInputClass,
-  getSubmitButtonClass,
-  handleFileChange,
-  validateFile,
-} from "@utils/form";
+import { getSubmitButtonClass } from "@utils/form";
 import useVacancyStore from "@vacancy/store";
 import {
-  DocumentUrlsInputProps,
-  FileUploadDropzone,
-  FileUploadList,
-  FileUploadRoot,
-} from "@ui/file-upload";
-import {
-  CONTAINER_ACTIVE_CLASSES,
   CONTAINER_CLASSES,
   getThemeClassNames,
   TEXT_CLASSES,
 } from "@utils/classNames";
-import { toaster } from "@ui/toaster";
 import { CreateVacancySchema } from "@vacancy/schemas/create";
 import { CreateVacancyFormDto } from "@vacancy/types/create";
 import { CreateVacancyField } from "@vacancy/fields/create";
-import { NativeSelectField, NativeSelectRoot } from "@ui/native-select";
 import { useIncomeTypestore } from "@enums/stores/incomeType";
 import { useJobTypestore } from "@enums/stores/jobType";
 import { useEffect } from "react";
+import FileUpload from "@commoncomponents/form/FileUpload";
+import TextArea from "@commoncomponents/form/TextArea";
+import Dropdown from "@commoncomponents/form/Dropdown";
+import TextInput from "@commoncomponents/form/TextInput";
 
 const CreateVacancyDialog = () => {
   const {
@@ -118,130 +102,51 @@ const CreateVacancyDialog = () => {
                 {(() => {
                   if (field.type === "file") {
                     return (
-                      <FileUploadRoot
-                        {...register(field.name)}
-                        maxW="xl"
-                        accept=".png, .jpg"
-                        disabled={isImageLoading || isVacancyLoading}
-                        onFileAccept={(acceptedFilesObject) =>
-                          handleFileChange(
-                            acceptedFilesObject,
-                            image,
-                            (
-                              newDocuments: CreateVacancyFormDto["document_urls"]
-                            ) => {
-                              setImage(newDocuments);
-                              setValue("document_urls", newDocuments);
-                              trigger("document_urls");
-                            }
-                          )
-                        }
-                        onFileReject={(rejectedFilesObject) =>
-                          rejectedFilesObject.files.length > 0 &&
-                          toaster.error({
-                            title: `${rejectedFilesObject.files.length} image rejected`,
-                            description: "Please upload a valid image",
-                            duration: 3000,
-                          })
-                        }
-                        validate={(file) => validateFile(file, image)}
-                        alignItems="stretch"
-                        maxFileSize={5 * 1024 * 1024}
-                      >
-                        <FileUploadDropzone
-                          label={field.placeholder}
-                          description=".png and .jpg up to 5MB (max 1 files)"
-                          className={clsx(
-                            getInputClass(
-                              errors[field.name] as FieldError | undefined
-                            ),
-                            getThemeClassNames(
-                              CONTAINER_ACTIVE_CLASSES,
-                              TEXT_CLASSES
-                            )
-                          )}
-                        />
-                        {isImageLoading && (
-                          <Text fontSize="sm" color="gray.500">
-                            Compressing...
-                          </Text>
-                        )}
-                        <FileUploadList
-                          files={getValues("document_urls")}
-                          showSize
-                          clearable
-                          setValue={
-                            setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>
-                          }
-                          trigger={
-                            trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
-                          }
-                        />
-                      </FileUploadRoot>
+                      <FileUpload
+                        register={register}
+                        field={field}
+                        errors={errors}
+                        isFileLoading={isImageLoading}
+                        isContentLoading={isVacancyLoading}
+                        files={image}
+                        setFiles={setImage}
+                        setValue={setValue}
+                        getValues={getValues}
+                        trigger={trigger}
+                        isDownloadable={false}
+                      />
                     );
                   } else if (field.type === "select") {
                     return (
-                      <NativeSelectRoot size="md">
-                        <NativeSelectField
-                          isLoading={
-                            field.name === "income_type"
-                              ? isIncomeTypesLoading
-                              : isJobTypesLoading
-                          }
-                          className={clsx(
-                            "w-full pl-3 pr-8 py-1 rounded-lg border-2 bg-gray-100 border-gray-300 text-lg text-gray-600 appearance-none",
-                            getThemeClassNames(
-                              CONTAINER_ACTIVE_CLASSES,
-                              TEXT_CLASSES
-                            )
-                          )}
-                          {...register(field.name)}
-                          {...control?.register(field.name)}
-                          placeholder={field.placeholder}
-                          items={
-                            field.name === "income_type"
-                              ? incomeTypes
-                              : jobTypes
-                          }
-                          _loading={{ opacity: 0.5 }}
-                        />
-                      </NativeSelectRoot>
+                      <Dropdown
+                        register={register}
+                        field={field}
+                        isContentLoading={
+                          field.name === "income_type"
+                            ? isIncomeTypesLoading
+                            : isJobTypesLoading
+                        }
+                        control={control}
+                        items={
+                          field.name === "income_type" ? incomeTypes : jobTypes
+                        }
+                      />
                     );
                   } else if (field.type === "textarea") {
                     return (
-                      <Textarea
-                        {...register(field.name)}
-                        disabled={isVacancyLoading}
-                        placeholder={field.placeholder}
-                        className={clsx(
-                          getInputClass(errors[field.name] as FieldError),
-                          getThemeClassNames(
-                            CONTAINER_ACTIVE_CLASSES,
-                            TEXT_CLASSES
-                          )
-                        )}
-                        autoComplete="off"
+                      <TextArea
+                        register={register}
+                        field={field}
+                        errors={errors}
+                        isContentLoading={isVacancyLoading}
                       />
                     );
                   } else {
                     return (
-                      <Input
-                        {...register(field.name)}
-                        type={field.type}
-                        placeholder={field.placeholder}
-                        className={clsx(
-                          "p-4 rounded-lg border-2 bg-gray-100 text-lg placeholder-gray-400 appearance-none",
-                          errors[field.name]
-                            ? "focus-visible:ring-red-500 border-red-500"
-                            : "border-gray-300",
-                          getInputClass(
-                            errors[field.name] as FieldError | undefined
-                          ),
-                          getThemeClassNames(
-                            CONTAINER_ACTIVE_CLASSES,
-                            TEXT_CLASSES
-                          )
-                        )}
+                      <TextInput
+                        register={register}
+                        field={field}
+                        errors={errors}
                       />
                     );
                   }

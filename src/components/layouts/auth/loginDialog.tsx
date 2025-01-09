@@ -1,8 +1,7 @@
-import { Stack, Input, Text } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import { LuLogIn } from "react-icons/lu";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import clsx from "clsx";
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -18,13 +17,13 @@ import useAuthStore from "@auth/store";
 import { SignInDto } from "@auth/types/signIn";
 import { SignInSchema } from "@auth/schemas/signIn";
 import { SignInField } from "@auth/fields/signIn";
-import { getInputClass, getSubmitButtonClass } from "@utils/form";
+import { getSubmitButtonClass } from "@utils/form";
 import {
-  CONTAINER_ACTIVE_CLASSES,
   CONTAINER_CLASSES,
   getThemeClassNames,
   TEXT_CLASSES,
 } from "@utils/classNames";
+import TextInput from "@commoncomponents/form/TextInput";
 
 const LoginDialog = () => {
   const { isLoginDialogOpen, setLoginDialogOpen, setRegisterDialogOpen } =
@@ -69,19 +68,7 @@ const LoginDialog = () => {
                 invalid={!!errors[field.name]}
                 errorText={errors[field.name]?.message}
               >
-                <Input
-                  {...register(field.name)}
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  className={clsx(
-                    "p-4 rounded-lg border-2 bg-gray-100 text-lg placeholder-gray-400 appearance-none",
-                    errors[field.name]
-                      ? "focus-visible:ring-red-500 border-red-500"
-                      : "border-gray-300",
-                    getInputClass(errors[field.name]),
-                    getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)
-                  )}
-                />
+                <TextInput register={register} field={field} errors={errors} />
               </Field>
             ))}
             <Button
