@@ -14,9 +14,10 @@ interface InputProps {
   register: UseFormRegister<any>;
   field: FieldConfig<any>;
   errors: FieldErrors;
+  value?: string;
 }
 
-const TextInput = ({ register, field, errors }: InputProps) => {
+const TextInput = ({ register, field, errors, value }: InputProps) => {
   return (
     <Input
       {...register(field.name as string, {
@@ -24,6 +25,7 @@ const TextInput = ({ register, field, errors }: InputProps) => {
       })}
       type={field.type as string}
       placeholder={field.placeholder}
+      value={value}
       className={clsx(
         "p-4 rounded-lg border-2 bg-gray-100 text-lg placeholder-gray-400 appearance-none",
         errors[field.name as string]

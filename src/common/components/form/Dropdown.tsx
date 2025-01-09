@@ -15,6 +15,7 @@ interface DropdownProps {
   control: Control<any>;
   isContentLoading: boolean;
   items: string[];
+  value?: string;
 }
 
 const Dropdown = ({
@@ -23,6 +24,7 @@ const Dropdown = ({
   control,
   isContentLoading,
   items,
+  value,
 }: DropdownProps) => {
   return (
     <NativeSelectRoot size="md">
@@ -36,6 +38,7 @@ const Dropdown = ({
         {...control?.register(field.name as string)}
         placeholder={field.placeholder}
         items={items}
+        value={value}
         _loading={{ opacity: 0.5 }}
       />
     </NativeSelectRoot>
