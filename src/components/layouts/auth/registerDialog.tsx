@@ -50,7 +50,7 @@ const RegisterDialog = () => {
     <DialogRoot
       lazyMount
       open={isRegisterDialogOpen}
-      onOpenChange={() => setRegisterDialogOpen(false)}
+      onOpenChange={() => setRegisterDialogOpen(!isRegisterDialogOpen)}
     >
       <DialogContent
         className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}

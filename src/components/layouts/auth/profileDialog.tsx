@@ -81,7 +81,7 @@ const ProfileDialog = () => {
     <DialogRoot
       lazyMount
       open={isProfileDialogOpen}
-      onOpenChange={() => setProfileDialogOpen(isProfileDialogOpen)}
+      onOpenChange={() => setProfileDialogOpen(!isProfileDialogOpen)}
     >
       <DialogContent
         className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}

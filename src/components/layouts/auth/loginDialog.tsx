@@ -49,7 +49,7 @@ const LoginDialog = () => {
     <DialogRoot
       lazyMount
       open={isLoginDialogOpen}
-      onOpenChange={() => setLoginDialogOpen(false)}
+      onOpenChange={() => setLoginDialogOpen(!isLoginDialogOpen)}
     >
       <DialogContent
         className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}

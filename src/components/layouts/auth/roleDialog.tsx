@@ -87,7 +87,7 @@ const RoleDialog = () => {
     <DialogRoot
       lazyMount
       open={isRoleDialogOpen}
-      onOpenChange={() => setRoleDialogOpen(isRoleDialogOpen)}
+      onOpenChange={() => setRoleDialogOpen(!isRoleDialogOpen)}
     >
       <DialogContent
         className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}
