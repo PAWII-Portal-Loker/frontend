@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Stack } from "@chakra-ui/react";
@@ -14,13 +13,14 @@ import { CreateJobSeekerField } from "@jobSeeker/fields/create";
 import { getSubmitButtonClass } from "@utils/form";
 import TextInput from "@commoncomponents/form/TextInput";
 import Dropdown from "@commoncomponents/form/Dropdown";
+import { FieldConfig } from "@types";
 
 type RoleFormProps<T extends CreateCompanyDto | CreateJobSeekerDto> = {
   selectedRole: "COMPANY" | "JOB_SEEKER";
   onSubmit: (data: BaseSyntheticEvent<object> | undefined) => void;
   formState: {
     register: UseFormRegister<T>;
-    control: Control<any>;
+    control: Control<T>;
     errors: FieldErrors<T>;
   };
   isLoading: boolean;
@@ -40,14 +40,16 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
     isSelectDataLoading = false,
   } = props;
 
-  const fields =
-    selectedRole === "COMPANY" ? CreateCompanyField : CreateJobSeekerField;
+  const fields: FieldConfig<T>[] =
+    selectedRole === "COMPANY"
+      ? (CreateCompanyField as FieldConfig<T>[])
+      : (CreateJobSeekerField as FieldConfig<T>[]);
 
   return (
     <Stack as="form" onSubmit={onSubmit}>
       {fields?.map((field) => (
         <Field
-          key={field.name}
+          key={field.name as string}
           label={field.label}
           invalid={!!errors[field.name as keyof FieldErrors<T>]}
           errorText={String(
@@ -55,15 +57,23 @@ const RoleForm = <T extends CreateCompanyDto | CreateJobSeekerDto>(
           )}
         >
           {field.type === "select" ? (
-            <Dropdown
-              register={register}
-              field={field}
+            <Dropdown<T>
+              formState={{
+                register,
+                field,
+                control,
+              }}
               isContentLoading={isSelectDataLoading}
-              control={control}
               items={selectData}
             />
           ) : (
-            <TextInput register={register} field={field} errors={errors} />
+            <TextInput
+              formState={{
+                register,
+                field,
+                errors,
+              }}
+            />
           )}
         </Field>
       ))}

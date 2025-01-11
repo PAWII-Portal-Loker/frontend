@@ -103,30 +103,34 @@ const CreateVacancyDialog = () => {
                   if (field.type === "file") {
                     return (
                       <FileUpload
-                        register={register}
-                        field={field}
-                        errors={errors}
+                        formState={{
+                          register,
+                          setValue,
+                          getValues,
+                          trigger,
+                          field,
+                          errors,
+                        }}
                         isFileLoading={isImageLoading}
                         isContentLoading={isVacancyLoading}
                         files={image}
                         setFiles={setImage}
-                        setValue={setValue}
-                        getValues={getValues}
-                        trigger={trigger}
                         isDownloadable={false}
                       />
                     );
                   } else if (field.type === "select") {
                     return (
                       <Dropdown
-                        register={register}
-                        field={field}
+                        formState={{
+                          register,
+                          field,
+                          control,
+                        }}
                         isContentLoading={
                           field.name === "income_type"
                             ? isIncomeTypesLoading
                             : isJobTypesLoading
                         }
-                        control={control}
                         items={
                           field.name === "income_type" ? incomeTypes : jobTypes
                         }
@@ -135,18 +139,22 @@ const CreateVacancyDialog = () => {
                   } else if (field.type === "textarea") {
                     return (
                       <TextArea
-                        register={register}
-                        field={field}
-                        errors={errors}
+                        formState={{
+                          register,
+                          field,
+                          errors,
+                        }}
                         isContentLoading={isVacancyLoading}
                       />
                     );
                   } else {
                     return (
                       <TextInput
-                        register={register}
-                        field={field}
-                        errors={errors}
+                        formState={{
+                          register,
+                          field,
+                          errors,
+                        }}
                       />
                     );
                   }

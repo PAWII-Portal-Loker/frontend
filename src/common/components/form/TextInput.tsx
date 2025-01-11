@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Input } from "@chakra-ui/react";
 import { FieldConfig } from "@types";
 import {
@@ -8,19 +7,30 @@ import {
 } from "@utils/classNames";
 import { getInputClass } from "@utils/form";
 import clsx from "clsx";
-import { FieldError, FieldErrors, UseFormRegister } from "react-hook-form";
+import {
+  FieldError,
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from "react-hook-form";
 
-interface InputProps {
-  register: UseFormRegister<any>;
-  field: FieldConfig<any>;
-  errors: FieldErrors;
+interface InputProps<T extends FieldValues> {
+  formState: {
+    register: UseFormRegister<T>;
+    field: FieldConfig<T>;
+    errors: FieldErrors;
+  };
   value?: string;
 }
 
-const TextInput = ({ register, field, errors, value }: InputProps) => {
+const TextInput = <T extends FieldValues>({
+  formState: { register, field, errors },
+  value,
+}: InputProps<T>) => {
   return (
     <Input
-      {...register(field.name as string, {
+      {...register(field.name as Path<T>, {
         valueAsNumber: field.type === "number",
       })}
       type={field.type as string}

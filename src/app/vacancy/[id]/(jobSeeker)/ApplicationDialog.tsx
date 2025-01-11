@@ -88,25 +88,29 @@ const ApplicationDialog = () => {
               >
                 {field.type === "file" ? (
                   <FileUpload
-                    register={register}
-                    field={field}
-                    errors={errors}
+                    formState={{
+                      register,
+                      setValue,
+                      getValues,
+                      trigger,
+                      field,
+                      errors,
+                    }}
                     isFileLoading={isDocumentLoading}
                     isContentLoading={isApplicationLoading}
                     files={documents}
                     setFiles={setDocuments}
-                    setValue={setValue}
-                    getValues={getValues}
-                    trigger={trigger}
                     maxFiles={5}
                     acceptedFileTypes=".png, .jpg, .pdf"
                     isDownloadable={false}
                   />
                 ) : (
                   <TextArea
-                    register={register}
-                    field={field}
-                    errors={errors}
+                    formState={{
+                      register,
+                      field,
+                      errors,
+                    }}
                     isContentLoading={isApplicationLoading}
                   />
                 )}

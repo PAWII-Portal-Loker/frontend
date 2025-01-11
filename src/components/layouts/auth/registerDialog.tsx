@@ -69,7 +69,13 @@ const RegisterDialog = () => {
                 invalid={!!errors[field.name]}
                 errorText={errors[field.name]?.message}
               >
-                <TextInput register={register} field={field} errors={errors} />
+                <TextInput
+                  formState={{
+                    register,
+                    field,
+                    errors,
+                  }}
+                />
               </Field>
             ))}
             <Button

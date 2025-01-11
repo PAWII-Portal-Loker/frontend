@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Textarea } from "@chakra-ui/react";
 import { FieldConfig } from "@types";
 import {
@@ -8,24 +7,30 @@ import {
 } from "@utils/classNames";
 import { getInputClass } from "@utils/form";
 import clsx from "clsx";
-import { FieldError, FieldErrors, UseFormRegister } from "react-hook-form";
+import {
+  FieldError,
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from "react-hook-form";
 
-interface TextAreaProps {
-  register: UseFormRegister<any>;
-  field: FieldConfig<any>;
-  errors: FieldErrors;
+interface TextAreaProps<T extends FieldValues> {
+  formState: {
+    register: UseFormRegister<T>;
+    field: FieldConfig<T>;
+    errors: FieldErrors;
+  };
   isContentLoading: boolean;
 }
 
-const TextArea = ({
-  register,
-  field,
-  errors,
+const TextArea = <T extends FieldValues>({
+  formState: { register, field, errors },
   isContentLoading,
-}: TextAreaProps) => {
+}: TextAreaProps<T>) => {
   return (
     <Textarea
-      {...register(field.name as string)}
+      {...register(field.name as Path<T>)}
       disabled={isContentLoading}
       placeholder={field.placeholder}
       className={clsx(
