@@ -4,12 +4,7 @@ import { useApplicationStore } from "@application/store";
 import { toaster } from "@ui/toaster";
 import clsx from "clsx";
 import { FileAcceptDetails } from "node_modules/@chakra-ui/react/dist/types/components/file-upload/namespace";
-import {
-  FieldError,
-  FieldErrors,
-  UseFormSetValue,
-  UseFormTrigger,
-} from "react-hook-form";
+import { FieldError, FieldErrors } from "react-hook-form";
 import { compressPdf, compressImage } from "./compress";
 import useVacancyStore from "@vacancy/store";
 
@@ -29,42 +24,24 @@ export const getSubmitButtonClass = (isLoading: boolean, errors: FieldErrors) =>
     Object.keys(errors).length === 0 && !isLoading && "hover:bg-blue-600"
   );
 
-export interface DocumentUrlsInputProps {
-  document_urls: File[];
-}
-
-export const updateDocumentsAndForm = (
-  newDocuments: File[],
-  setDocuments: (
-    documents: File[] | ((prevDocuments: File[]) => File[])
-  ) => void,
-  setValue: UseFormSetValue<DocumentUrlsInputProps>,
-  trigger: UseFormTrigger<DocumentUrlsInputProps>
-) => {
-  setDocuments(newDocuments);
-  setValue("document_urls", newDocuments);
-  trigger("document_urls");
-};
-
 const processFile = (
   file: File,
   newDocuments: File[],
-  setValue: UseFormSetValue<DocumentUrlsInputProps>,
-  trigger: UseFormTrigger<DocumentUrlsInputProps>
+  callback: (updatedDocuments: File[]) => void
 ) => {
   if (file.type.startsWith("image/")) {
     compressImage(file, (compressedFile) => {
       newDocuments.push(compressedFile);
-      updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
+      callback(newDocuments);
     });
   } else if (file.type === "application/pdf") {
     compressPdf(file, (compressedFile) => {
       newDocuments.push(compressedFile);
-      updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
+      callback(newDocuments);
     });
   } else {
     newDocuments.push(file);
-    updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
+    callback(newDocuments);
   }
 };
 
@@ -75,8 +52,7 @@ const replaceWhitespaceWithHyphen = (fileName: string): string => {
 export const handleFileChange = (
   acceptedFilesObject: FileAcceptDetails,
   documents: File[],
-  setValue: UseFormSetValue<DocumentUrlsInputProps>,
-  trigger: UseFormTrigger<DocumentUrlsInputProps>
+  callback: (newDocuments: File[]) => void
 ) => {
   const { setDocumentLoading } = useApplicationStore.getState();
   setDocumentLoading(true);
@@ -107,7 +83,9 @@ export const handleFileChange = (
       return;
     }
 
-    processFile(newFile, newDocuments, setValue, trigger);
+    processFile(newFile, newDocuments, (newDocuments) => {
+      callback(newDocuments);
+    });
   });
   setDocumentLoading(false);
 };
@@ -118,14 +96,13 @@ export const deleteFileFromList = (files: File[], index: number): File[] => {
 
 export const handleDeleteFile = (
   index: number,
-  setValue: UseFormSetValue<DocumentUrlsInputProps>,
-  trigger: UseFormTrigger<DocumentUrlsInputProps>,
-  event: React.MouseEvent<HTMLButtonElement>
+  event: React.MouseEvent<HTMLButtonElement>,
+  callback: (newDocuments: File[]) => void
 ) => {
   event.preventDefault();
   setDocuments((prevDocuments) => {
     const newDocuments = deleteFileFromList(prevDocuments, index);
-    updateDocumentsAndForm(newDocuments, setDocuments, setValue, trigger);
+    callback(newDocuments);
     return newDocuments;
   });
 };

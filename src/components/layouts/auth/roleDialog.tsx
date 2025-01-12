@@ -25,7 +25,11 @@ import { CreateJobSeekerSchema } from "@jobSeeker/schemas/create";
 import { slideVariants } from "@consts/animationVariants";
 import RoleForm from "./roleForm";
 import AnimatedHeight from "@commoncomponents/animated/AnimatedHeight";
-import { CONTAINER_CLASSES, getThemeClassNames, TEXT_CLASSES } from "@utils/classNames";
+import {
+  CONTAINER_CLASSES,
+  getThemeClassNames,
+  TEXT_CLASSES,
+} from "@utils/classNames";
 
 const RoleDialog = () => {
   const {
@@ -64,6 +68,7 @@ const RoleDialog = () => {
 
   const {
     register: registerJobSeeker,
+    control: controlJobSeeker,
     handleSubmit: handleSubmitJobSeeker,
     formState: { errors: errorsJobSeeker },
   } = useForm<CreateJobSeekerDto>({
@@ -82,9 +87,11 @@ const RoleDialog = () => {
     <DialogRoot
       lazyMount
       open={isRoleDialogOpen}
-      onOpenChange={() => setRoleDialogOpen(isRoleDialogOpen)}
+      onOpenChange={() => setRoleDialogOpen(!isRoleDialogOpen)}
     >
-      <DialogContent className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}>
+      <DialogContent
+        className={getThemeClassNames(CONTAINER_CLASSES, TEXT_CLASSES)}
+      >
         <DialogHeader>
           <DialogTitle textAlign="center" fontSize="2xl" fontWeight="bold">
             Choose Your Role
@@ -130,6 +137,7 @@ const RoleDialog = () => {
                       isSelectDataLoading={isLastEducationTypesLoading}
                       formState={{
                         register: registerJobSeeker,
+                        control: controlJobSeeker,
                         errors: errorsJobSeeker,
                       }}
                     />

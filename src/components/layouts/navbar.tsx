@@ -63,9 +63,9 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
         "w-full px-3 py-2 rounded-md",
         useIsNavbarActive(href)
           ? clsx(
-            "font-semibold",
-            getThemeClassNames(TEXT_PRIMARY_CLASSES, CONTAINER_ACTIVE_CLASSES)
-          )
+              "font-semibold",
+              getThemeClassNames(TEXT_PRIMARY_CLASSES, CONTAINER_ACTIVE_CLASSES)
+            )
           : getThemeClassNames(TEXT_CLASSES, CONTAINER_HOVER_CLASSES)
       )}
       disabled={useIsNavbarActive(href)}
@@ -77,8 +77,12 @@ const MobileNavLink = ({ href, label }: NavLinkProps) => (
 
 const Navbar = () => {
   const { isLogin, auth, signOut } = useAuthStore();
-  const { isNavigationOpen, setNavigationOpen, setLoginDialogOpen } =
-    useMainStore();
+  const {
+    isNavigationOpen,
+    setNavigationOpen,
+    setLoginDialogOpen,
+    setProfileDialogOpen,
+  } = useMainStore();
   const { setRoleDialogOpen } = useRoleDialogStore();
   const isNavbarHidden = useHideNavbarOnScroll();
 
@@ -159,7 +163,11 @@ const Navbar = () => {
               </MenuTrigger>
               <MenuContent>
                 {auth.role ? (
-                  <MenuItem value="profile" valueText="profile">
+                  <MenuItem
+                    value="profile"
+                    valueText="profile"
+                    onClick={() => setProfileDialogOpen(true)}
+                  >
                     <BsPerson size={24} />
                     <Box flex="1">Profile</Box>
                   </MenuItem>

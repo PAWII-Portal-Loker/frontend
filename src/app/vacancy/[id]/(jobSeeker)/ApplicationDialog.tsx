@@ -1,13 +1,7 @@
-import { Stack, Text, Textarea } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { GiClick } from "react-icons/gi";
-import {
-  FieldError,
-  useForm,
-  UseFormSetValue,
-  UseFormTrigger,
-} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import clsx from "clsx";
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -18,14 +12,7 @@ import {
 } from "@ui/dialog";
 import { Field } from "@ui/field";
 import { Button } from "@ui/button";
-import {
-  DocumentUrlsInputProps,
-  downloadZip,
-  getInputClass,
-  getSubmitButtonClass,
-  handleFileChange,
-  validateFile,
-} from "@utils/form";
+import { getSubmitButtonClass } from "@utils/form";
 import { useApplicationStore } from "@application/store";
 import { CreateApplicationFormDto } from "@application/types/create";
 import { CreateApplicationField } from "@application/fields/create";
@@ -33,17 +20,12 @@ import useVacancyStore from "@vacancy/store";
 import { useParams } from "next/navigation";
 import { CreateApplicationSchema } from "@application/schemas/create";
 import {
-  FileUploadDropzone,
-  FileUploadList,
-  FileUploadRoot,
-} from "@ui/file-upload";
-import {
-  CONTAINER_ACTIVE_CLASSES,
   CONTAINER_CLASSES,
   getThemeClassNames,
   TEXT_CLASSES,
 } from "@utils/classNames";
-import { toaster } from "@ui/toaster";
+import FileUpload from "@commoncomponents/form/FileUpload";
+import TextArea from "@commoncomponents/form/TextArea";
 
 const ApplicationDialog = () => {
   const vacancyId = useParams().id as string;
@@ -54,6 +36,7 @@ const ApplicationDialog = () => {
     setApplicationDialogOpen,
     createApplication,
     documents,
+    setDocuments,
     uploadDocuments,
     isDocumentLoading,
   } = useApplicationStore();
@@ -104,78 +87,31 @@ const ApplicationDialog = () => {
                 errorText={errors[field.name]?.message}
               >
                 {field.type === "file" ? (
-                  <FileUploadRoot
-                    {...register(field.name)}
-                    maxW="xl"
-                    accept=".png, .jpg, .pdf"
-                    disabled={isDocumentLoading || isApplicationLoading}
-                    onFileAccept={(acceptedFilesObject) =>
-                      handleFileChange(
-                        acceptedFilesObject,
-                        documents,
-                        setValue as unknown as UseFormSetValue<DocumentUrlsInputProps>,
-                        trigger as unknown as UseFormTrigger<DocumentUrlsInputProps>
-                      )
-                    }
-                    onFileReject={(rejectedFilesObject) =>
-                      rejectedFilesObject.files.length > 0 &&
-                      toaster.error({
-                        title: `${rejectedFilesObject.files.length} file(s) rejected`,
-                        description: "Please upload a valid file",
-                        duration: 3000,
-                      })
-                    }
-                    validate={(file) => validateFile(file, documents)}
-                    alignItems="stretch"
+                  <FileUpload
+                    formState={{
+                      register,
+                      setValue,
+                      getValues,
+                      trigger,
+                      field,
+                      errors,
+                    }}
+                    isFileLoading={isDocumentLoading}
+                    isContentLoading={isApplicationLoading}
+                    files={documents}
+                    setFiles={setDocuments}
                     maxFiles={5}
-                    maxFileSize={5 * 1024 * 1024}
-                  >
-                    <FileUploadDropzone
-                      label={field.placeholder}
-                      description=".png, .jpg, ,pdf up to 5MB (max 5 files)"
-                      className={clsx(
-                        getInputClass(errors[field.name] as FieldError),
-                        getThemeClassNames(
-                          CONTAINER_ACTIVE_CLASSES,
-                          TEXT_CLASSES
-                        )
-                      )}
-                    />
-                    {isDocumentLoading && (
-                      <Text fontSize="sm" color="gray.500">
-                        Compressing...
-                      </Text>
-                    )}
-                    {getValues("document_urls").length > 0 && (
-                      <Button
-                        onClick={() => downloadZip(getValues("document_urls"))}
-                        disabled={getValues("document_urls").length === 0}
-                        className={clsx(
-                          "mt-2 dark:bg-slate-600/80 bg-slate-400/80 dark:hover:bg-slate-500/70 hover:bg-slate-500/70 transition-colors duration-200 font-bold",
-                          getThemeClassNames(TEXT_CLASSES)
-                        )}
-                      >
-                        Download All Files (ZIP)
-                      </Button>
-                    )}
-                    <FileUploadList
-                      files={getValues("document_urls")}
-                      showSize
-                      clearable
-                      setValue={setValue}
-                      trigger={trigger}
-                    />
-                  </FileUploadRoot>
+                    acceptedFileTypes=".png, .jpg, .pdf"
+                    isDownloadable={false}
+                  />
                 ) : (
-                  <Textarea
-                    {...register(field.name)}
-                    disabled={isApplicationLoading}
-                    placeholder={field.placeholder}
-                    className={clsx(
-                      getInputClass(errors[field.name] as FieldError),
-                      getThemeClassNames(CONTAINER_ACTIVE_CLASSES, TEXT_CLASSES)
-                    )}
-                    autoComplete="off"
+                  <TextArea
+                    formState={{
+                      register,
+                      field,
+                      errors,
+                    }}
+                    isContentLoading={isApplicationLoading}
                   />
                 )}
               </Field>

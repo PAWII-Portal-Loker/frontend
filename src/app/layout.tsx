@@ -14,6 +14,7 @@ import Footer from "@components/layouts/footer";
 import RoleDialog from "@components/layouts/auth/roleDialog";
 import { useIsNotHomePage } from "@utils/checkPathName";
 import useAuthStore from "@auth/store";
+import ProfileDialog from "@components/layouts/auth/profileDialog";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const { checkLogin } = useAuthStore();
+  const { auth, checkLogin } = useAuthStore();
   const isNotHomePage = useIsNotHomePage();
 
   useEffect(() => {
@@ -44,9 +45,15 @@ const RootLayout = ({
                 "pt-16 h-full flex-grow dark:text-slate-100 text-slate-700 bg-gradient-to-r from-slate-200 to-slate-400 dark:from-slate-400 dark:to-slate-600"
             )}
           >
-            <LoginDialog />
-            <RegisterDialog />
-            <RoleDialog />
+            {auth.role ? (
+              <ProfileDialog />
+            ) : (
+              <>
+                <LoginDialog />
+                <RegisterDialog />
+                <RoleDialog />
+              </>
+            )}
             {children}
           </main>
           {isNotHomePage && <Footer />}

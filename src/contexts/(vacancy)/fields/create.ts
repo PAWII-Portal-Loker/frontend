@@ -1,8 +1,8 @@
-import { CreateVacancyDto } from "../types/create";
+import { CreateVacancyFormDto } from "../types/create";
 import { CreateVacancySchema } from "../schemas/create";
 import { FieldConfig } from "@types";
 
-export const CreateVacancyField: FieldConfig<CreateVacancyDto>[] = [
+export const CreateVacancyField: FieldConfig<CreateVacancyFormDto>[] = [
   {
     name: "job_type",
     label: "Job Type",
@@ -25,11 +25,11 @@ export const CreateVacancyField: FieldConfig<CreateVacancyDto>[] = [
     rules: CreateVacancySchema.fields.position,
   },
   {
-    name: "thumbnail_url",
+    name: "document_urls",
     label: "Thumbnail URL",
     type: "file",
     placeholder: "Upload thumbnail file",
-    rules: CreateVacancySchema.fields.thumbnail_url,
+    rules: CreateVacancySchema.fields.document_urls,
   },
   {
     name: "description",
